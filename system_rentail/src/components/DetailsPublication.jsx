@@ -2,11 +2,13 @@ import * as React from 'react';
 import '../styles/details_publication.sass'
 import SimpleBackdrop from './SimpleBackdrop'
 import CardDetails from './CardDetails'
+import BasicBreadcrumbs from './BasicBreadcrumbs'
 
 export default function DetailsPublication(props) {
 
     const [ publication, setPublication] = React.useState([])
-    const [ loading, setLoading ] = React.useState(null);
+    const [ loading, setLoading ] = React.useState(null)
+    const [ search, setSearch ] = React.useState(null)
 
     React.useEffect(() => {
         const getPublication = async (url) => {
@@ -16,20 +18,25 @@ export default function DetailsPublication(props) {
               const jsonRequest = await request.json()
                   setLoading(false)
                   setPublication(jsonRequest)
+                  setSearch(jsonRequest[0].title)
           } else {
               setLoading(false)
               setPublication([])
           }
         }
-    
-        getPublication('https://income-system.herokuapp.com/publications/614cdfe151de9100162a0c08')
+
+        let { id } = props.match.params    
+        getPublication('https://income-system.herokuapp.com/publications/' + id)
     
     },[])
 
     return (
+        <>
+        {loading ? <SimpleBackdrop loading={true} />: null}
+        <BasicBreadcrumbs search={search} />
         <div className="details-publication">
-            {loading ? <SimpleBackdrop loading={true} />: null}
             {publication.length > 0 ? <CardDetails publication={publication}/> : null}
         </div>
+        </>
     )
 }

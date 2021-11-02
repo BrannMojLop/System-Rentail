@@ -2,13 +2,14 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import {
-  Link as LinkReactRouter
-} from "react-router-dom";
 
 function handleClick(event) {
   event.preventDefault();
-  console.info('You clicked a breadcrumb.');
+  if (event.target.innerHTML == "Home") {
+    window.location.href = "/";
+  } else if (event.target.innerHTML == "Catalogo"){
+    window.location.href = "/catalog";
+  }
 }
 
 export default function BasicBreadcrumbs(props) {
@@ -25,7 +26,7 @@ export default function BasicBreadcrumbs(props) {
           color="inherit"
           href="/getting-started/installation/"
         >
-          Catalago
+          Catalogo
         </Link>
         <Typography color="text.primary">{props.search}</Typography>
       </Breadcrumbs>

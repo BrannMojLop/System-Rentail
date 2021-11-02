@@ -2,6 +2,7 @@ import * as React from 'react';
 import '../styles/buttons.sass';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
+import SvgIcon from '@mui/material/SvgIcon';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +11,6 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -96,9 +96,17 @@ export default function PrimarySearchAppBar(props) {
   }
 
   const handleClick = (event) => {
-    const urlNew = '/catalog_search=/' + searchText
+    const urlNew = '/catalog/search/' + searchText
     // props.searchPublications(urlNew, 'Busqueda: ' + searchText);
     window.location.href = urlNew;
+  }
+
+  function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
   }
 
   const menuId = 'primary-search-account-menu';
@@ -187,7 +195,9 @@ export default function PrimarySearchAppBar(props) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <HomeIcon onClick={(e) => {
+              window.location.href = "/"
+            }}/>
           </IconButton>
           <Typography
             variant="h6"
@@ -208,24 +218,9 @@ export default function PrimarySearchAppBar(props) {
               name="search"
             />
           </Search>
-          <Link to="/catalog">oki</Link>
           <Button className="btn-search"name="search" onClick={handleClick} className="search-btn" variant="contained">Buscar</Button>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}> 
             <IconButton
               size="large"
               edge="end"

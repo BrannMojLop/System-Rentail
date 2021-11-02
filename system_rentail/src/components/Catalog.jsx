@@ -4,13 +4,6 @@ import SimpleBackdrop from './SimpleBackdrop'
 import BasicBreadcrumbs from './BasicBreadcrumbs'
 import '../styles/catalog.sass'
 import { Card } from './Card'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams
-} from "react-router-dom";
 
 export default function Catalog(props) {
 
@@ -37,113 +30,31 @@ export default function Catalog(props) {
             }
         }
 
-        console.log(props.match);
-
         let url = "https://income-system.herokuapp.com/publications"
-        if(props.match.params.title){
-            url += "?title=" + props.match.params.title
-            setSearch(props.match.params.title)
-        } else if(props.match.params.category){
-            url += "?category=" + props.match.params.title
-            setSearch(props.match.params.category)
-        } else if(props.match.params.sector){
-            url += "?sector=" + props.match.params.title
-            setSearch(props.match.params.sector)
+
+        if (props.match.params.search) {
+            url = url + "?title=" + props.match.params.search
         }
 
         getPublications(url)
 
     },[])
 
-    // const searchPublications = async (url_search, search) => {
-    //     setLoading(true)
-    //     const request = await fetch(url_search)
-    //     if (request.status === 200) {
-    //         const jsonRequest = await request.json()
-    //         if (jsonRequest.length > 0) {
-    //             setLoading(false)
-    //             setSearch(search)
-    //             setPublications(jsonRequest)
-    //             setNotResult(false)
-    //             setCatalogActive(true)
-    //             setDetailsActive(false)
-    //         } else {
-    //             setSearch(null)
-    //             setLoading(false)
-    //             setPublications([])
-    //             setNotResult(true)
-    //             setCatalogActive(true)
-    //             setDetailsActive(false)
-    //         }
-    //     } else {
-    //         setSearch(null)
-    //         setLoading(false)
-    //         setPublications([])
-    //         setNotResult(true)
-    //         setCatalogActive(true)
-    //         setDetailsActive(false)
-    //     }
-    // }
 
-    // const getPublication = async (url_search, search) => {
-    //     setLoading(true)
-    //     const request = await fetch(url_search)
-    //     if (request.status === 200) {
-    //         const jsonRequest = await request.json()
-    //         if (jsonRequest.length > 0) {
-    //             setLoading(false)
-    //             setSearch(search)
-    //             setPublication(jsonRequest)
-    //             setNotResult(false)
-    //             setCatalogActive(false)
-    //             setDetailsActive(true)
-    //         } else {
-    //             setSearch(null)
-    //             setLoading(false)
-    //             setPublications([])
-    //             setNotResult(true)
-    //             setCatalogActive(true)
-    //             setDetailsActive(false)
-    //         }
-    //     } else {
-    //         setSearch(null)
-    //         setLoading(false)
-    //         setPublications([])
-    //         setNotResult(true)
-    //         setCatalogActive(true)
-    //         setDetailsActive(false)
-    //     }
-    // }
-
-    // const filterPublications = async (url_search, search) => {
-    //     setLoading(true)
-    //     const request = await fetch(url_search)
-    //     if (request.status === 200) {
-    //         const jsonRequest = await request.json()
-    //         if (jsonRequest.length > 0) {
-    //             setLoading(false)
-    //             setSearch(search)
-    //             setPublications(jsonRequest)
-    //             setNotResult(false)
-    //             setCatalogActive(true)
-    //             setDetailsActive(false)
-    //         } else {
-    //             setSearch(null)
-    //             setLoading(false)
-    //             setPublications([])
-    //             setNotResult(true)
-    //             setCatalogActive(true)
-    //             setDetailsActive(false)
-    //         }
-    //     } else {
-    //         setSearch(null)
-    //         setLoading(false)
-    //         setPublications([])
-    //         setNotResult(true)
-    //         setCatalogActive(true)
-    //         setDetailsActive(false)
-    //     }
-    // }
+    const searchPublications = async (url_search, search) => {
+        setLoading(true)
+        const request = await fetch(url_search)
+        if (request.status === 200) {
+            const jsonRequest = await request.json()
+                setLoading(false)
+                setSearch(search)
+                setPublications(jsonRequest)
+        } else {
+            setSearch(null)
+            setLoading(false)
+            setPublications([])
+        }
+    }
 
     return (
         <>
@@ -151,10 +62,10 @@ export default function Catalog(props) {
         {loading ? <SimpleBackdrop loading={true} />: null}
         <main className="body-catalog">
             <div className="catalog">
-                <ToolsCatalog searchPublications={props.searchPublications} />
+                <ToolsCatalog searchPublications={searchPublications} />
                 <ul>
                     {publications.length > 0 ? publications.map(publication => {
-                            return <li key={publication._id}><Card publication={publication}/></li>
+                            return <li key={publication._id}><Card history={props.history} publication={publication}/></li>
                     }): <h1>Sin Resultados</h1>}
                 </ul>
             </div>

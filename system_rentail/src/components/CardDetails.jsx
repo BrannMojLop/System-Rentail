@@ -2,17 +2,100 @@ import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import SimpleBackdrop from './SimpleBackdrop'
 
-export default function(props) {
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-    const [view, setView] = React.useState('list');
+export default function CardDetails(props) {
+
+    const [view, setView] = React.useState(null);
+    const [loading, setLoading ] = React.useState(null);
+    const [selectOption, setSelectOption] = React.useState(null)
+    const [msg, setMsg] = React.useState({status: "success", message: "Solcitud enviada con Exito!"})
+    const user = {
+        "username": "brann",
+        "email": "brandonmojica95@gmail.com",
+        "typeUser": "614cda108ee09a00163763ed",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZTM4NTFkZTkxMDAxNjJhMGJjYSIsInVzZXJuYW1lIjoibHVsdSIsImV4cCI6MTY0MTAwMjMxMSwiaWF0IjoxNjM1ODE4MzExfQ.lc6N7mLf0FDIUgNLbUh1Xu77Zt3l0YH-HTHXPjH4Lzo"
+    }
+
+    let request = {}
+
+    const sendRequest = async () => {
+    try {
+        const objRequest = {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + user.token },
+                body: JSON.stringify(request)
+        }
+            await fetch("https://income-system.herokuapp.com/rental-requests", objRequest)
+            setLoading(false)
+            setMsg({status: "success", message: "Solcitud enviada con Exito!"})
+            restForm()
+            setOpen(true);
+
+    } catch (e) {
+        setOpen(true);
+        setMsg({status: "error", message: "El envio de la solcitud Fallo!"})
+    }
+}
 
     const handleChange = (event, nextView) => {
+        event.preventDefault();
         setView(nextView);
+        setSelectOption(event.target.value)    
       }
+
+    const restForm = () => {
+        setView(null);
+        setSelectOption(null);
+        request = {}
+    }
+
+    const handleClick = async (event) => {
+        event.preventDefault();
+        if(props.publication[0].periods[selectOption]) {
+            request = {
+                "id_lessor": props.publication[0].lessor[0]._id,
+                "id_lessee": "614e05ee5448770016739af8",
+                "id_publication": props.publication[0]._id,
+                "contract": {
+                    "price": props.publication[0].periods[selectOption],
+                    "period": props.publication[0].prices[selectOption]
+                }
+            }
+            setLoading(true)
+            setTimeout(() => {
+                sendRequest()
+            }, 1000);
+        }
+    }
+
+    const [open, setOpen] = React.useState(false);
+  
+    const handleCloseAlert = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
     return (
         <>
+        {loading ? <SimpleBackdrop loading={true} />: null}
+        <Stack spacing={2}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseAlert}>
+            <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
+              {msg.message}
+            </Alert>
+          </Snackbar>
+        </Stack>
         <div className="box-img">
                 <header>
                     <h2>{props.publication[0].title}</h2>
@@ -46,8 +129,11 @@ export default function(props) {
                         })
                     })
                     </ToggleButtonGroup>
-                    <Button style={{marginTop: '5%', width:'70%', backgroundColor: '#153E90'}} variant="contained"
+                    <Button 
+                    style={{marginTop: '5%', width:'70%', backgroundColor: '#153E90'}} 
+                    variant="contained"
                     id="demo-simple-select"
+                    onClick={handleClick}
                     >Enviar</Button>
                     </form>
                     </section>

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import '../styles/card.sass';
 import { ButtonRent } from './Buttons'
  
@@ -7,7 +7,7 @@ export function Card(props) {
     const handleClick = (event) => {
         event.preventDefault();
         if (event.target.localName === 'img' || event.target.localName === 'button' || event.target.localName === 'a'){
-            props.getPublication('https://income-system.herokuapp.com/publications/' + props.publication._id, props.publication.product[0].name)
+            props.history.push("/catalog/detailsPublication/" + props.publication._id)
         }
     }
 
