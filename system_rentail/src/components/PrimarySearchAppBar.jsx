@@ -83,6 +83,7 @@ export default function PrimarySearchAppBar(props) {
   };
 
   const handleMenuClose = () => {
+    window.location.href = "/user/profile";
     setAnchorEl(null);
     handleMobileMenuClose();
   };

@@ -3,6 +3,7 @@ import '../styles/app.sass'
 import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
 import DetailsPublication from './DetailsPublication';
+import Profile from './Profile';
 import NotFound from './NotFound'
 import {
   BrowserRouter as Router,
@@ -18,9 +19,10 @@ function App(props) {
       <PrimarySearchAppBar />
       <Router>
         <Switch>
+          <Route exact path="/user/profile" component={Profile}/>
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
-          <Route path="/catalog/detailsPublication/:id" component={DetailsPublication} />
+          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
           <Route path="/" component={Catalog}/>
           <Route path="" component={NotFound} />
         </Switch>
