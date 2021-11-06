@@ -82,8 +82,14 @@ export default function PrimarySearchAppBar(props) {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    window.location.href = "/user/profile";
+  const handleMenuClose = (event) => {
+    console.log(event);
+    if (event.target.id === "profile") {
+      window.location.href = "/user/profile";
+    } else if (event.target.id === "requests") {
+      window.location.href = "/requests";
+    }
+    
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -127,8 +133,8 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem id="profile" onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem id="requests" onClick={handleMenuClose}>My Requests</MenuItem>
     </Menu>
   );
 

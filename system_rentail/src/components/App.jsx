@@ -4,6 +4,7 @@ import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
 import DetailsPublication from './DetailsPublication';
 import Profile from './Profile';
+import Requests from './Requests';
 import NotFound from './NotFound'
 import {
   BrowserRouter as Router,
@@ -23,6 +24,7 @@ function App(props) {
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
           <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
+          <Route exact path="/requests" component={Requests}/>
           <Route path="/" component={Catalog}/>
           <Route path="" component={NotFound} />
         </Switch>
