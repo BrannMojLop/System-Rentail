@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { ButtonFilter } from './Buttons'
 import '../styles/details.sass'
 
+
+import Button from '@mui/material/Button';
+
 const evalStatus = (estatus)=>{
 
     return estatus == 'En Espera' ? true : false;
@@ -12,6 +15,7 @@ export function Details(props) {
    
 
     return (
+        <>
         <div className= {`details ${props.active == props.req._id ? 'active':'non-active'}`}>
   
             <div className="group-details">
@@ -35,7 +39,7 @@ export function Details(props) {
             </div>
 
            {
-            evalStatus(props.req.answer.status) &&
+            //evalStatus(props.req.answer.status) &&
             <div className="group-details">         
                 <button className="blue-white-button">Editar</button>
                 <button className = "blue-white-button">Cancelar</button>
@@ -43,6 +47,8 @@ export function Details(props) {
             }
 
         </div>
+
+        </>
     )
 
 }

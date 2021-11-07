@@ -1,12 +1,5 @@
 @import './variables.sass'
 
-.table
-    margin: 2%
-    width: 90%
-    margin: auto
-
-
-
 td, th
     .cancelled 
         background-color: #E34646
@@ -23,65 +16,17 @@ td, th
 
     font-family: sans-serif
 
-th 
-    font-size: 1.2em
-    color: $c2
 
-tr
-    box-shadow: 0px 0.5px 0px 0px #808080
-    
-   
-td  
-    div
-        padding: 5%
-        border-radius: 15px
-        font-weight: medium
-        width: 50%
-        margin: auto
-
-.show-more-details
-    background-image: url('../public/assets/unfold-icon-2.jpg')
-    background-repeat: no-repeat
-    width: 30px
-    height: 15px
-    border: none
-    background-size: 70%
-    opacity: 0.5
-
-.detailsR
-    display: block
-    box-shadow: 0px 0px 0px 0px #808080
-
-.active
-    display: show
-
-.non-active
-    display: none
+thead
+    .table-header
+        color: #153E90
+        font-size: 1em
+        font-weight: bold
 
 
-@media (max-width: $small)
-table
-    font-size: 0.8em
-th    
-    font-size: .8em
 
 
-@media (max-width: $medium) and (min-width: $small + 1px)
-table
-    font-size: 0.6em
-th    
-    font-size: .7em
 
 
-@media (max-width: $medium-large) and (min-width: $medium + 1px)
-table
-    font-size: 0.9em
-th    
-    font-size: 1.2em
 
 
-@media (max-width: $large) and (min-width: $medium-large + 1px)
-table
-    font-size: 0.9em
-th    
-    font-size: 1.2em
