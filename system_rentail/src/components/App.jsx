@@ -28,7 +28,7 @@ function App(props) {
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
           <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
-          <Route exact path="/requests" component={Requests}/>
+          <Route exact path="/requests" component={RequestPanel}/>
           <Route path="/" component={Catalog}/>
           <Route path="" component={NotFound} />
         </Switch>
