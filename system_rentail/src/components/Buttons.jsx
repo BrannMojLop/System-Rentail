@@ -1,25 +1,31 @@
 import React from 'react';
 import '../styles/buttons.sass';
 
-export function ButtonRent(props) {
+export function ButtonRent() {
     return (
-        <button className="btn-rent-desktop">Rentalo Ahora</button>
+        <button className="btn-rent-desktop">Detalles</button>
     )
 }
 
-export function ButtonApply(props) {
+export function ButtonApply() {
     return (
         <button className="btn-apply-desktop">Aplicar</button>
     )
 }
 
-export function ButtonFilter(props) {
+export function ButtonFilter() {
     return (
         <button className="btn-filter-desktop">Filtrar</button>
     )
 }
 
-export function ButtonSearch(props) {
+export function ButtonEdit() {
+    return (
+        <button className="btn-filter-desktop">Filtrar</button>
+    )
+}
+
+export function ButtonSearch() {
     return (
         <button className="btn-search-desktop">Buscar</button>
     )
@@ -46,5 +52,11 @@ export function ButtonCancel(props) {
 export function ButtonAcept(props) {
     return (
         <button className="btn-acept-desktop">Aceptar</button>
+    )
+}
+
+export function ButtonPassword(props) {
+    return (
+        <button className="btn-password-desktop">Olvidé mi contraseña</button>
     )
 }
