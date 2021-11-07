@@ -6,6 +6,10 @@ import DetailsPublication from './DetailsPublication';
 import Profile from './Profile';
 import Requests from './Requests';
 import NotFound from './NotFound'
+import  Login from './Login'
+import  Register from './Register'
+import  ForgotPassword from './ForgotPassword'
+
 import {
   BrowserRouter as Router,
   Switch,
