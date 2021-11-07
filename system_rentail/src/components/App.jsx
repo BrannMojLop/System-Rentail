@@ -4,7 +4,7 @@ import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
 import DetailsPublication from './DetailsPublication';
 import Profile from './Profile';
-import Requests from './Requests';
+import RequestPanel from './RequestPanel';
 import NotFound from './NotFound'
 import  Login from './Login'
 import  Register from './Register'
