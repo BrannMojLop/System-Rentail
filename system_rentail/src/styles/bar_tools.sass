@@ -1,0 +1,99 @@
+@import './variables.sass'
+.toolsCatalog
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+
+    .basic-select-M
+        display: none
+
+    .box-price-M
+        display: none
+
+    .box-price-D
+        grid-column-start: 3
+        grid-column-end: 5
+
+    input
+        width: 500px !important
+
+@media (max-width: $small)
+    .toolsCatalog
+        display: flex
+        flex-direction: column
+        .basic-select-D
+            display: none
+        .box-price-D
+            display: none
+        .basic-select-M
+            display: block
+            display: flex
+            justify-content: center
+            align-items: center
+
+            .btn-select
+                font-size: 0.8em
+        .box-price-M
+            display: block
+            display: flex
+            justify-content: center
+            align-items: center
+
+            .btn-select
+                font-size: 0.8em
+
+@media (max-width: $medium) and (min-width: $small + 1px)
+    .toolsCatalog
+        grid-template-columns: repeat(3, 1fr)
+        .basic-select-D
+            display: none
+        .box-price-D
+            display: none
+        .basic-select-M
+            display: block
+            padding: 3%
+            display: flex
+            justify-content: center
+            align-items: center
+
+            .btn-select
+                font-size: 0.8em
+        .box-price-M
+            display: block
+            padding: 3%
+            display: flex
+            justify-content: center
+            align-items: center
+
+            .btn-select
+                font-size: 0.8em
+
+@media (max-width: $medium-large) and (min-width: $medium + 1px)
+    .toolsCatalog
+        grid-template-columns: repeat(3, 1fr)
+        .basic-select-D
+            display: none
+        .box-price-D
+            display: none
+        .basic-select-M
+            display: block
+            padding: 3%
+            display: flex
+            justify-content: center
+            align-items: center
+        .box-price-M
+            display: block
+            padding: 3%
+            display: flex
+            justify-content: center
+            align-items: center
+
+@media (max-width: $large) and (min-width: $medium-large + 1px)
+    .toolsCatalog
+        .label-basic
+            font-size: 1em !important
+        .btn-select
+            width: 40% !important
+        .select-basic
+            width: 60% !important
+        .select-price
+            font-size: 0.5em !important
