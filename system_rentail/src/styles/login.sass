@@ -1,21 +1,38 @@
 @import './variables.sass'
 
-
+.form-title
+    color: #0E49B5
+    font-size: 17px
+    font-weight: bold
+    text-align: center
+    
 .container 
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas: "image info";
+  display: grid 
+  grid-template-columns: 1.3fr 0.7fr 
+  grid-template-rows: 1fr 
+  gap: 0px 0px 
+  grid-auto-flow: row 
+  grid-template-areas: "image info" 
+  height: 100vh
 
 .image
-    grid-area: image;
-    background-color: $c2;
+    grid-area: image 
+    background-color: $c2 
 
 .info 
-    grid-area: info;
-    background-color: $c4;
+    grid-area: info 
+    background-color: $c4 
 
 .image-icon
-    max-width: 40%;  
+    max-width: 40%  
+    margin-top: 25%
+    margin-left: 25%
+ 
+.login-btn
+    margin-top: 25%
+    text-align: end
+
+.register-btn
+    margin-top: 25%
+
+

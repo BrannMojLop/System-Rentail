@@ -4,6 +4,8 @@ import '../styles/table.sass'
 
 
 
+
+
 const evalStatus = (estatus)=>{
     let classN = "";
      switch(estatus){
@@ -28,9 +30,12 @@ export function Table(props) {
 
     const [ requestsList, setRequests] = useState([]);
     const [active, setActive] = useState([''])
+    const typeQuery = props.type
     
-    
-  
+    console.log(`Tipo de tabla ${typeQuery}`)
+    localStorage.setItem('UserId', '614cdde351de9100162a0bc2')
+    const idUser = localStorage.getItem('UserId')
+ 
     useEffect( () => {
       
         const getRequestsList = async (url) =>{
@@ -45,13 +50,16 @@ export function Table(props) {
             }
         
         }
-        
-        getRequestsList('https://income-system.herokuapp.com/rental-requests')
+        const requestURL = 'https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + '=' +idUser
+        console.log(`url a consultar ${requestURL}`)
+        // getRequestsList('https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + idUser)
+        getRequestsList(requestURL)
 
     }, [])
    
 
     return (
+        <>
         <div>
             <table className="table">
                 <thead>
@@ -92,7 +100,7 @@ export function Table(props) {
                 </tbody>
             </table>
         </div>
+        </>
     )
 
 }
-

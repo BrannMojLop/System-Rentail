@@ -1,11 +1,18 @@
-import React from 'react';
+import * as React from 'react';
 import '../styles/card.sass';
 import { ButtonRent } from './Buttons'
  
 export function Card(props) {
 
+    const handleClick = (event) => {
+        event.preventDefault();
+        if (event.target.localName === 'img' || event.target.localName === 'button' || event.target.localName === 'a'){
+            props.history.push("/catalog/detailsPublication/" + props.publication._id)
+        }
+    }
+
     return (
-    <div className="card">
+    <div className="card" onClick={handleClick}>
         <div className="box-image">
             <img src={props.publication.product[0].image} alt="Product" />
         </div>
