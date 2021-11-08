@@ -1,6 +1,7 @@
 @import './variables.sass'
 
 .body-catalog
+    padding: 0
     width: 100%
     display: flex
     align-items: center
@@ -9,8 +10,6 @@
     .catalog
         width: 100%
         background-color: #eef4f7
-        padding: 3%
-
     ul
         margin: 0
         padding: 0
@@ -38,6 +37,9 @@
                 li
                     margin-left: 5%
 
+        .btn-search
+            width: 10%
+
 @media (max-width: $medium) and (min-width: $small + 1px)
     .body-catalog
         .catalog
@@ -62,8 +64,6 @@
 @media (max-width: $large) and (min-width: $medium-large + 1px)
     .body-catalog
         .catalog
-            padding: 1%
-
             ul
                 grid-template-columns: repeat(4, 1fr)
                 gap: 0.5%

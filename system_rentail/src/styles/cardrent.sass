@@ -1,6 +1,6 @@
 @import './variables.sass'
 
-.card
+.card-rent
     width: 95%
     height: 400px
     background-color: #fff
@@ -23,7 +23,6 @@
         margin-top: 2%
         margin-left: 10%
         border-bottom: solid 1px #808080
-        cursor: pointer
 
         img
             max-width: 90%
@@ -33,7 +32,7 @@
 
     .card-content
         width: 100%
-        height: 30%
+        height: 25%
         padding: 3%
 
         .card-title
@@ -83,85 +82,16 @@
                 text-decoration: underline
                 font-size: 0.8em
                 transition: all 300ms
+    .status-rent
+        background-color: #3468cf
+        color: #ffff
+        padding: 1px 20px 
+        border-radius: 20px
 
 @media (max-width: $small)
     .card
         margin-bottom: 5%
         height: 450px
-
-        .card-content
-            .card-title
-                font-size: 0.8em
-
-            .card-name
-                font-size: 0.7em
-
-            .card-price
-                font-size: 0.9em
-
-            .card-period
-                font-size: 0.7em
-
-        .card-actions
-            a
-                font-size: 0.7em
-                &:hover
-                    font-size: 0.8em
-
-@media (max-width: $medium) and (min-width: $small + 1px)
-    .card
-        margin-bottom: 5%
-        height: 370px
-
-        .card-content
-            .card-title
-                font-size: 0.8em
-
-            .card-name
-                font-size: 0.7em
-
-            .card-price
-                font-size: 0.9em
-
-            .card-period
-                font-size: 0.7em
-
-        .card-actions
-            a
-                font-size: 0.6em
-                &:hover
-                    font-size: 0.7em
-
-@media (max-width: $medium-large) and (min-width: $medium + 1px)
-    .card
-        width: 95%
-        margin-bottom: 5%
-        height: 370px
-
-        .card-content
-            .card-title
-                font-size: 0.8em
-
-            .card-name
-                font-size: 0.7em
-
-            .card-price
-                font-size: 0.9em
-
-            .card-period
-                font-size: 0.7em
-
-        .card-actions
-            a
-                font-size: 0.6em
-                &:hover
-                    font-size: 0.7em
-
-@media (max-width: $large) and (min-width: $medium-large + 1px)
-    .card
-        width: 95%
-        margin-bottom: 5%
-        height: 400px
 
         .card-content
             .card-title

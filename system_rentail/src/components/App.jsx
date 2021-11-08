@@ -1,12 +1,39 @@
+import React, { useState, useEffect } from 'react';
 import '../styles/app.sass'
-import { Header } from './Header'
+import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
+import DetailsPublication from './DetailsPublication';
+import Profile from './Profile';
+import RequestPanel from './RequestPanel';
+import NotFound from './NotFound'
+import  Login from './Login'
+import  Register from './Register'
+import  ForgotPassword from './ForgotPassword'
 
-function App() {
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+function App(props) {
+
+
   return (
     <div className="App">
-      <Header />
-      <Catalog />
+      <PrimarySearchAppBar />
+      <Router>
+        <Switch>
+          <Route exact path="/user/profile" component={Profile}/>
+          <Route exact path="/catalog" component={Catalog}/>
+          <Route exact path="/catalog/search/:search" component={Catalog}/>
+          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
+          <Route exact path="/requests" component={RequestPanel}/>
+          <Route path="/" component={Catalog}/>
+          <Route path="" component={NotFound} />
+        </Switch>
+      </Router> 
     </div>
   );
 }
