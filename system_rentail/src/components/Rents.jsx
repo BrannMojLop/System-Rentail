@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/rents.sass'
 import {CardRent} from './CardRent' 
 
-export function Rents(porps) {
+export function Rents(pops) {
     const [ publications, setPublications ] = useState([]);
 
     useEffect(() => {
