@@ -20,10 +20,16 @@ import Button from '@mui/material/Button';
 import { Header } from './Header'
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Redirect
 } from "react-router-dom";
+import Stack from '@mui/material/Stack';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,6 +72,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
+  const [ msg, setMsg ] = React.useState({status: "", message: ""})
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -73,6 +80,16 @@ export default function PrimarySearchAppBar(props) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const [openAlert, setOpenAlert] = React.useState(false);
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenAlert(false);
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -83,13 +100,17 @@ export default function PrimarySearchAppBar(props) {
   };
 
   const handleMenuClose = (event) => {
-    console.log(event);
-    if (event.target.id === "profile") {
+    if (event.target.textContent === "Iniciar Sesión") {
+      window.location.href = "/user/login";
+    } else if (event.target.textContent === "Mi Perfil") {
       window.location.href = "/user/profile";
-    } else if (event.target.id === "requests") {
-      window.location.href = "/requests";
+    } else if (event.target.textContent === "Cerrar Sesión") {
+      window.localStorage.removeItem('user')
+      props.setUser(null)
+      setMsg({status: "success", message: `Sesion Finilizada`})
+      setOpenAlert(true)
+      window.location.href = "/catalog"
     }
-    
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -133,8 +154,9 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem id="profile" onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem id="requests" onClick={handleMenuClose}>My Requests</MenuItem>
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Perfil</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
+      { props.user ? <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : null}
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
     </Menu>
   );
 
@@ -191,7 +213,8 @@ export default function PrimarySearchAppBar(props) {
   );
 
   return (
-    <Router>
+    <>
+    {props.user ? <Redirect to="/catalog" /> : null}
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{backgroundColor: '#153E90'}}>
         <Toolbar>
@@ -258,6 +281,13 @@ export default function PrimarySearchAppBar(props) {
       {renderMobileMenu}
       {renderMenu}
     </Box>
-    </Router>
+    <Stack spacing={2}>
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
+          {msg.message}
+        </Alert>
+      </Snackbar>
+    </Stack>
+    </>
   );
 }

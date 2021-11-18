@@ -33,13 +33,13 @@ export default function Profile(props) {
   const [ passwordEdit, setPasswordEdit ] = React.useState({password_current:"", password_new:""})
 
   React.useEffect(() => {
-
+    console.log(props.user);
     setLoading(true)
 
     const getUser = async (url) => {
       try {
         const config = {
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2FlMTRlM2E0MGFhMDAxNjI5NzBhOCIsInVzZXJuYW1lIjoiam5hbWUiLCJleHAiOjE2NDA2MjcwMjIsImlhdCI6MTYzNTQ0MzAyMn0.BxY-c14bn3198yT_tqVmVqywFbXMpdk2Mm2IwGNM0EE"
+            "Authorization": "Bearer " + props.user.token
         }
 
         const request = await fetch(url, {
@@ -53,7 +53,7 @@ export default function Profile(props) {
           console.log(e); 
         } } 
 
-        getUser('https://income-system.herokuapp.com/users/617ae14e3a40aa00162970a8')
+        getUser('https://income-system.herokuapp.com/users/' + props.user.id)
 
     }, [])
 
@@ -63,7 +63,7 @@ export default function Profile(props) {
     const getUser = async (url) => {
       try {
         const config = {
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2FlMTRlM2E0MGFhMDAxNjI5NzBhOCIsInVzZXJuYW1lIjoiam5hbWUiLCJleHAiOjE2NDA2MjcwMjIsImlhdCI6MTYzNTQ0MzAyMn0.BxY-c14bn3198yT_tqVmVqywFbXMpdk2Mm2IwGNM0EE"
+            "Authorization": "Bearer " + props.user.token
         }
 
         const request = await fetch(url, {
@@ -77,7 +77,7 @@ export default function Profile(props) {
           console.log(e); 
         } } 
 
-        getUser('https://income-system.herokuapp.com/users/617ae14e3a40aa00162970a8')
+        getUser('https://income-system.herokuapp.com/users/' + props.user.id)
 
     }, [userData]);
 
@@ -123,12 +123,12 @@ export default function Profile(props) {
           setLoading(true);
 
           try {
-            const url = 'https://income-system.herokuapp.com/users/617ae14e3a40aa00162970a8'
+            const url = 'https://income-system.herokuapp.com/users/' + props.user.id
             const config = {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
-                  "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2FlMTRlM2E0MGFhMDAxNjI5NzBhOCIsInVzZXJuYW1lIjoiam5hbWUiLCJleHAiOjE2NDA2MjcwMjIsImlhdCI6MTYzNTQ0MzAyMn0.BxY-c14bn3198yT_tqVmVqywFbXMpdk2Mm2IwGNM0EE"
+                  "Authorization": "Bearer " + props.user.token
                 },
                 body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
             }
