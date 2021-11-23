@@ -17,12 +17,6 @@ export default function CardDetails(props) {
     const [loading, setLoading ] = React.useState(null);
     const [selectOption, setSelectOption] = React.useState(null)
     const [msg, setMsg] = React.useState({status: "success", message: "Solcitud enviada con Exito!"})
-    const user = {
-        "username": "brann",
-        "email": "brandonmojica95@gmail.com",
-        "typeUser": "614cda108ee09a00163763ed",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZTM4NTFkZTkxMDAxNjJhMGJjYSIsInVzZXJuYW1lIjoibHVsdSIsImV4cCI6MTY0MTAwMjMxMSwiaWF0IjoxNjM1ODE4MzExfQ.lc6N7mLf0FDIUgNLbUh1Xu77Zt3l0YH-HTHXPjH4Lzo"
-    }
 
     let request = {}
 
@@ -30,7 +24,7 @@ export default function CardDetails(props) {
     try {
         const objRequest = {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + user.token },
+                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token },
                 body: JSON.stringify(request)
         }
             await fetch("https://income-system.herokuapp.com/rental-requests", objRequest)
@@ -59,20 +53,31 @@ export default function CardDetails(props) {
 
     const handleClick = async (event) => {
         event.preventDefault();
-        if(props.publication[0].periods[selectOption]) {
-            request = {
-                "id_lessor": props.publication[0].lessor[0]._id,
-                "id_lessee": "614e05ee5448770016739af8",
-                "id_publication": props.publication[0]._id,
-                "contract": {
-                    "price": props.publication[0].periods[selectOption],
-                    "period": props.publication[0].prices[selectOption]
+
+        if (JSON.parse(localStorage.getItem('user'))) {
+            if(props.publication[0].periods[selectOption]) {
+                request = {
+                    "id_lessor": props.publication[0].lessor[0]._id,
+                    "id_lessee": JSON.parse(localStorage.getItem('user')).id,
+                    "id_publication": props.publication[0]._id,
+                    "contract": {
+                        "price": props.publication[0].periods[selectOption],
+                        "period": props.publication[0].prices[selectOption]
+                    }
                 }
-            }
+                setLoading(true)
+                setTimeout(() => {
+                    sendRequest()
+                }, 1000);
+            } 
+        } else {
+            setOpen(true);
             setLoading(true)
+            setMsg({status: "warning", message: "Es necesario tener una cuenta para rentar"})
             setTimeout(() => {
-                sendRequest()
-            }, 1000);
+                setLoading(false)
+                window.location.href = "/user/login"
+            }, 1500);
         }
     }
 

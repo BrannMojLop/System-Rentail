@@ -144,19 +144,36 @@ export default function Login() {
             }
             const request = await fetch(url, config)
             const jsonRequest = await request.json() 
-              setMsg({status: "success", message: `Bienvenido ${jsonRequest.user.username}!`})
+
+            if (jsonRequest.errors) {
+              if (jsonRequest.errors.email) {
+                setMsg({status: "error", message: `Debe ingresar su email`})
+                setOpenAlert(true)
+                setLoading(false)  
+              } else if (jsonRequest.errors.password) {
+                setMsg({status: "error", message: `Debe ingresar su contraseña`})
+                setOpenAlert(true)
+                setLoading(false)
+              } else {
+                setMsg({status: "error", message: `Email o Contraseña incorrectas`})
+                setOpenAlert(true)
+                setLoading(false)
+              }
+
+            } else if (jsonRequest.user) {
+              setMsg({status: "success", message: `Bienvenid@ ${jsonRequest.user.username}!`})
               window.localStorage.setItem("user", JSON.stringify(jsonRequest.user))
               setOpenAlert(true)
               setTimeout(() => {
                 setLoading(false)
                 window.location.href = "/catalog"
               }, 2000)
-          } catch (e){ 
-              setMsg({status: "error", message: "Algo salio mal, no se pudo inicar sesion!"})
+            }
+          } catch (e){
+              setMsg({status: "error", message: "Algo salio mal, no se pudo iniciar sesion!"})
               setOpenAlert(true); 
               setLoading(false)
           } 
-
     }
 
     function handleChange(event) {
@@ -201,7 +218,9 @@ const handleCloseAlert = (event, reason) => {
                 <h3>Aun no esta registrado?</h3>
                 <p>Fusce vitae neque libero. In ligula arcu, placerat vel luctus non, accumsan in ipsum. Pellentesque euismod commodo laoreet. </p>
                 <div className="actions-register">
-                    <SvgButton id="button-register">Registrate</SvgButton>
+                    <SvgButton onClick={(event) => {
+                      window.location.href = "/user/register"
+                    }} id="button-register">Registrate</SvgButton>
                     <a>Necesitas Ayuda?</a>
                 </div>
             </div>

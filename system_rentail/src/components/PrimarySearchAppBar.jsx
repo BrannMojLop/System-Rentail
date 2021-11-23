@@ -107,9 +107,12 @@ export default function PrimarySearchAppBar(props) {
     } else if (event.target.textContent === "Cerrar Sesión") {
       window.localStorage.removeItem('user')
       props.setUser(null)
-      setMsg({status: "success", message: `Sesion Finilizada`})
+      setMsg({status: "success", message: "La sesion ha finalizado"})
       setOpenAlert(true)
-      window.location.href = "/catalog"
+      setTimeout(() => {
+        window.location.href = "/catalog"
+      }, 1000)
+      
     }
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -177,7 +180,11 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Perfil</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
+      { props.user ? <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : null}
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
+      {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             <MailIcon />
@@ -196,8 +203,8 @@ export default function PrimarySearchAppBar(props) {
           </Badge>
         </IconButton>
         <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      </MenuItem> */}
+      {/* <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -207,8 +214,8 @@ export default function PrimarySearchAppBar(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+        <p>Mi Cuenta</p>
+      </MenuItem> */}
     </Menu>
   );
 

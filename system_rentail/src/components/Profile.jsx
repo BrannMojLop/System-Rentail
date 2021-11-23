@@ -33,7 +33,6 @@ export default function Profile(props) {
   const [ passwordEdit, setPasswordEdit ] = React.useState({password_current:"", password_new:""})
 
   React.useEffect(() => {
-    console.log(props.user);
     setLoading(true)
 
     const getUser = async (url) => {
@@ -47,7 +46,12 @@ export default function Profile(props) {
         }) 
           const jsonRequest = await request.json() 
           setUserData(jsonRequest)
-          setAvatar(jsonRequest.firstname.charAt(0) + jsonRequest.lastname.charAt(0))
+          if(jsonRequest.lastname & jsonRequest.firstname){
+            setAvatar(jsonRequest.firstname.charAt(0) + jsonRequest.lastname.charAt(0))
+          } else {
+            setAvatar('?')
+          }
+          
           setLoading(false)
         } catch (e){ 
           console.log(e); 
@@ -71,7 +75,11 @@ export default function Profile(props) {
         }) 
           const jsonRequest = await request.json() 
           setUserData(jsonRequest)
-          setAvatar(jsonRequest.firstname.charAt(0) + jsonRequest.lastname.charAt(0))
+                    if(jsonRequest.lastname & jsonRequest.firstname){
+            setAvatar(jsonRequest.firstname.charAt(0) + jsonRequest.lastname.charAt(0))
+          } else {
+            setAvatar('?')
+          }
           setLoading(false)
         } catch (e){ 
           console.log(e); 
@@ -132,14 +140,13 @@ export default function Profile(props) {
                 },
                 body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
             }
-            console.log(config, dataEdit);
-            const request = await fetch(url, config)
-            
-              setUserData({})
-              setLoading(false)
-              setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
-              setOpenAlert(true)
-              const jsonRequest = await request.json() 
+
+            await fetch(url, config)
+            setUserData({})
+            setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+            setOpenAlert(true)
+            setLoading(false)
+
           } catch (e){ 
               setMsg({status: "error", message: "No se pudo Actualizar!"})
               setOpenAlert(true); 
@@ -172,25 +179,25 @@ export default function Profile(props) {
             </figure>
         <div className="data-profile">
           <div className="option">
-          <TextField label="Username" value={userData.username || ""} disabled={true} />
+          <TextField label="Username" value={userData.username || " "} disabled={true} />
           <IconButton id="Username" aria-label="edit" size="large" onClick={handleClickOpen}>
           <EditIcon id="Username"/>
           </IconButton>
           </div>
           <div className="option">
-          <TextField label="Nombre" value={userData.firstname || ""} disabled={true} />
+          <TextField label="Nombre" value={userData.firstname || " "} disabled={true} />
           <IconButton id='Nombre' aria-label="edit" size="large" onClick={handleClickOpen}>
           <EditIcon id='Nombre' aria-label="edit"/>
           </IconButton>
           </div>
           <div className="option">
-          <TextField label="Apellidos" value={userData.lastname || ""} disabled={true} />
+          <TextField label="Apellidos" value={userData.lastname || " "} disabled={true} />
           <IconButton id='Apellidos' aria-label="edit" size="large" onClick={handleClickOpen}>
           <EditIcon />
           </IconButton>
           </div>
           <div className="option">
-          <TextField label="Correo" value={userData.email || ""} disabled={true} />  
+          <TextField label="Correo" value={userData.email || " "} disabled={true} />  
           <IconButton id='Email' aria-label="edit" size="large" onClick={handleClickOpen}>
           <EditIcon />
           </IconButton>

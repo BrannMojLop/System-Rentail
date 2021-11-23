@@ -6,11 +6,11 @@ import DetailsPublication from './DetailsPublication';
 import Profile from './Profile';
 import NotFound from './NotFound'
 import Login from './Login';
+import Register from './Register';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 
@@ -35,9 +35,10 @@ export default function App() {
           <Route exact path="/user/login">
             <Login setUser={setUser} />
           </Route>
+          <Route exact path="/user/register" component={Register}/>
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
-          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
+          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} user={user}/>
           <Route path="/" component={Catalog}/>
           <Route path="" component={NotFound} />
         </Switch>
