@@ -102,8 +102,8 @@ export default function PrimarySearchAppBar(props) {
   const handleMenuClose = (event) => {
     if (event.target.textContent === "Iniciar Sesión") {
       window.location.href = "/user/login";
-    } else if (event.target.textContent === "Mi Perfil") {
-      window.location.href = "/user/profile";
+    } else if (event.target.textContent === "Mi Cuenta") {
+      window.location.href = "/user/account";
     } else if (event.target.textContent === "Cerrar Sesión") {
       window.localStorage.removeItem('user')
       props.setUser(null)
@@ -157,8 +157,7 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Perfil</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
-      { props.user ? <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : null}
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
       { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
     </Menu>
   );
@@ -180,10 +179,6 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-
-      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Perfil</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
-      { props.user ? <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : null}
-      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
       {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">

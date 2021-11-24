@@ -3,7 +3,7 @@ import '../styles/app.sass'
 import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
 import DetailsPublication from './DetailsPublication';
-import Profile from './Profile';
+import MyAccount from './MyAccount';
 import NotFound from './NotFound'
 import Login from './Login';
 import Register from './Register';
@@ -29,11 +29,11 @@ export default function App() {
       <PrimarySearchAppBar user={user} setUser={setUser} />
       <Router>
         <Switch>
-          <Route exact path="/user/profile">
-            {user ? <Profile user={user}/> : null}
-          </Route>
           <Route exact path="/user/login">
             <Login setUser={setUser} />
+          </Route>
+          <Route exact path="/user/account">
+            {user ? <MyAccount user={user}/> : null}
           </Route>
           <Route exact path="/user/register" component={Register}/>
           <Route exact path="/catalog" component={Catalog}/>
