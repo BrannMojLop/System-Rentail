@@ -6,6 +6,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
+import { AlertDialog } from './Confirm';
+import { MaterialUIPickers } from './DatePicker'
+import { BasicAlerts } from './Alert'
+
 
 const evalStatus = (estatus)=>{
     return estatus == 'En Espera' ? true : false;
@@ -13,7 +17,22 @@ const evalStatus = (estatus)=>{
 
 export function Details(props) {
     const [ data, setData] = useState([]);
-    console.log(`Este es el id: ${props.idRR}`)
+    const [open, setOpen] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('Holi :)')
+    const [responseSeverity, setSeverity] = useState('success')
+    const [alertVisibility, setAlertVisibility] = useState(false)
+    const [activeRRN, setActiveRRN] = useState('')
+    const [activeRRI, setActiveRRI] = useState('')
+    //console.log(`Este es el id: ${props.idRR}`)
+
+    const [value, setValue] = React.useState(new Date());
+
+    const handleChange = (newValue) => {
+      
+      setValue(newValue);
+      //console.log(newValue)
+
+    };
 
     let type = ''
     let typeLess = ''
@@ -34,7 +53,7 @@ export function Details(props) {
 
 
     URL = `https://income-system.herokuapp.com/users/${typeLess}`  
-    console.log(`Dta: ${URL}`)
+    //console.log(`Dta: ${URL}`)
     useEffect( () => {
       
     const getData = async (url) =>{
@@ -51,7 +70,8 @@ export function Details(props) {
                 headers: config
               })
             const data = await response.json()
-            console.log(data)
+
+            //console.log(data)
             setData(data)
         } catch(err){
             console.log(err)
@@ -70,17 +90,42 @@ function addDays(date, days) {
 }
 
 
-const handleClick = (e)=>{
+const confirm = (e)=>{
+    //console.log('Botón presionado')
+    setOpen(true);
 
-    const ref = e.target.id;
-    console.log('Nombre del botón:::')
-    console.log(e.target.name)
+    //console.log('Nombre del botón:::')
+    //console.log(e.target.name)
+    setActiveRRN(e.target.name)
+    setActiveRRI(e.target.id)
+
+}
+
+
+const accept = ()=>{
+    //console.log('Aceptado')
+    handleClick()
+    setOpen(false)
+}
+
+const cancel = () => {
+    //console.log('Cancelado')
+    setOpen(false);
+  };
+
+
+// Queda pendiente lo del target
+const handleClick = ()=>{
+
+    const ref = activeRRI//e.target.id;
+    //console.log('Nombre del botón:::')
+    //console.log(activeRRN)
     const token = localStorage.getItem('TOKEN');
-    const idRequest = e.target.name
+    const idRequest = activeRRN//e.target.name
     const urlUpdateRequest = 'https://income-system.herokuapp.com/rental-requests/'+ idRequest +'/'+ ref
     const urlConfirmRequest = 'https://income-system.herokuapp.com/rents'
 
-    console.log('Test de Fechas')
+    //console.log('Test de Fechas')
     let numberOfDays = props.req.contract.days; // Aquí poner el total de días del contrato
     const periodo = props.req.contract.period
     numberOfDays = !numberOfDays ? periodo : numberOfDays
@@ -88,7 +133,7 @@ const handleClick = (e)=>{
     const formattedDate = (date) =>{
         const fecha = date
 
-        const day = fecha.getDate() + 1
+        const day = fecha.getDate()
         const month = fecha.getMonth() + 1
         const year = fecha.getFullYear()
 
@@ -98,10 +143,12 @@ const handleClick = (e)=>{
         
         return completeDate
     }
-     
-    const date = new Date();
+    // De la fecha seleccionada empieza a correr al siguiente día
+    const date = addDays(value, 1)
     console.log(date)
+
     const startDate = formattedDate(date)
+    
     console.log(startDate)
 
     const finalDate = addDays(date, numberOfDays);
@@ -119,9 +166,13 @@ const handleClick = (e)=>{
         }
 
         try{
-            const response = await fetch(url, config)
-            const data = await response.json()
-            console.log(data)
+            const response = await fetch(url, config);
+            const data = await response.json();
+            const resSev = response.status == '200' ? 'success' : 'error'
+            setSeverity(resSev)
+            setAlertVisibility(true)
+            setResponseMessage(data.message)
+            //console.log(data)
         }
         catch(err){
             console.log(err)
@@ -131,7 +182,7 @@ const handleClick = (e)=>{
     const confirmRequest = async (url) => {
 
         const dataForRent = { 
-                "id_rentalRequest": `${e.target.name}`,
+                "id_rentalRequest": `${activeRRN}`,
                 "start_date":`${startDate}`,
                 "end_date":`${ffinalDate}`
         }
@@ -151,7 +202,13 @@ const handleClick = (e)=>{
             
             const response = await fetch(url, config)
             const data = await response.json()
-            console.log(data)
+
+            const resSev = response.status == '200' ? 'success' : 'error'
+            setSeverity(resSev)
+            setAlertVisibility(true)
+            setResponseMessage(data.message)
+            //console.log(data)
+   
         }
         catch(err){
             console.log(err)
@@ -161,14 +218,12 @@ const handleClick = (e)=>{
     if (ref == '2'){
         console.log('Quiere confirmar')
         confirmRequest(urlConfirmRequest)
-
     }
     else{
         updateStatus(urlUpdateRequest)
     }
     props.setUpdate(props.update)
-    console.log(`update vale ${props.update}`)  
-
+    //console.log(`update vale ${props.update}`)  
 
 }
 
@@ -209,15 +264,36 @@ const handleClick = (e)=>{
                 // Vista de Lessee
                 (lessee && evalStatus(props.req.answer.status) && 
                 <div>
-                    <button id='4' className = "red-button" name={props.idRR} onClick={handleClick}>Cancelar</button>    
+                    <button id='4' className = "red-button" name={props.idRR} onClick={confirm}>Cancelar</button>
+                    <AlertDialog
+                        open={open}
+                        cancel={cancel}
+                        accept ={accept}
+                        action = {'cancelar'}
+                    ></AlertDialog>    
                 </div>)
                 ||
                 // Vista de Lessor
                 (lessor && evalStatus(props.req.answer.status) &&
-                    <div>
-                        <button id='2' className = "green-button" name={props.idRR} onClick={handleClick}>Aceptar</button>
-                        <button id= '3' className = "red-button" name={props.idRR} onClick={handleClick}>Rechazar</button>
-                    </div>
+                <div>
+                    <h6>Antes de aceptar una solicitud seleccione la fecha correcta</h6> 
+                    <MaterialUIPickers
+                        value = {value}
+                        handleChange = {handleChange}
+                    ></MaterialUIPickers>
+                         
+                                   
+                    <button id='2' className = "green-button" name={props.idRR} onClick={confirm}>Aceptar</button>
+                    
+                    <button id='3' className = "red-button" name={props.idRR} onClick={confirm}>Rechazar</button>
+                    <AlertDialog
+                        open={open}
+                        cancel={cancel}
+                        accept ={accept}
+                        action = {'ejecutar esta acción para'}
+                    ></AlertDialog>
+
+                </div>
                 )   
             }
 
@@ -236,9 +312,15 @@ const handleClick = (e)=>{
                 {'Ver Renta'} 
                 </Link>
             }
-
         </div>
     </div>
+    {
+        alertVisibility && 
+        <BasicAlerts 
+            resSeverity={responseSeverity} 
+            responseMessage={responseMessage} >
+        </BasicAlerts>
+    }
     </>
     
   );
