@@ -1,38 +1,114 @@
 @import './variables.sass'
 
-.form-title
-    color: #0E49B5
-    font-size: 17px
-    font-weight: bold
-    text-align: center
-    
-.container 
-  display: grid 
-  grid-template-columns: 1.3fr 0.7fr 
-  grid-template-rows: 1fr 
-  gap: 0px 0px 
-  grid-auto-flow: row 
-  grid-template-areas: "image info" 
-  height: 100vh
+.box-login
+    width: 94%
+    padding: 3%
+    padding-top: 1%
+    display: flex
+    justify-content: center
+    align-items: center
 
-.image
-    grid-area: image 
-    background-color: $c2 
+    .information
+        width: 50%
+        margin: 3%
+        padding: 3%
+        background-color: #fff
+        box-shadow: 0.5px 0.5px 0.5px 0.5px #808080
 
-.info 
-    grid-area: info 
-    background-color: $c4 
+        h2
+            color: #505050
+            font-size: 2em
 
-.image-icon
-    max-width: 40%  
-    margin-top: 25%
-    margin-left: 25%
- 
-.login-btn
-    margin-top: 25%
-    text-align: end
+        p
+            font-size: 0.8em
 
-.register-btn
-    margin-top: 25%
+        .box-img
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 100%
+            img
+                width: 50%
 
+    .forms
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 50%
 
+        .actions-login
+            width: 80%
+            margin: 3%
+            margin-top: 0%
+            padding: 3%
+            background-color: #fff
+            box-shadow: 0.5px 0.5px 0.5px 0.5px #808080
+
+            .login
+                display: flex
+                justify-content: center
+                align-items: center
+                flex-direction: column
+
+                h3
+                    color: #505050
+                    font-size: 1.2em
+
+                .input-text
+                    width: 80%
+                    margin: 2%
+
+        .register
+            width: 80%
+            padding: 3%
+            background-color: #fff
+            box-shadow: 0.5px 0.5px 0.5px 0.5px #808080
+
+            h3
+                color: #505050
+                font-size: 1.2em
+                text-align: center
+
+            p
+                font-size: 0.8em
+
+            .actions-register
+                width: 100%
+                display: flex
+                justify-content: center
+                align-items: center
+                flex-direction: column
+
+                #button-register
+                    margin: 5%
+                    margin-bottom: 1%
+
+                a
+                    color: #505050
+                    font-size: 0.7em
+
+@media (max-width: $small)
+    .box-login
+        display: grid
+        justify-content: center
+        align-items: center
+        grid-template: repeat(1, 1fr)
+        .information
+            display: none
+
+        .forms
+            margin-top: 3%
+            width: 100%
+
+@media (max-width: $medium) and (min-width: $small + 1px)
+    .box-login
+        display: grid
+        justify-content: center
+        align-items: center
+        grid-template: repeat(1, 1fr)
+        .information
+            display: none
+
+        .forms
+            margin-top: 3%
+            width: 100%

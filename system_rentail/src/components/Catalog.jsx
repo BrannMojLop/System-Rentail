@@ -66,8 +66,9 @@ export default function Catalog(props) {
                 <ul>
                     {publications.length > 0 ? publications.map(publication => {
                             return <li key={publication._id}><Card history={props.history} publication={publication}/></li>
-                    }): <h1>Sin Resultados</h1>}
+                    }): null}
                 </ul>
+                {notResult ? <h1>Sin Resultados</h1> : null}
             </div>
         </main>
         </>

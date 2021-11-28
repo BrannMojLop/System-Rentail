@@ -3,33 +3,42 @@ import '../styles/app.sass'
 import PrimarySearchAppBar from './PrimarySearchAppBar'
 import Catalog from './Catalog';
 import DetailsPublication from './DetailsPublication';
-import Profile from './Profile';
-import RequestPanel from './RequestPanel';
+import MyAccount from './MyAccount';
 import NotFound from './NotFound'
-import  Login from './Login'
-import  Register from './Register'
-import  ForgotPassword from './ForgotPassword'
-
+import Login from './Login';
+import Register from './Register';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
-function App(props) {
 
+export default function App() {
+
+  const [ user, setUser] = useState(null)
+
+  useEffect(() => {
+    if (window.localStorage.getItem('user')) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+  }, [])
 
   return (
     <div className="App">
-      <PrimarySearchAppBar />
+      <PrimarySearchAppBar user={user} setUser={setUser} />
       <Router>
         <Switch>
-          <Route exact path="/user/profile" component={Profile}/>
+          <Route exact path="/user/login">
+            <Login setUser={setUser} />
+          </Route>
+          <Route exact path="/user/account">
+            {user ? <MyAccount user={user}/> : null}
+          </Route>
+          <Route exact path="/user/register" component={Register}/>
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
-          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} />
-          <Route exact path="/requests" component={RequestPanel}/>
+          <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication} user={user}/>
           <Route path="/" component={Catalog}/>
           <Route path="" component={NotFound} />
         </Switch>
@@ -37,5 +46,3 @@ function App(props) {
     </div>
   );
 }
-
-export default App;
