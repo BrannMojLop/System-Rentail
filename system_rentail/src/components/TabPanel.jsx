@@ -61,6 +61,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={1}>
         <CollapsibleTable type = "lessor"></CollapsibleTable>
       </TabPanel>
+     
     </Box>
   );
 }

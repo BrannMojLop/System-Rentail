@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Details } from './Details2';
 import '../styles/table.sass'
 
-
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -48,12 +46,12 @@ function Row(props) {
   const estatus = request.answer.status;
   const [open, setOpen] = React.useState(false);
   const publicacion = request.publication
-  console.log(request.publication[0].title)
-  console.log(publicacion.title)
+  //console.log(request.publication[0].title)
+  //console.log(publicacion.title)
 
 
   useEffect( () => {
-    console.log(`Var que recibo ${props.update}`)
+    //console.log(`Var que recibo ${props.update}`)
 
 }, [props.update])
 
@@ -87,10 +85,12 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                <Details req={request} type= {props.type} idRR ={props.idRR}
-                setUpdate={props.setUpdate} update={props.update}
-                
-                
+                <Details 
+                  req={request} 
+                  type= {props.type} 
+                  idRR ={props.idRR}
+                  setUpdate={props.setUpdate} 
+                  update={props.update}
                 />
               </Typography>
               
@@ -110,7 +110,7 @@ export  function CollapsibleTable(props) {
     const [ requestsList, setRequests] = useState([]);
     const typeQuery = props.type
     
-    console.log(`Tipo de tabla ${typeQuery}`)
+    //console.log(`Tipo de tabla ${typeQuery}`)
     localStorage.setItem('UserId', '614cdde351de9100162a0bc2')
 
     const idUser = localStorage.getItem('UserId')
@@ -128,7 +128,7 @@ export  function CollapsibleTable(props) {
             try{
                 const response = await fetch(url)
                 const data = await response.json()
-                console.log(data)
+                //console.log(data)
                 setRequests(data)
             } catch(err){
                 console.log(err)
@@ -136,18 +136,13 @@ export  function CollapsibleTable(props) {
         
         }
         const requestURL = 'https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + '=' +idUser
-        console.log(`url a consultar ${requestURL}`)
+        //console.log(`url a consultar ${requestURL}`)
         // getRequestsList('https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + idUser)
         getRequestsList(requestURL)
 
     }, [update])
    
     
-
-    
-
-
-
 
   return (
     <TableContainer component={Paper}>
