@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/app.sass'
-import PrimarySearchAppBar from './PrimarySearchAppBar'
-import Catalog from './Catalog';
-import DetailsPublication from './DetailsPublication';
-import MyAccount from './MyAccount';
+import '../public/styles/app.sass'
+import PrimarySearchAppBar from './utils/BarSearch/PrimarySearchAppBar'
+import Catalog from './Catalog/Catalog';
+import DetailsPublication from './DetailsPublication/DetailsPublication';
+import MyAccount from './MyAccount/MyAccount';
 import NotFound from './NotFound'
-import Login from './Login';
-import Register from './Register';
+import Login from './Login/Login';
+import Register from './Register/Register';
 import RequestPanel from './RequestPanel';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from "react-router-dom";
 
 
@@ -34,7 +35,7 @@ export default function App() {
             <Login setUser={setUser} />
           </Route>
           <Route exact path="/user/account">
-            {user ? <MyAccount user={user}/> : null}
+            {user ? <MyAccount user={user}/> : null }
           </Route>
           <Route exact path="/user/register" component={Register}/>
           <Route exact path="/catalog" component={Catalog}/>

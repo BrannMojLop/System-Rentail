@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/404.css';
+import '../public/styles/404.css';
 
 export default function NotFound() {
     return (

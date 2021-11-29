@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Details } from './Details2';
-import '../styles/table.sass'
+import '../public/styles/table.sass';
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -111,9 +111,14 @@ export  function CollapsibleTable(props) {
     const typeQuery = props.type
     
     //console.log(`Tipo de tabla ${typeQuery}`)
-    localStorage.setItem('UserId', '614cdde351de9100162a0bc2')
+    //localStorage.setItem('UserId', '614cdde351de9100162a0bc2')
 
-    const idUser = localStorage.getItem('UserId')
+    
+    
+    // const idUser = localStorage.getItem('UserId')
+    const sUser = JSON.parse(localStorage.getItem('user'))
+    const idUser = sUser.id
+
     const [update, setUpdate] = useState(7);
 
 
