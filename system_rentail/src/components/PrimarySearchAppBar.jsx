@@ -179,6 +179,8 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem> : <MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem>}
+      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
       {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">

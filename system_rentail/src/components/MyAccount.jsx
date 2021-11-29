@@ -177,6 +177,11 @@ export default function MyAccount(props) {
             setOpenAlert(false);
           };
 
+          const handleClick = (event) => {
+            event.preventDefault();
+            window.location.href = '/user/panel-requests'
+          }
+
     return (
         <>
         {loading ? <SimpleBackdrop loading={true} />: null}
@@ -264,7 +269,7 @@ export default function MyAccount(props) {
                       </CardContent>
                     </CardActionArea>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card onClick={handleClick} sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                       <CardMedia
                         className="card-media"
