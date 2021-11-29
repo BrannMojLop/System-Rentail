@@ -62,7 +62,8 @@ export function Details(props) {
             "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2FlMTRlM2E0MGFhMDAxNjI5NzBhOCIsInVzZXJuYW1lIjoiam5hbWUiLCJleHAiOjE2NDA2MjcwMjIsImlhdCI6MTYzNTQ0MzAyMn0.BxY-c14bn3198yT_tqVmVqywFbXMpdk2Mm2IwGNM0EE"
         }
 
-        localStorage.setItem('TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZGUzNTFkZTkxMDAxNjJhMGJjMiIsInVzZXJuYW1lIjoibWFyaSIsImV4cCI6MTY0MTQxNDQ2OSwiaWF0IjoxNjM2MjMwNDY5fQ.snhZQ-80qf7TNCnwA-Xo0B9lTUk2q5itMIIKW2Z1v1Y')
+        
+        //localStorage.setItem('TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZGUzNTFkZTkxMDAxNjJhMGJjMiIsInVzZXJuYW1lIjoibWFyaSIsImV4cCI6MTY0MTQxNDQ2OSwiaWF0IjoxNjM2MjMwNDY5fQ.snhZQ-80qf7TNCnwA-Xo0B9lTUk2q5itMIIKW2Z1v1Y')
 
 
         try{
@@ -120,7 +121,11 @@ const handleClick = ()=>{
     const ref = activeRRI//e.target.id;
     //console.log('Nombre del botón:::')
     //console.log(activeRRN)
-    const token = localStorage.getItem('TOKEN');
+    //const token = localStorage.getItem('TOKEN');
+    //
+
+    const sUser = JSON.parse(localStorage.getItem('user'))
+    const token = sUser.token;
     const idRequest = activeRRN//e.target.name
     const urlUpdateRequest = 'https://income-system.herokuapp.com/rental-requests/'+ idRequest +'/'+ ref
     const urlConfirmRequest = 'https://income-system.herokuapp.com/rents'
