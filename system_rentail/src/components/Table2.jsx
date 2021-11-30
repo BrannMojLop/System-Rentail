@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Details } from './Details2';
-import '../styles/table.sass'
+import '../public/styles/table.sass';
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';

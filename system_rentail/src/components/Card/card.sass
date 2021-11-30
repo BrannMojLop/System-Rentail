@@ -1,0 +1,183 @@
+@import '../../public/styles/variables.sass'
+
+.card
+    width: 95%
+    height: 400px
+    background-color: #fff
+    border-radius: 8px
+    box-shadow: 0.5px 0.5px 0.5px 0.5px #808080
+
+    &:hover
+        .box-image
+            img
+                max-width: 95%
+                height: 90%
+                transition: all 300ms
+
+    .box-image
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 80%
+        height: 50%
+        margin-top: 2%
+        margin-left: 10%
+        border-bottom: solid 1px #808080
+        cursor: pointer
+
+        img
+            max-width: 90%
+            height: 80%
+            margin-bottom: 3%
+            transition: all 300ms
+
+    .card-content
+        width: 100%
+        height: 30%
+        padding: 3%
+
+        .card-title
+            margin: 0
+            margin-left: 5%
+            margin-bottom: 1%
+            font-size: 0.9em
+            font-weight: bold
+
+        .card-name
+            margin: 0
+            margin-left: 5%
+            margin-bottom: 4%
+            font-size: 0.8em
+            font-weight: normal
+
+        .card-price
+            margin: 0
+            margin-left: 5%
+            margin-bottom: 2%
+            font-size: 0.9em
+            font-weight: bold
+
+        .card-period
+            margin: 0
+            margin-left: 5%
+            margin-bottom: 2%
+            font-size: 0.8em
+            font-weight: normal
+
+    .card-actions
+        margin: 0
+        margin-bottom: 1%
+        display: flex
+        flex-direction: column
+        width: 100%
+        justify-content: center
+        align-items: center
+        a
+            margin-top: 2%
+            text-decoration: none
+            font-size: 0.7em
+            color: black
+            transition: all 300ms
+
+            &:hover
+                text-decoration: underline
+                font-size: 0.8em
+                transition: all 300ms
+
+@media (max-width: $small)
+    .card
+        margin-bottom: 5%
+        height: 450px
+
+        .card-content
+            .card-title
+                font-size: 0.8em
+
+            .card-name
+                font-size: 0.7em
+
+            .card-price
+                font-size: 0.9em
+
+            .card-period
+                font-size: 0.7em
+
+        .card-actions
+            a
+                font-size: 0.7em
+                &:hover
+                    font-size: 0.8em
+
+@media (max-width: $medium) and (min-width: $small + 1px)
+    .card
+        margin-bottom: 5%
+        height: 370px
+
+        .card-content
+            .card-title
+                font-size: 0.8em
+
+            .card-name
+                font-size: 0.7em
+
+            .card-price
+                font-size: 0.9em
+
+            .card-period
+                font-size: 0.7em
+
+        .card-actions
+            a
+                font-size: 0.6em
+                &:hover
+                    font-size: 0.7em
+
+@media (max-width: $medium-large) and (min-width: $medium + 1px)
+    .card
+        width: 95%
+        margin-bottom: 5%
+        height: 370px
+
+        .card-content
+            .card-title
+                font-size: 0.8em
+
+            .card-name
+                font-size: 0.7em
+
+            .card-price
+                font-size: 0.9em
+
+            .card-period
+                font-size: 0.7em
+
+        .card-actions
+            a
+                font-size: 0.6em
+                &:hover
+                    font-size: 0.7em
+
+@media (max-width: $large) and (min-width: $medium-large + 1px)
+    .card
+        width: 95%
+        margin-bottom: 5%
+        height: 400px
+
+        .card-content
+            .card-title
+                font-size: 0.8em
+
+            .card-name
+                font-size: 0.7em
+
+            .card-price
+                font-size: 0.9em
+
+            .card-period
+                font-size: 0.7em
+
+        .card-actions
+            a
+                font-size: 0.7em
+                &:hover
+                    font-size: 0.8em
