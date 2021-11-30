@@ -29,7 +29,7 @@ export default function RangePriceM(props) {
     if (event.target.textContent === 'Cancel') {
       setOpen(false);
     } else {
-        props.searchPublications('https://income-system.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
+        props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
         setOpen(false);
     }
   };

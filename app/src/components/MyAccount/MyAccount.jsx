@@ -66,7 +66,7 @@ export default function MyAccount(props) {
               console.log(e); 
             } } 
     
-            getUser('https://income-system.herokuapp.com/users/' + props.user.id)
+            getUser('https://system-rentail-api.herokuapp.com/users/' + props.user.id)
     
         }, [])
     
@@ -94,7 +94,7 @@ export default function MyAccount(props) {
               console.log(e); 
             } } 
     
-            getUser('https://income-system.herokuapp.com/users/' + props.user.id)
+            getUser('https://system-rentail-api.herokuapp.com/users/' + props.user.id)
     
         }, [userData]);
     
@@ -144,7 +144,7 @@ export default function MyAccount(props) {
               setLoading(true);
     
               try {
-                const url = 'https://income-system.herokuapp.com/users/' + props.user.id
+                const url = 'https://system-rentail-api.herokuapp.com/users/' + props.user.id
                 const config = {
                     method: "PUT",
                     headers: {

@@ -135,7 +135,7 @@ export default function Register() {
         event.preventDefault()
         setLoading(true)
         try {
-            const url = 'https://income-system.herokuapp.com/users'
+            const url = 'https://system-rentail-api.herokuapp.com/users'
             const config = {
                 method: "POST",
                 headers: {

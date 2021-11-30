@@ -79,4 +79,4 @@ Para un mejor entendimiento de las entidades, usuarios y casos de uso pueden con
 
 ##### Comando: `npm start`
 
-8.  Ya puedes iniciar a crear peticiones, como lo indica la siguiente documentación: [Documentación API](https://income-system.herokuapp.com/api-docs/)
+8.  Ya puedes iniciar a crear peticiones, como lo indica la siguiente documentación: [Documentación API](https://system-rentail-api.herokuapp.com/api-docs/)
