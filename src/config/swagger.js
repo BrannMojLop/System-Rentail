@@ -22,7 +22,7 @@ const options = {
                 description: 'Servidor de Desarrollo'
             },
             {
-                url: "https://income-system.herokuapp.com/",
+                url: "https://system-rentail-api.herokuapp.com/",
                 description: 'Servidor de Producciòn'
             }
         ],

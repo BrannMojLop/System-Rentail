@@ -52,7 +52,7 @@ export function Details(props) {
     }
 
 
-    URL = `https://income-system.herokuapp.com/users/${typeLess}`  
+    URL = `https://system-rentail-api.herokuapp.com/users/${typeLess}`  
     //console.log(`Dta: ${URL}`)
     useEffect( () => {
       
@@ -125,8 +125,8 @@ const handleClick = ()=>{
     const sUser = JSON.parse(localStorage.getItem('user'))
     const token = sUser.token;
     const idRequest = activeRRN//e.target.name
-    const urlUpdateRequest = 'https://income-system.herokuapp.com/rental-requests/'+ idRequest +'/'+ ref
-    const urlConfirmRequest = 'https://income-system.herokuapp.com/rents'
+    const urlUpdateRequest = 'https://system-rentail-api.herokuapp.com/rental-requests/'+ idRequest +'/'+ ref
+    const urlConfirmRequest = 'https://system-rentail-api.herokuapp.com/rents'
 
     //console.log('Test de Fechas')
     let numberOfDays = props.req.contract.days; // Aquí poner el total de días del contrato

@@ -32,7 +32,7 @@ export default function Catalog(props) {
             }
         }
 
-        let url = "https://income-system.herokuapp.com/publications"
+        let url = "https://system-rentail-api.herokuapp.com/publications"
 
         if (props.match.params.search) {
             url = url + "?title=" + props.match.params.search

@@ -27,7 +27,7 @@ export default function CardDetails(props) {
                 headers: { "Content-Type": "application/json", "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token },
                 body: JSON.stringify(request)
         }
-            await fetch("https://income-system.herokuapp.com/rental-requests", objRequest)
+            await fetch("https://system-rentail-api.herokuapp.com/rental-requests", objRequest)
             setMsg({status: "success", message: "Solcitud enviada con Exito!"})
             restForm()
             setOpen(true);

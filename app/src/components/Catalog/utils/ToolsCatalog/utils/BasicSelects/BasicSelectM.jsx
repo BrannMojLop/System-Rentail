@@ -41,10 +41,10 @@ export default function BasicSelectM(props) {
       setOpen(false);
     } else {
         if (selectOption === 'Mostrar Todos'){
-            props.searchPublications('https://income-system.herokuapp.com/publications')
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications')
             setOpen(false);
           } else{
-            props.searchPublications('https://income-system.herokuapp.com/publications?'+ props.search + '=' + selectOption, selectSearch)
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search + '=' + selectOption, selectSearch)
             setOpen(false);
           }
     }

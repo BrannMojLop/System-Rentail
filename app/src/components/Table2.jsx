@@ -140,9 +140,9 @@ export  function CollapsibleTable(props) {
             }
         
         }
-        const requestURL = 'https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + '=' +idUser
+        const requestURL = 'https://system-rentail-api.herokuapp.com/rental-requests?id_'+ typeQuery + '=' +idUser
         //console.log(`url a consultar ${requestURL}`)
-        // getRequestsList('https://income-system.herokuapp.com/rental-requests?id_'+ typeQuery + idUser)
+        // getRequestsList('https://system-rentail-api.herokuapp.com/rental-requests?id_'+ typeQuery + idUser)
         getRequestsList(requestURL)
 
     }, [update])

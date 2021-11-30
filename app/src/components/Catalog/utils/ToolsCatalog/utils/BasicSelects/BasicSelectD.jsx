@@ -46,9 +46,9 @@ export default function BasicSelectD(props) {
         </Select>
         <Button className="btn-select"onClick={(e) => {
           if (selectOption === 'Mostrar Todos'){
-            props.searchPublications('https://income-system.herokuapp.com/publications')
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications')
           } else{
-            props.searchPublications('https://income-system.herokuapp.com/publications?'+ props.search + '=' + selectOption, selectSearch)
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search + '=' + selectOption, selectSearch)
           }
         }} style={{width:'30%', backgroundColor: '#153E90'}} variant="contained"
         id="demo-simple-select"

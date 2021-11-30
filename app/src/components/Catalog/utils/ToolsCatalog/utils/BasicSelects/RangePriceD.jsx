@@ -25,7 +25,7 @@ export default function BasicSelect(props) {
           <TextField onChange={(e) => {handleChange(e)}} type='number' id="max_price" label="Max Precio" variant="outlined" min={0} max={5000}/>
         </Box>
         <Button onClick={(e) => {
-            props.searchPublications('https://income-system.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
         }} style={{width:'30%', backgroundColor: '#153E90'}} variant="contained"
         id="demo-simple-select"
         >Aplicar </Button>
