@@ -1,6 +1,6 @@
-# project_backend_API
+# System Rentail
 
-Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack - BackEnd
+Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack con JavaScript
 
 # Integrantes del Equipo #5:
 
@@ -8,13 +8,13 @@ Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack - BackEnd
 - Rogelio Yael Vega Hernández
 - Christian Eduardo Suárez Ontiveros
 
-# Proyecto: API para Sistema de Rentas
+# Proyecto: API con Express y Cliente utilizando React para Aplicación de Rentas
 
-### Objetivo:
+### Objetivo de la API:
 
 Ofrecer un servicio para la implementación de un sistema de rentas, la cual sea suficientemente robusta y escalable a la necesidad de las interfaces de usuario que el sistema requiera. El propósito de la API es brindar un control y una herramienta de una forma ordenada y estandarizada, para personas que requieran poner en renta sus servicios o productos y estos a su ves esten al alcance de otras personas que busquen un producto o servicio para interes personal, laboral, etc.
 
-### Alcance:
+### Alcance de la API:
 
 En primer instancia la API esta enfocada a un servicio básico que de la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendadores de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo la forma en que sé esta modula rizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
 
@@ -23,7 +23,7 @@ En primer instancia la API esta enfocada a un servicio básico que de la oportun
 - Estadísticas
 - etc.
 
-# Estructura del Proyecto
+# Estructura de la API
 
 ### Entidades:
 
@@ -48,7 +48,7 @@ Para un mejor entendimiento de las entidades, usuarios y casos de uso pueden con
 - [Diagrama_Historias_de_Usuario](https://docs.google.com/document/d/1nPgRO4lJxKA0pWs1SntZzZmJlEOH1swSI4LR8IQuQTk/edit?usp=sharing)
 - [Diagrama_Casos_de_Uso](https://drive.google.com/file/d/1OFqRugTuhmfUXwVrMvSI0av4IHohZGlB/view?usp=sharing)
 
-# Fundamentos Técnicos
+# Fundamentos Técnicos de la API
 
 ### Tecnologías Aplicadas:
 
@@ -57,7 +57,7 @@ Para un mejor entendimiento de las entidades, usuarios y casos de uso pueden con
 - Express: Marco de trabajo base de la aplicación, adicionalmente se integran algunas librarías de express.
 - MongoDB: Base de datos (NoSQL) base de la aplicación.
 
-# Instalación
+# Tutorial para inciar el servidor de la API
 
 ### Pasos:
 
@@ -71,11 +71,10 @@ Para un mejor entendimiento de las entidades, usuarios y casos de uso pueden con
 
 ##### Comando: `npm run build`
 
-5.  Editar el archivo src/config/database.js, cambiado en URL de conexión el `<user>:<password>` con el usuario de la Base de Datos
+5.  Crea una Base de Datos en MongoDB Atlas, que te servira para probar la aplicacion
 
-##### URL a Editar: `mongodb+srv://<user>:<password>@bedu-backend.kfbjk.mongodb.net`
+6.  Crear tu archivo .env configrando tus variables de entorno toma como ejemplo el archivo /.env.sample.
 
-6.  Solicita al Administrador de base de datos agregar la dirección IP de tu dispositivo a la IP Access List de MongoDBAtlas
 7.  Dentro de la raíz del proyecto correr el siguiente comando para arrancar el servidor:
 
 ##### Comando: `npm start`
