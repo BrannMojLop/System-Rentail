@@ -1,0 +1,720 @@
+components:
+  schemas:
+     Sector:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Sector
+           example: 613fa0a4b37dee626ed7e52f
+         name:
+           type: string
+           description: Nombre del Sector de Productos
+           example: Herramientas
+         description:
+           type: string
+           description: Descripcion del tipo de Sector
+           example: Herramientas en general
+         status:
+           type: boolean,
+           description: Indica si el Sector esta activo o desactivado
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion del Sector
+           format: date-time
+           example: 2021-09-13T19:04:04.310Z
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Sector
+           format: date-time
+           example: 2021-09-13T19:04:04.310Z
+       required:  
+          - _id
+          - name
+          - status
+
+     Category:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Categoria
+         name:
+           type: string
+           description: Nombre de la Categoria de Productos
+           example: Hogar
+         description:
+           type: string
+           description: Descripcion de la categoria
+           example: Uso Domestico
+         id_sector:
+           $ref: '#/components/schemas/Sector'
+         status:
+           type: boolean,
+           description: Indica si la Categoria esta activa o desactivada
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion de la Categoria
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion de la Categoria
+           format: date-time
+       required:  
+          - _id
+          - name
+          - id_sector
+          - status
+     Period:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Periodo
+         name:
+           type: String
+           description: Nombre del Perido de Renta
+           example: Quincenal
+         days:
+           type: Number
+           description: Dias de duracion del perido de renta
+           example: 15
+         status:
+           type: boolean,
+           description: Indica si el Periodo esta activo o desactivado
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion del Periodo
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Periodo
+           format: date-time
+       required:  
+          - _id
+          - name
+          - days
+          - status
+     Product:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Producto
+         name:
+           type: string
+           description: Nombre del Producto
+           example: Motocierra Semi-nueva
+         description:
+           type: string
+           description: Descripcion detallada del Producto
+           example: Motocierra en buen estado, funcionando al 100
+         image:
+           type: string
+           description: URL de la imagen del producto
+         id_lessor:
+           $ref: '#/components/schemas/User'
+         id_category:
+           $ref: '#/components/schemas/Category'
+         status:
+           type: boolean,
+           description: Indica si el Producto esta activo o desactivado
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion del Producto
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Producto
+           format: date-time
+       required:  
+          - _id
+          - name
+          - id_lessor
+          - id_category
+          - status
+     TypeUser:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Tipo de Usuario
+         name:
+           type: string
+           description: Nombre del Tipo de usuario
+           example: Administrador
+         type:
+           type: Number
+           description: Numero identificador de cada tipo de usuario
+           example: 1
+         status:
+           type: boolean,
+           description: Indica si el Tipo de Usuario esta activo o desactivado
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion del Tipo de Usuario
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Tipo de Usuario
+           format: date-time
+       required:  
+          - _id
+          - name
+          - type
+          - status
+     Rent:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Renta
+         id_rentalRequest:
+           $ref: '#/components/schemas/RentalRequest'
+         payment:
+           type: boolean
+           description: Indica el estatus del pago de la renta
+         start_date:
+           type: Date
+           description: Fecha de inicio del contrato de renta
+           format: date-time
+         end_date:
+           type: Date
+           description: Fecha de termino del contrato de renta
+           format: date-time
+         status:
+           type: Object,
+           description: Contiene el detalle de estatus de la Renta
+           example: { "status": "Activa", "ref": 1 }
+           enum:
+              - Activa
+              - Finalizada
+              - Cancelada
+         created_at:
+           type: Date
+           description: Fecha de creacion del Tipo de Usuario
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Tipo de Usuario
+           format: date-time
+       required:  
+          - _id
+          - id_rentalRequest
+          - payment
+          - start_date
+          - end_date
+          - status
+     User:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Usuario
+         firstname:
+           type: string
+           description: Nombre del Usuario
+           example: Juan
+         lastname:
+           type: string
+           description: Apellidos del Usuario
+           example: Valdez Suarez
+         email:
+           type: string
+           description: Email del Usuario
+           example: juan@juan.com
+         username:
+           type: string
+           description: Username del Usuario
+         id_type:
+           $ref: '#/components/schemas/TypeUser'
+         status:
+           type: boolean,
+           description: Indica si el Usuario esta activo o desactivado
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion del Usuario
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion del Usuario
+           format: date-time
+       required:  
+          - _id
+          - username
+          - email
+          - id_type
+          - status
+     Publication:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Publicacion
+         title:
+           type: string
+           description: Titulo de la publicacion
+           example: Moto en Venta, accesible en la CDMX
+         id_product:
+           $ref: '#/components/schemas/Product'
+         prices:
+           type: Array
+           description: Listado de precios por renta
+           example: [ 200, 500 ]
+         periods:
+           type: Array
+           description: Listado de peridos por renta
+           example: [ 15, 30 ]
+         amount:
+           type: Number
+           description: Numero de existencias disponibles del producto
+           example: 2
+         location:
+           type: String
+           description: Zona donde se encuentra el producto en renta
+           example: Guadalajara
+         max_distance:
+           type: Number
+           description: Distancia maxima en KM, en que se ofrece la renta del producto
+           example: 35
+         finished_at:
+           type: Date
+           description: Fecha de finalizacion de la publicacion
+           format: date-time
+         status:
+           type: boolean,
+           description: Indica si la Publicacion esta activa o desactivada
+           enum:
+              - true
+              - false
+         created_at:
+           type: Date
+           description: Fecha de creacion de la Publicacion
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion de la Publicacion
+           format: date-time
+       required:  
+          - _id
+          - title
+          - id_product
+          - prices
+          - peridos
+          - status
+     RentalRequest:
+       type: object
+       properties:
+         _id:
+           type: ObjectId
+           description: Identificador Unico de cada Solicitud de Renta
+         id_lessee:
+           $ref: '#/components/schemas/User'
+         id_lessor:
+           $ref: '#/components/schemas/User'
+         id_publication:
+           $ref: '#/components/schemas/Publication'
+         contract:
+          type: Object
+          description: Contiene el contrato elegido por el Arrendador, periodo y precio
+          example: { price: 350, days: 15}
+         answer:
+           type: Object,
+           description: Contiene el detalle de estatus de la Solicitud
+           example: { "status": "En Espera", "ref": 1 }
+           enum:
+              - En Espera
+              - Rechazada
+              - Confirmada
+              - Cancelada
+         created_at:
+           type: Date
+           description: Fecha de creacion de la Solicitud de Renta
+           format: date-time
+         updated_at:
+           type: Date
+           description: Uiltima fecha de actualizacion de la Solicitud de Renta
+           format: date-time
+       required:  
+          - _id
+          - id_lessor
+          - id_lessee
+          - id_publication
+          - contract
+          - answer
+
+  schemasError:
+    CreateSector:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: string
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: Ya existe un sector con este nombre
+    DisableSector:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Indica el tipo de error
+          example: CastError
+        message:
+          description: Describe el error obtenido
+          type: string
+          example: Cast to ObjectId failed for value
+    CreateCategory:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: La categoria ya existe
+    CreatePeriod:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: El periodo ya existe
+    CreateProduct:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: El producto ya existe
+    CreatePublication:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: La publicacion ya existe
+    CreateRentalRequest:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: La Solicitud ya existe
+    CreateRents:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: La Renta ya existe
+    CreateUser:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: El usuario ya existe
+    CreateTypeUser:
+      type: object
+      properties:
+        success: 
+          type: boolean
+          example: false
+        type:
+          description: Indica el tipo de error
+          type: String
+          example: ValidationError
+        error:
+          type: string
+          description: Describe el error obtenido
+          example: El tipo de usuario ya existe
+
+  requestBodies:
+    postSector:
+      description: Un objeto JSON que contiene la informacion del Sector
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             name:
+               type: string
+               required: true
+               description: Nombre del Sector de Productos
+               example: Herramientas
+             description:
+               type: string
+               required: true
+               description: Descripcion del tipo de Sector
+               example: Herramientas en general
+    configRequest:
+      description: Un objeto JSON que contiene la configuracion de respuesta
+      required: false
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             require:
+               type: object
+               required: false
+               description: Objeto con los campos que se quiere obtener
+               example: { name: 1, description: 1, _id: 0}
+             limit:
+               type: number
+               required: false
+               description: Número de docuemtos que desa obtener
+               example: 2
+    postCategory:
+      description: Un objeto JSON que contiene la información de la categoria
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             name:
+               type: string
+               required: true
+               description: Nombre de la Categría de Productos
+               example: Hogar
+             description:
+               type: string
+               required: true
+               description: Descripcion del tipo de Sector
+               example: Herramientas en general
+    postPeriod:
+      description: Un objeto JSON que contiene la información del periodo
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             name:
+               type: string
+               required: true
+               description: Nombre del Periodo
+               example: Quincenal
+             days:
+               type: number
+               required: true
+               description: Número de días del periodo
+               example: 15
+    postProduct:
+      description: Un objeto JSON que contiene la información del producto
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             name:
+               type: string
+               required: true
+               description: Nombre del Producto
+               example: Motocierra Semi-nueva
+             description:
+               type: string
+               required: true
+               description: Descripcion del producto
+               example: Motocierra en buen estado, funcionando al 100
+            image:
+              type: string
+              required: true
+              description: Imagen del producto
+              example: Sin imagen
+            id_category:
+              type: string
+              required: true
+              description: ID de la categoria
+              example: id_category
+            id_lessor:
+              type: string
+              required: true
+              description: ID de arrendatario
+              example: id_lessor
+    postPublication:
+      description: Un objeto JSON que contiene la información del producto
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+             title:
+               type: String
+               required: true
+               description: Título de la publicación
+               example: Moto en Venta, accesible en la CDMX
+             id_product:
+               type: String
+               required: true
+               description: ID del Producto a rentar
+               example: id_producto
+            prices:
+              type: Array
+              required: true
+              description: Precios de la renta
+              example: [ 200, 500 ]
+            periods:
+              type: Array
+              required: true
+              description: Listado de peridos por renta
+              example: [ 15, 30 ]
+    postRentalRequest:
+      description: Un objeto JSON que contiene la información de la Solicitud de Renta
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              contract:
+                type: Object
+                description: Contiene el contrato elegido por el Arrendador, periodo y precio
+                example: { price: 350, days: 15}
+              answer:
+                type: Object,
+                description: Contiene el detalle de estatus de la Solicitud
+                example: { "status": "En Espera", "ref": 1 }
+    postRents:
+      description: Un objeto JSON que contiene la información de una Renta
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              payment:
+                type: boolean
+                description: Indica el estatus del pago de la renta
+                example: true
+              start_date:
+                type: Object,
+                description: Fecha de inicio del contrato de renta
+                example: 2021-09-13T19:04:04.310Z
+    postUsers:
+      description: Un objeto JSON que contiene la información de un Usuario
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstname:
+                type: string
+                description: Nombre del Usuario
+                example: Juan
+              lastname:
+                type: string
+                description: Apellidos del Usuario
+                example: Valdez Suarez
+              email:
+                type: string
+                description: Email del Usuario
+                example: juan@juan.com
+              username:
+                type: string
+                description: Username del Usuario
+    postTypeUser:
+      description: Un objeto JSON que contiene la información de un tipo de Usuario
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del Tipo de usuario
+                example: Administrador
+              type:
+                type: Number
+                description: Numero identificador de cada tipo de usuario
+                example: 1
+              status:
+                type: boolean,
+                description: Indica si el Tipo de Usuario esta activo o desactivado
+                example: true
+
+  securitySchemes:
+    bearerAuth:  
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    
+
+security:
+  - bearerAuth: [] 
