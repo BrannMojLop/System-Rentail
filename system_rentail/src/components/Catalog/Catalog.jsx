@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ToolsCatalog from './utils/ToolsCatalog/ToolsCatalog'
 import SimpleBackdrop from '../utils/SimpleBackdrop/SimpleBackdrop'
 import BasicBreadcrumbs from '../utils/BasicBreadcrumbs/BasicBreadcrumbs'
+import NotResults from './utils/NotResults/NotResults'
 import './catalog.sass'
 import { Card } from '../Card/Card'
 
@@ -50,10 +51,12 @@ export default function Catalog(props) {
                 setLoading(false)
                 setSearch(search)
                 setPublications(jsonRequest)
+                setNotResult(false)
         } else {
             setSearch(null)
             setLoading(false)
             setPublications([])
+            setNotResult(true)
         }
     }
 
@@ -69,7 +72,7 @@ export default function Catalog(props) {
                             return <li key={publication._id}><Card history={props.history} publication={publication}/></li>
                     }): null}
                 </ul>
-                {notResult ? <h1>Sin Resultados</h1> : null}
+                {notResult ? <NotResults /> : null}
             </div>
         </main>
         </>

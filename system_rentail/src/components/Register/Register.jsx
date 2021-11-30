@@ -126,7 +126,7 @@ export default function Register() {
       email: null,
       username: null,
       password: null,
-      id_type: "614cdbcc51de9100162a0ba1"
+      id_type: "61a552c28143c300168b6f0d"
     });
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "", message: ""})
