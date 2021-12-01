@@ -1,0 +1,21 @@
+tags:
+  - name: Sectores
+    description: CRUD completo para Sectores de Producto
+  - name: Categorias
+    description: CRUD completo para Categorias de Producto
+  - name: Periodos
+    description: CRUD completo para Periodos de Renta
+  - name: Productos
+    description: CRUD completo para Productos
+  - name: Publicaciones
+    description: CRUD completo para Publicacion de Productos en Renta
+  - name: Solicitudes de Renta
+    description: CRUD completo para Solicitudes en Renta
+  - name: Rentas
+    description: CRUD completo para la Renta de Productos
+  - name: Publicaciones
+    description: CRUD completo para Publicacion de Productos en Renta
+  - name: Usuarios
+    description: CRUD completo para el control de Usuarios y Permisos
+  - name: Tipos de Usuario
+    description: CRUD completo para Tipos de Usuario
