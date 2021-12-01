@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import BasicTabs from './TabPanel';
-import '../public/styles/panel.sass'
-
+import React from 'react';
+import BasicTabs from './TabPanel/TabPanel';
+import './request_panel.sass';
 
 export default function RequestPanel(props) {
 

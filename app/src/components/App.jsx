@@ -7,7 +7,7 @@ import MyAccount from './MyAccount/MyAccount';
 import NotFound from './NotFound'
 import Login from './Login/Login';
 import Register from './Register/Register';
-import RequestPanel from './RequestPanel';
+import RequestPanel from './RequestPanel/RequestPanel';
 import ProductsPanel from './ProductsPanel/ProductsPanel';
 import {
   BrowserRouter as Router,

@@ -26,7 +26,7 @@ export function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.cancel}>
+          <Button onClick={props.cancel}> 
             Cancelar
           </Button>
           <Button onClick={props.accept} autoFocus>

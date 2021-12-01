@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import '../public/styles/details.sass'
+import './request_details.sass'
 import Link from '@mui/material/Link';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
-import { AlertDialog } from './Confirm';
-import { MaterialUIPickers } from './DatePicker'
-import { BasicAlerts } from './Alert'
+import { AlertDialog } from '../utils/Confirm/Confirm';
+import { MaterialUIPickers } from './utils/DatePicker/DatePicker'
+import { BasicAlerts } from '../utils/Alert/Alert'
+import { setDate } from 'date-fns';
 
+const calculateDates = require('./utils/Scripts/dates')
 
 const evalStatus = (estatus)=>{
     return estatus == 'En Espera' ? true : false;
 }
 
 export function Details(props) {
-    const [ data, setData] = useState([]);
+    const [data, setData] = useState([]);
     const [open, setOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState('Holi :)')
     const [responseSeverity, setSeverity] = useState('success')
@@ -26,12 +28,11 @@ export function Details(props) {
     //console.log(`Este es el id: ${props.idRR}`)
 
     const [value, setValue] = React.useState(new Date());
-
+    // DatePicker
     const handleChange = (newValue) => {
       
       setValue(newValue);
       //console.log(newValue)
-
     };
 
     let type = ''
@@ -53,6 +54,8 @@ export function Details(props) {
 
 
     URL = `https://system-rentail-api.herokuapp.com/users/${typeLess}`  
+    const storedUser = JSON.parse(localStorage.getItem('user'))
+    const token = storedUser.token;
     //console.log(`Dta: ${URL}`)
     useEffect( () => {
       
@@ -60,15 +63,7 @@ export function Details(props) {
 
         const config = {
             "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2FlMTRlM2E0MGFhMDAxNjI5NzBhOCIsInVzZXJuYW1lIjoiam5hbWUiLCJleHAiOjE2NDA2MjcwMjIsImlhdCI6MTYzNTQ0MzAyMn0.BxY-c14bn3198yT_tqVmVqywFbXMpdk2Mm2IwGNM0EE"
-<<<<<<< HEAD
-        }
-
-        
-        //localStorage.setItem('TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZGUzNTFkZTkxMDAxNjJhMGJjMiIsInVzZXJuYW1lIjoibWFyaSIsImV4cCI6MTY0MTQxNDQ2OSwiaWF0IjoxNjM2MjMwNDY5fQ.snhZQ-80qf7TNCnwA-Xo0B9lTUk2q5itMIIKW2Z1v1Y')
-
-=======
         }        
->>>>>>> upstream/brann
 
         //localStorage.setItem('TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGNkZGUzNTFkZTkxMDAxNjJhMGJjMiIsInVzZXJuYW1lIjoibWFyaSIsImV4cCI6MTY0MTQxNDQ2OSwiaWF0IjoxNjM2MjMwNDY5fQ.snhZQ-80qf7TNCnwA-Xo0B9lTUk2q5itMIIKW2Z1v1Y')
         try{
@@ -77,7 +72,7 @@ export function Details(props) {
               })
             const data = await response.json()
 
-            //console.log(data)
+            console.log(data)
             setData(data)
         } catch(err){
             console.log(err)
@@ -89,11 +84,6 @@ export function Details(props) {
 }, [])
 
 
-function addDays(date, days) {
-    const copy = new Date(Number(date))
-    copy.setDate(date.getDate() + days)
-    return copy
-}
 
 
 const confirm = (e)=>{
@@ -118,6 +108,20 @@ const cancel = () => {
     //console.log('Cancelado')
     setOpen(false);
   };
+//
+
+
+
+// Control de Alert
+const [openAlert, setOpenAlert] = React.useState(false);
+
+const handleCloseAlert = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpenAlert(false);
+};
 
 
 // Queda pendiente lo del target
@@ -130,43 +134,21 @@ const handleClick = ()=>{
     //const token = localStorage.getItem('TOKEN');
     //
 
-    const sUser = JSON.parse(localStorage.getItem('user'))
-    const token = sUser.token;
+
     const idRequest = activeRRN//e.target.name
     const urlUpdateRequest = 'https://system-rentail-api.herokuapp.com/rental-requests/'+ idRequest +'/'+ ref
     const urlConfirmRequest = 'https://system-rentail-api.herokuapp.com/rents'
 
     //console.log('Test de Fechas')
     let numberOfDays = props.req.contract.days; // Aquí poner el total de días del contrato
-    const periodo = props.req.contract.period
+    const periodo = props.req.contract.period // este se añade porque en algunos registros se llama period y en otros days
     numberOfDays = !numberOfDays ? periodo : numberOfDays
     numberOfDays = !numberOfDays? 0: numberOfDays
-    const formattedDate = (date) =>{
-        const fecha = date
 
-        const day = fecha.getDate()
-        const month = fecha.getMonth() + 1
-        const year = fecha.getFullYear()
-
-        const  realMonth = month < 10 ? `0${month}` : `${month}`
-        const realDay = day < 10 ? `0${day}` : `${day}`
-        const completeDate = `${year},${realMonth},${realDay}`
-        
-        return completeDate
-    }
-    // De la fecha seleccionada empieza a correr al siguiente día
-    const date = addDays(value, 1)
-    console.log(date)
-
-    const startDate = formattedDate(date)
+    // Cálculo de las fechas
+    const {startDate, finalDate} = calculateDates.dates(value, numberOfDays)
     
-    console.log(startDate)
-
-    const finalDate = addDays(date, numberOfDays);
-    const ffinalDate = formattedDate(finalDate)
-    console.log(ffinalDate)
-    console.log('End de Fechas')
-
+    // Para rechazar o cancelar solicitudes
     const updateStatus = async (url) => {
         const config = {
             method: "PUT",
@@ -182,7 +164,8 @@ const handleClick = ()=>{
             const data = await response.json();
             const resSev = response.status == '200' ? 'success' : 'error'
             setSeverity(resSev)
-            setAlertVisibility(true)
+            setOpenAlert(true)
+            //setAlertVisibility(true)
             setResponseMessage(data.message)
             //console.log(data)
         }
@@ -190,16 +173,15 @@ const handleClick = ()=>{
             console.log(err)
         }
     }
-    // Esta se llama solo en caso de que quiera confirmar
+    // Solo para confirmaciones (se crea la renta)
     const confirmRequest = async (url) => {
 
         const dataForRent = { 
                 "id_rentalRequest": `${activeRRN}`,
                 "start_date":`${startDate}`,
-                "end_date":`${ffinalDate}`
+                "end_date":`${finalDate}`
         }
-        console.log('Datos a Enviar: ')
-        console.log(dataForRent)
+        console.log('Datos a Enviar: ', dataForRent)
 
         const config = {
             method: "POST",
@@ -211,21 +193,21 @@ const handleClick = ()=>{
         }
 
         try{
-            
             const response = await fetch(url, config)
             const data = await response.json()
 
             const resSev = response.status == '200' ? 'success' : 'error'
             setSeverity(resSev)
-            setAlertVisibility(true)
+            setOpenAlert(true)
+            //setAlertVisibility(true)
             setResponseMessage(data.message)
             //console.log(data)
-   
         }
         catch(err){
             console.log(err)
         }
     }
+    
     // Si lo que quiere es confirmar entonces se llama a crear Renta, sino, simplemente actualiza estatus
     if (ref == '2'){
         console.log('Quiere confirmar')
@@ -266,7 +248,15 @@ const handleClick = ()=>{
             <ListItem>
             
             </ListItem>
-            
+
+            <BasicAlerts 
+                open={openAlert}
+                resSeverity={responseSeverity} 
+                responseMessage={responseMessage}
+                handleClose={handleCloseAlert}
+            >
+            </BasicAlerts>
+    
             </List>
         </div>
 
@@ -296,7 +286,6 @@ const handleClick = ()=>{
                          
                                    
                     <button id='2' className = "green-button" name={props.idRR} onClick={confirm}>Aceptar</button>
-                    
                     <button id='3' className = "red-button" name={props.idRR} onClick={confirm}>Rechazar</button>
                     <AlertDialog
                         open={open}
@@ -326,13 +315,7 @@ const handleClick = ()=>{
             }
         </div>
     </div>
-    {
-        alertVisibility && 
-        <BasicAlerts 
-            resSeverity={responseSeverity} 
-            responseMessage={responseMessage} >
-        </BasicAlerts>
-    }
+  
     </>
     
   );

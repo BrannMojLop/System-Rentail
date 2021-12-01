@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import {CollapsibleTable} from './Table2'
+import {CollapsibleTable} from '../../RequestTable/RequestTable'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
