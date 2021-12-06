@@ -55,15 +55,28 @@ async function showProducts(req, res) {
             }
         })
     } else if (req.query.id_lessor) {
-        await Product.find({ id_lessor: req.query.id_lessor }, function (err, products) {
-            if (err) {
-                res.status(401).send(err);
-            } else if (products.length > 0) {
-                res.status(200).send(products);
-            } else {
-                res.status(404).send("No se han encontrado registros");
+        await Product.aggregate([
+            {
+                '$lookup': {
+                    'from': 'categories',
+                    'localField': 'id_category',
+                    'foreignField': '_id',
+                    'as': 'category'
+                }
+            }], function (err, products) {
+                const search = products.filter(product => {
+                    if (product.id_lessor == req.query.id_lessor) {
+                        return product
+                    }
+                })
+
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.status(200).send(search);
+                }
             }
-        })
+        )
     } else if (req.query.id_category) {
         await Product.find({ id_category: req.query.id_category }, function (err, products) {
             if (err) {
@@ -142,7 +155,7 @@ async function updateProduct(req, res) {
     const user = await User.findById(req.usuario.id);
     const type = await user.typeUser(user.id_type);
 
-    if (type === 2 || type === 4) {
+    if (type === 2 || type === 4 || type === 3) {
         const product = await Product.findById(req.params.id, function (err) {
             if (err) {
                 res.status(400).json({
