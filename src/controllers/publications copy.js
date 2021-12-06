@@ -132,30 +132,6 @@ async function showPublications(req, res) {
                 }
             }
         );
-    } else if (req.query.id_lessor) {
-
-        await Publication.aggregate([
-            {
-                '$lookup': {
-                    'from': 'products',
-                    'localField': 'id_product',
-                    'foreignField': '_id',
-                    'as': 'product'
-                }
-            }], function (err, publications) {
-                const search = publications.filter(publication => {
-                    if (publication.product[0].id_lessor == req.query.id_lessor) {
-                        return publication;
-                    }
-                })
-                if (err) {
-                    res.status(401).send(err);
-                } else if (search.length > 0) {
-                    res.status(200).send(search);
-                } else {
-                    res.status(404).send("No se han encontrado registros");
-                }
-            })
     } else if (req.query.min_price || req.query.max_price) {
         if (!req.query.min_price) {
             req.query.min_price = 0

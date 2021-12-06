@@ -179,7 +179,12 @@ export default function MyAccount(props) {
 
           const handleClick = (event) => {
             event.preventDefault();
-            window.location.href = '/user/panel-requests'
+
+            if (event.target.id === "card-request") {
+              window.location.href = '/user/panel-requests'
+            } else if (event.target.id === "card-products") {
+              window.location.href = '/user/panel-products'
+            }
           }
 
     return (
@@ -221,7 +226,7 @@ export default function MyAccount(props) {
                 </div>
             </div>
             <div className="menu-account">
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} onClick={handleClick}>
                     <CardActionArea>
                       <CardMedia 
                         className="card-media"
@@ -229,9 +234,10 @@ export default function MyAccount(props) {
                         height="140"
                         image={products}
                         alt="products"
+                        id="card-products"
                       />
                       <CardContent>
-                        <Typography className="text-card" gutterBottom variant="h5" component="div">
+                        <Typography id="card-products" className="text-card" gutterBottom variant="h5" component="div">
                         Productos
                         </Typography>
                       </CardContent>
@@ -269,17 +275,18 @@ export default function MyAccount(props) {
                       </CardContent>
                     </CardActionArea>
                 </Card>
-                <Card onClick={handleClick} sx={{ maxWidth: 345 }}>
+                <Card id="card-request" onClick={handleClick} sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                       <CardMedia
+                        id="card-request"
                         className="card-media"
                         component="img"
                         height="140"
                         image={requests}
                         alt="requests"
                       />
-                      <CardContent>
-                        <Typography className="text-card" gutterBottom variant="h5" component="div">
+                      <CardContent id="card-request">
+                        <Typography id="card-request" className="text-card" gutterBottom variant="h5" component="div">
                         Solicitudes de Renta
                         </Typography>
                       </CardContent>
