@@ -5,7 +5,12 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import {CollapsibleTable} from '../../RequestTable/RequestTable'
+import { CollapsibleTable, CollapsibleTableMobile } from '../../RequestTable/RequestTable'
+
+import './tab_panel.sass';
+
+
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,6 +48,7 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -50,16 +56,20 @@ export default function BasicTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs value={value} onChange={handleChange}>
           <Tab label="Realizadas" {...a11yProps(0)} />
           <Tab label="Recibidas" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <CollapsibleTable type = "lessee"></CollapsibleTable>    
+        <CollapsibleTableMobile className= "mobile" type = "lessee"></CollapsibleTableMobile>         
+        <CollapsibleTable className= "web" type = "lessee"></CollapsibleTable>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CollapsibleTable type = "lessor"></CollapsibleTable>
+        <div><p className="mobile">HOLA</p></div>
+        <div><p className="web">ADIOS</p></div>
+        <CollapsibleTable className= "web"  type = "lessor"></CollapsibleTable>
+        <CollapsibleTableMobile className= "mobile" type = "lessor"></CollapsibleTableMobile> 
       </TabPanel>
      
     </Box>

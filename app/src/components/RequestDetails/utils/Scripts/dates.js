@@ -1,20 +1,20 @@
 module.exports.dates = (selectedDate, period) => {
 
-    console.log('Inicia cálculo de fechas')
+    //console.log('Inicia cálculo de fechas')
     //Fecha inicial
-    console.log('Fecha seleccionada: ', selectedDate)
+    //console.log('Fecha seleccionada: ', selectedDate)
     //De la fecha seleccionada empieza a correr al siguiente día (le agrega 1 día)
     const startDate = addDays(selectedDate, 1)
-    console.log(startDate)
+    //console.log(startDate)
     //Le da formato para registrarla en la base de datos
     const startDateF = formatDate(startDate)
-    console.log(startDateF)
+    //console.log(startDateF)
     //Le suma los días del periodo
     const finalDate = addDays(startDate, period);
     //Le da formato
     const finalDateF = formatDate(finalDate)
-    console.log(finalDateF)
-    console.log('End de fechas')
+    //console.log(finalDateF)
+    //console.log('End de fechas')
 
     return {
         startDate: startDateF,
