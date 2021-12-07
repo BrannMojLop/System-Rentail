@@ -21,6 +21,11 @@ const productSchema = new mongoose.Schema({
         ref: "User",
         required: [true, 'Se debe asignar un usuario tipo: Arrendatario al producto']
     },
+    published: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     status: {
         type: Boolean,
         required: true,
