@@ -54,6 +54,33 @@ async function showProducts(req, res) {
                 res.status(204).send("No se han encontrado registros");
             }
         })
+    } else if (req.query.id_lessor && req.query.published) {
+        await Product.aggregate([
+            {
+                '$lookup': {
+                    'from': 'categories',
+                    'localField': 'id_category',
+                    'foreignField': '_id',
+                    'as': 'category'
+                }
+            }, {
+                '$match': {
+                    'published': false
+                }
+            }], function (err, products) {
+                const search = products.filter(product => {
+                    if (product.id_lessor == req.query.id_lessor) {
+                        return product
+                    }
+                })
+
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.status(200).send(search);
+                }
+            }
+        )
     } else if (req.query.id_lessor) {
         await Product.aggregate([
             {
