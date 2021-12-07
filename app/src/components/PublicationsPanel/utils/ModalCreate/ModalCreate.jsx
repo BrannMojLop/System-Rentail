@@ -1,4 +1,5 @@
 import * as React from 'react';
+import SimpleBackdrop from '../../../utils/SimpleBackdrop/SimpleBackdrop'
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,6 +11,15 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import "./modal-create.sass"
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -52,28 +62,54 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ModalCreate(props) {
 
+  let dateDefault = new Date()
+  dateDefault.setDate(dateDefault.getDate() + 30);
+
   const [ createData, setCreateData ] = React.useState({
-    id_lessor: JSON.parse(localStorage.getItem('user')).id
+    periods: [],
+    prices: [],
+    finished_at: dateDefault
   })
-  const [selectCategories, setSelectCategories] = React.useState([]);
+  const [ selectProducts, setSelectProducts] = React.useState([]);
+  const [ loading, setLoading ] = React.useState(null);
+  const [ open, setOpen] = React.useState(true);
+  const [ openModalContract, setOpenModalContract ] = React.useState(false);
+  const [ optionContract, setOptionContract] = React.useState(null);
+
+  const contracts = {
+    prices: createData.prices,
+    periods: createData.periods,
+  }
 
   React.useEffect(() => {
-    const getOptions = async (url) => {
-        const request = await fetch(url)
-        const jsonRequest = await request.json()
-        setSelectCategories(jsonRequest)
-    }
+    setLoading(true);
+    const getProducts = async (url) => {
+      try {
+        const config = {
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+        }
 
-    getOptions("https://system-rentail-api.herokuapp.com/categories")
+        const request = await fetch(url, {
+          headers: config
+        }) 
+          const jsonRequest = await request.json() 
+          setSelectProducts(jsonRequest)
+          setLoading(false)
+
+        } catch (e){ 
+          console.log(e); 
+        } } 
+
+        getProducts('https://system-rentail-api.herokuapp.com/products?id_lessor=' + JSON.parse(localStorage.getItem('user')).id + '&published=true')
 
 },[])
 
   const handleClose = async (event) => {
     props.setOpenModal(false);
-    if (event.target.id === 'create-product'){
+    if (event.target.id === 'create-publish'){
       props.setLoading(true)
       try {
-        const url = 'https://system-rentail-api.herokuapp.com/products'
+        const url = 'https://system-rentail-api.herokuapp.com/publications'
         const config = {
             method: "POST",
             headers: {
@@ -83,32 +119,82 @@ export default function ModalCreate(props) {
             body: JSON.stringify(createData)
             
         }
-        await fetch(url, config)
-        props.setOpenAlert(true)
-        setTimeout(() => {
-          window.location.href = "/user/panel-products"
-        }, 1000)
+        const request = await fetch(url, config)
+        const jsonRequest = await request.json()
 
+        if (jsonRequest.success === true) {
+          props.setOpenAlert(true)
+          setTimeout(() => {
+            window.location.href = "/user/panel-publications"
+          }, 1000)
+        } else {
+          console.log(jsonRequest.error);
+        }
       } catch (e){
         console.log(e);
       } 
     }
   };
 
-  const handleChange = (event) => {
-    if (event.target.id === "name"){
-      setCreateData({...createData, name:event.target.value});
-    } else if (event.target.id === "description"){
-      setCreateData({...createData, description:event.target.value})
-    } else if (event.target.id === "image") {
-      setCreateData({...createData, image:event.target.value})
+  const handleCloseContract = () => {
+    setCreateData({...createData, prices: contracts.prices})
+    setCreateData({...createData, periods: contracts.periods}) 
+    setOpenModalContract(false);
+  };
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClickContract = (event) => {
+    if (event.target.id == "add-contract") {
+      setOpenModalContract(true)
+      setOptionContract(createData.periods.length)
+    } else if (event.target.id == "") {
+      if (event.target.parentElement.id == "add-contract") {
+        setOpenModalContract(true)
+        setOptionContract(createData.periods.length)
+      } else if (event.target.parentElement.id == ""){
+        setOpenModalContract(true)
+        setOptionContract(event.target.parentElement.parentElement.id)
+      } else {
+        setOptionContract(event.target.parentElement.id)
+        setOpenModalContract(true)
+      }
     } else {
-      setCreateData({...createData, id_category:event.target.value})
+      setOptionContract(event.target.id)
+      setOpenModalContract(true)
     }
+  }
+
+  const handleChangeDate = (dateFinished) => {
+    setCreateData({...createData, finished_at: dateFinished})
+  }
+
+  const handleChange = (event) => {
+
+    
+    if (event.target.id === "title"){
+      setCreateData({...createData, title:event.target.value});
+    } else if (event.target.id === "location") {
+      setCreateData({...createData, location:event.target.value})
+    } else if (event.target.id === "amount") {
+      setCreateData({...createData, amount:event.target.value})
+    } else if (event.target.id === "max_distance") {
+      setCreateData({...createData, max_distance:event.target.value})
+    } else if (event.target.id === "period"){
+      contracts.periods[optionContract] = event.target.value
+    } else if (event.target.id === "price"){
+      contracts.prices[optionContract] = event.target.value
+    } else {
+      setCreateData({...createData, id_product:event.target.value})
+    }
+    console.log(createData);
   }
 
   return (
     <>
+    {loading ? <SimpleBackdrop loading={true} />: null} 
     <div >
       <BootstrapDialog
         onClose={handleClose}
@@ -116,36 +202,80 @@ export default function ModalCreate(props) {
         open={props.openModal}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Crear Nuevo producto
+          Crear Nueva Publicacion
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-            <TextField onChange={handleChange} className="input-product" id="name" label="Nombre" value={createData.name || "" }/>
+            <TextField onChange={handleChange} className="input-product" id="title" label="Titulo" value={createData.title || "" }/>
             <TextField
-              id="category"
+              id="product"
               select
-              label="Categoria"
+              label="Producto"
               className="input-product"
-              value={createData.id_category || ""}
+              value={createData.id_product || ""}
               onChange={handleChange}
             >
-              {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
+              {selectProducts.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>
-            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={createData.image || ""}/>
-            <TextField
-            onChange={handleChange}
-            className="input-product-multiline"
-            label="Descripcion"
-            id="description"
-            multiline
-            rows={4}
-            defaultValue="Default Value"
-            variant="standard"
-            value={createData.description || ""}
-          />
+            <TextField onChange={handleChange} className="input-product" id="location" label="Locacion" value={createData.location || "" }/>
+            <TextField type="number" onChange={handleChange} className="input-product" id="amount" label="Existencias" value={createData.amount || "" }/>
+            <TextField type="number" onChange={handleChange} className="input-product" id="max_distance" label="Distancia Maxima (KM)" value={createData.max_distance || "" }/>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MobileDatePicker
+            id="finished_at"
+            label="Finalizar Publicacion el:"
+            inputFormat="MM/dd/yyyy"
+            value={createData.finished_at}
+            onChange={handleChangeDate}
+            renderInput={(params) => <TextField style={{marginTop: "3%"}} {...params} />}
+            />
+            </LocalizationProvider>
+            <List
+                sx={{ width: '80%', bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+                className="contracts"
+                >
+                <ListItemButton onClick={handleClick}>
+                <ListItemText primary="Opciones de Renta" />
+                {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                  {createData.periods.map((period, index) => {
+                      return (
+                        <ListItemButton onClick={handleClickContract} id={index} className="contract-list" sx={{ pl: 4 }} onClick={handleClickContract}>
+                          <ListItemText className="input-publication-panel" label="Opcion de Renta">{`Opcion ${index + 1} - ${period} Dias por $${createData.prices[index]} pesos`}</ListItemText>
+                        </ListItemButton>
+                      ) 
+                  })}
+                  <ListItemButton id="add-contract" className="contract-list" sx={{ pl: 4 }} onClick={handleClickContract}>
+                    <Button> <strong style={{ margin: "10%" }}> + </strong> Nuevo </Button>
+                  </ListItemButton>
+                  </List>
+                </Collapse>
+              </List>
         </DialogContent>
         <DialogActions>
-          <Button id="create-product" autoFocus onClick={handleClose}>
-            Crear Producto
+          <Button id="create-publish" autoFocus onClick={handleClose}>
+            Crear Publicacion
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
+      <BootstrapDialog
+        onClose={handleCloseContract}
+        aria-labelledby="customized-dialog-title"
+        open={openModalContract}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseContract}>
+           Editar Opcion - {optionContract == 0 ? "1" : parseInt(optionContract) + 1}
+        </BootstrapDialogTitle>
+        <DialogContent dividers className="dialog-content">
+        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Dias del Periodo" value={ null }/>
+        <TextField type="number" onChange={handleChange} className="input-publication" id="price" label="Precio" value={ null }/>
+        </DialogContent>
+        <DialogActions>
+          <Button id="edit-publication-contract" autoFocus onClick={handleCloseContract}>
+            Guardar
           </Button>
         </DialogActions>
       </BootstrapDialog>

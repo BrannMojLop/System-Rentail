@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function FullScreenDialog(props) {
 
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Deshabilitado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Deshabilitado con Exito!"})
 
   const handleClose = () => {
     props.setOpen(false);
@@ -55,7 +55,7 @@ export default function FullScreenDialog(props) {
       if (action){
         setMsg({status: "success", message: "Publicacion Activado con Exito!"})
       } else {
-        setMsg({status: "success", message: "Publicacion Deshabilitado con Exito!"})
+        setMsg({status: "success", message: "Publicacion Deshabilitada con Exito!"})
       }
       setOpenAlert(true)
       setTimeout(() => {
@@ -135,7 +135,7 @@ export default function FullScreenDialog(props) {
           </div>
           <div className="actions-publication-panel">
             <Button onClick={handleClickOpen} id="edit" className="btn-publication-panel"variant="outlined"> Editar Publicacion </Button>
-            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Producto</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Producto</Button> }
+            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Publicacion</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Producto</Button> }
           </div>
         </div>
         <div className="details-publication-panel">
@@ -179,7 +179,7 @@ export default function FullScreenDialog(props) {
                   <TextField className="input-publication-panel" label="Ultima actualizacion" value={dateUpdated} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-publication-panel" label="Estatus" value={props.publicationData[0].status ? "Activo" : "Deshabilitado" } disabled={true} />
+                  <TextField className="input-publication-panel" label="Estatus" value={props.publicationData[0].status ? "Activo" : "Deshabilitada" } disabled={true} />
                 </div>
               </div>
         </div>

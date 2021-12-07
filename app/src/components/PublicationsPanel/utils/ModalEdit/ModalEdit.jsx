@@ -117,8 +117,7 @@ export default function ModalEdit(props) {
             body: JSON.stringify(editData)
             
         }
-        const request = await fetch(url, config)
-        const jsonRequest = await request.json()
+        await fetch(url, config)
         setOpenAlert(true)
         setTimeout(() => {
           window.location.href = "/user/panel-publications"

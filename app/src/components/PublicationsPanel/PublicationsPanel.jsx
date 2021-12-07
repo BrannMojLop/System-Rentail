@@ -17,7 +17,7 @@ export default function PublicationsPanel(){
     const [ publicationsData, setpublicationsData ] = React.useState(null)
     const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
     
 
     React.useEffect(() => {
@@ -76,7 +76,7 @@ export default function PublicationsPanel(){
                 </div>
             </div>
             <div className="table-publications-panel">
-              {publicationsData !== null && headerData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} headerData={headerData} /> : null}\
+              {publicationsData !== null && headerData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} headerData={headerData} /> : null}
             </div> 
             {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>
