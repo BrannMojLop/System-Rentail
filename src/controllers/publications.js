@@ -221,6 +221,10 @@ async function showPublications(req, res) {
 async function createPublication(req, res) {
     const publication = new Publication(req.body)
 
+    const updateProduct = async () => {
+        await Product.updateOne({ _id: req.body.id_product }, { $set: { published: true } })
+    }
+
     await connect();
 
     const user = await User.findById(req.usuario.id);
@@ -235,8 +239,10 @@ async function createPublication(req, res) {
                     error: err.message
                 });
             } else {
+                updateProduct()
                 res.status(201).json({
                     success: "Publicacion creada con Exito",
+                    task: "Producto Publicado",
                     Publication: publication
                 });
             }

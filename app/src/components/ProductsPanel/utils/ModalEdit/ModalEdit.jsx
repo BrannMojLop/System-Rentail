@@ -144,7 +144,7 @@ export default function ModalEdit(props) {
               select
               label="Categoria"
               className="input-product"
-              value={editData.category || props.productData[0].category[0].name}
+              value={editData.id_category || null}
               onChange={handleChange}
             >
               {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
