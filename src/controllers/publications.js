@@ -169,8 +169,8 @@ async function showPublications(req, res) {
                     'prices': {
                         '$gte': Number(req.query.min_price),
                         '$lte': Number(req.query.max_price),
-                        'status': true
-                    }
+                    },
+                    'status': true
                 }
             }, {
                 '$lookup': {
