@@ -119,17 +119,12 @@ export default function ModalCreate(props) {
             body: JSON.stringify(createData)
             
         }
-        const request = await fetch(url, config)
-        const jsonRequest = await request.json()
+        await fetch(url, config)
+        props.setOpenAlert(true)
+        setTimeout(() => {
+          window.location.href = "/user/panel-publications"
+        }, 1000)
 
-        if (jsonRequest.success === true) {
-          props.setOpenAlert(true)
-          setTimeout(() => {
-            window.location.href = "/user/panel-publications"
-          }, 1000)
-        } else {
-          console.log(jsonRequest.error);
-        }
       } catch (e){
         console.log(e);
       } 

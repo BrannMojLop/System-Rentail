@@ -75,7 +75,7 @@ export default function ProductsPanel(){
             <div className="table-products">
               {productsData !== null && headerData !== null ? <BasicTable productsData={productsData} headerData={headerData} /> : null}
             </div> 
-            {openModal ? <ModalCreate setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
+            {openModal ? <ModalCreate setMsg={setMsg} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
               <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>

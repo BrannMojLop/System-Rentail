@@ -10,6 +10,7 @@ import Register from './Register/Register';
 import RequestPanel from './RequestPanel';
 import ProductsPanel from './ProductsPanel/ProductsPanel';
 import PublicationsPanel from './PublicationsPanel/PublicationsPanel'
+import RentsPanel from './RentsPanel/RentsPanel';
 import {
   BrowserRouter as Router,
   Switch,
@@ -43,6 +44,7 @@ export default function App() {
           <Route exact path="/user/panel-requests" component={RequestPanel}/>
           <Route exact path="/user/panel-products" component={ProductsPanel}/>
           <Route exact path="/user/panel-publications" component={PublicationsPanel}/>
+          <Route exact path="/user/panel-rents" component={RentsPanel}/>
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
           <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication}/>

@@ -246,7 +246,7 @@ export default function ModalEdit(props) {
                   </ListItemButton>
                   </List>
                 </Collapse>
-                </List>
+              </List>
         </DialogContent>
         <DialogActions>
           <Button id="edit-publication" autoFocus onClick={handleClose}>

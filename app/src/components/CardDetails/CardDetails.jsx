@@ -64,8 +64,8 @@ export default function CardDetails(props) {
                     "id_lessee": JSON.parse(localStorage.getItem('user')).id,
                     "id_publication": props.publication[0]._id,
                     "contract": {
-                        "price": props.publication[0].periods[selectOption],
-                        "period": props.publication[0].prices[selectOption]
+                        "price": props.publication[0].prices[selectOption],
+                        "period": props.publication[0].periods[selectOption]
                     }
                 }
                 setLoading(true)
@@ -126,23 +126,25 @@ export default function CardDetails(props) {
                     <h3>Envia una solicitud de Renta</h3>
                     <form className="form-actions">
                     <p>Selecciona una opcion</p>
-                    <ToggleButtonGroup
+                        <ToggleButtonGroup
                     orientation="vertical"
                     value={view}
                     exclusive
                     onChange={handleChange}
                     >
                     {props.publication[0].prices.map((price, index) => {
-                            return <ToggleButton style={{ fontSize: '0.8em' }} value={index}>{props.publication[0].periods[index]} dias por: $ {price}</ToggleButton> 
+                        if ( props.publication[0].product[0].id_lessor !== JSON.parse(localStorage.getItem('user')).id ) {
+                            return <ToggleButton style={{ fontSize: '0.8em' }} value={index}>{props.publication[0].periods[index]} dias por: $ {price}</ToggleButton>
+                        }
                         })
                     })
                     </ToggleButtonGroup>
-                    <Button 
+                    { props.publication[0].product[0].id_lessor === JSON.parse(localStorage.getItem('user')).id ? <p style={{ cursor:'help ', color: "#505050", fontSize: '0.9em' }}>Esta es tu Publicación</p> : <Button 
                     style={{marginTop: '5%', width:'70%', backgroundColor: '#153E90'}} 
                     variant="contained"
                     id="demo-simple-select"
                     onClick={handleClick}
-                    >Enviar</Button>
+                    >Enviar</Button> }
                     </form>
                     </section>
                 </section>
