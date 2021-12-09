@@ -53,9 +53,7 @@ BootstrapDialogTitle.propTypes = {
 export default function ModalCreate(props) {
 
   const [ createData, setCreateData ] = React.useState({
-    id_lessor: JSON.parse(localStorage.getItem('user')).id,
-    id_category: "",
-    name: ""
+    id_lessor: JSON.parse(localStorage.getItem('user')).id
   })
   const [selectCategories, setSelectCategories] = React.useState([]);
 
@@ -71,38 +69,31 @@ export default function ModalCreate(props) {
 },[])
 
   const handleClose = async (event) => {
-      if (event.target.id === 'create-product'){
-        if (createData.id_category === ""  || createData.name === "") {
-          props.setMsg({status: "error", message: "Completa los datos requeridos (*)"})
-          props.setOpenAlert(true)
-        } else {
-          props.setOpenModal(false);
-          props.setLoading(true)
-          try {
-            const url = 'https://system-rentail-api.herokuapp.com/products'
-            const config = {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
-                },
-                body: JSON.stringify(createData)
-                
-            }
-            await fetch(url, config)
-            props.setOpenAlert(true)
-            setTimeout(() => {
-              window.location.href = "/user/panel-products"
-            }, 1000)
-    
-          } catch (e){
-            console.log(e);
-          } 
+    props.setOpenModal(false);
+    if (event.target.id === 'create-product'){
+      props.setLoading(true)
+      try {
+        const url = 'https://system-rentail-api.herokuapp.com/products'
+        const config = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
+            },
+            body: JSON.stringify(createData)
+            
         }
-      } else {
-        props.setOpenModal(false);
-      }
-};
+        await fetch(url, config)
+        props.setOpenAlert(true)
+        setTimeout(() => {
+          window.location.href = "/user/panel-products"
+        }, 1000)
+
+      } catch (e){
+        console.log(e);
+      } 
+    }
+  };
 
   const handleChange = (event) => {
     if (event.target.id === "name"){
@@ -114,7 +105,7 @@ export default function ModalCreate(props) {
     } else {
       setCreateData({...createData, id_category:event.target.value})
     }
-}
+  }
 
   return (
     <>
@@ -128,7 +119,7 @@ export default function ModalCreate(props) {
           Crear Nuevo producto
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-            <TextField required="true" onChange={handleChange} className="input-product" id="name" label="Nombre" value={createData.name || "" }/>
+            <TextField onChange={handleChange} className="input-product" id="name" label="Nombre" value={createData.name || "" }/>
             <TextField
               id="category"
               select
@@ -136,7 +127,6 @@ export default function ModalCreate(props) {
               className="input-product"
               value={createData.id_category || ""}
               onChange={handleChange}
-              required="true"
             >
               {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>

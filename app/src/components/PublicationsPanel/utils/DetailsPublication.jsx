@@ -38,7 +38,7 @@ export default function FullScreenDialog(props) {
     props.setOpen(false);
   };
 
-  const disableProduct = async (action) => {
+  const disablePublication = async (action) => {
     setLoading(true);
     try {
       const url = 'https://system-rentail-api.herokuapp.com/publications/' + props.publicationData[0]._id
@@ -75,9 +75,9 @@ export default function FullScreenDialog(props) {
     if (event.target.id === "edit"){
       setOpenModal(true);
     } else if (event.target.id === "disable") {
-        disableProduct(false)
+        disablePublication(false)
     } else if (event.target.id === "enable") {
-      disableProduct(true)
+      disablePublication(true)
     }
   };
 
