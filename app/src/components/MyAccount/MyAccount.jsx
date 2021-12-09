@@ -179,11 +179,14 @@ export default function MyAccount(props) {
 
           const handleClick = (event) => {
             event.preventDefault();
-
             if (event.target.id === "card-request") {
               window.location.href = '/user/panel-requests'
             } else if (event.target.id === "card-products") {
               window.location.href = '/user/panel-products'
+            } else if (event.target.id === "card-publications") {
+              window.location.href = '/user/panel-publications'
+            } else if (event.target.id === "card-rents") {
+              window.location.href = '/user/panel-rents'
             }
           }
 
@@ -243,9 +246,10 @@ export default function MyAccount(props) {
                       </CardContent>
                     </CardActionArea>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} onClick={handleClick}>
                     <CardActionArea>
                       <CardMedia
+                        id="card-publications"
                         className="card-media"
                         component="img"
                         height="140"
@@ -253,15 +257,16 @@ export default function MyAccount(props) {
                         alt="publications"
                       />
                       <CardContent>
-                        <Typography className="text-card" gutterBottom variant="h5" component="div">
+                        <Typography id="card-publications" className="text-card" gutterBottom variant="h5" component="div">
                         Publicaciones
                         </Typography>
                       </CardContent>
                     </CardActionArea>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} onClick={handleClick}>
                     <CardActionArea>
                       <CardMedia
+                        id="card-rents"
                         className="card-media"
                         component="img"
                         height="140"
@@ -269,7 +274,7 @@ export default function MyAccount(props) {
                         alt="rents"
                       />
                       <CardContent>
-                        <Typography className="text-card" gutterBottom variant="h5" component="div">
+                        <Typography id="card-rents" className="text-card" gutterBottom variant="h5" component="div">
                         Rentas
                         </Typography>
                       </CardContent>

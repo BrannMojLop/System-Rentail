@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import SimpleBackdrop from '../../../utils/SimpleBackdrop/SimpleBackdrop'
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -9,16 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Stack from '@mui/material/Stack';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import "./modal-edit.sass"
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import "./modal-create.sass"
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -58,11 +50,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function ModalEdit(props) {
+export default function ModalCreate(props) {
 
-  const [ editData, setEditData ] = React.useState({})
-  const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Exito!"})
+  const [ createData, setCreateData ] = React.useState({
+    id_lessor: JSON.parse(localStorage.getItem('user')).id
+  })
   const [selectCategories, setSelectCategories] = React.useState([]);
 
   React.useEffect(() => {
@@ -78,21 +70,21 @@ export default function ModalEdit(props) {
 
   const handleClose = async (event) => {
     props.setOpenModal(false);
-    if (event.target.id === 'edit-product'){
-      setLoading(true)
+    if (event.target.id === 'create-product'){
+      props.setLoading(true)
       try {
-        const url = 'https://system-rentail-api.herokuapp.com/products/' + props.productData[0]._id
+        const url = 'https://system-rentail-api.herokuapp.com/products'
         const config = {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
               "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
             },
-            body: JSON.stringify(editData)
+            body: JSON.stringify(createData)
             
-        } 
+        }
         await fetch(url, config)
-        setOpenAlert(true)
+        props.setOpenAlert(true)
         setTimeout(() => {
           window.location.href = "/user/panel-products"
         }, 1000)
@@ -105,29 +97,18 @@ export default function ModalEdit(props) {
 
   const handleChange = (event) => {
     if (event.target.id === "name"){
-      setEditData({...editData, name:event.target.value});
+      setCreateData({...createData, name:event.target.value});
     } else if (event.target.id === "description"){
-      setEditData({...editData, description:event.target.value})
+      setCreateData({...createData, description:event.target.value})
     } else if (event.target.id === "image") {
-      setEditData({...editData, image:event.target.value})
+      setCreateData({...createData, image:event.target.value})
     } else {
-      setEditData({...editData, id_category:event.target.value})
+      setCreateData({...createData, id_category:event.target.value})
     }
   }
 
-  const [openAlert, setOpenAlert] = React.useState(false);
-      
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
-
   return (
     <>
-    {loading ? <SimpleBackdrop loading={true} />: null} 
     <div >
       <BootstrapDialog
         onClose={handleClose}
@@ -135,21 +116,21 @@ export default function ModalEdit(props) {
         open={props.openModal}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Editar: {props.productData[0].name}
+          Crear Nuevo producto
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-            <TextField onChange={handleChange} className="input-product" id="name" label="Nombre" value={editData.name || props.productData[0].name }/>
+            <TextField onChange={handleChange} className="input-product" id="name" label="Nombre" value={createData.name || "" }/>
             <TextField
               id="category"
               select
               label="Categoria"
               className="input-product"
-              value={editData.id_category || null}
+              value={createData.id_category || ""}
               onChange={handleChange}
             >
               {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>
-            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={editData.image || props.productData[0].image}/>
+            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={createData.image || ""}/>
             <TextField
             onChange={handleChange}
             className="input-product-multiline"
@@ -159,22 +140,15 @@ export default function ModalEdit(props) {
             rows={4}
             defaultValue="Default Value"
             variant="standard"
-            value={editData.description || props.productData[0].description}
+            value={createData.description || ""}
           />
         </DialogContent>
         <DialogActions>
-          <Button id="edit-product" autoFocus onClick={handleClose}>
-            Aplicar Cambios
+          <Button id="create-product" autoFocus onClick={handleClose}>
+            Crear Producto
           </Button>
         </DialogActions>
       </BootstrapDialog>
-      <Stack spacing={2}>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
-        <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
-          {msg.message}
-        </Alert>
-      </Snackbar>
-      </Stack>
     </div>
     </>
   );

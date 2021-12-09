@@ -16,7 +16,7 @@ Ofrecer un servicio para la implementación de un sistema de rentas, la cual sea
 
 ### Alcance de la API:
 
-En primer instancia la API esta enfocada a un servicio básico que de la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendadores de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo la forma en que sé esta modula rizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
+En primer instancia la API esta enfocada a un servicio básico que de la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendatarios de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo la forma en que sé esta modula rizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
 
 - Control de Pagos
 - Control de Envíos

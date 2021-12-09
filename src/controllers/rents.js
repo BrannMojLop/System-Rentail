@@ -17,7 +17,23 @@ async function showRents(req, res) {
                     'foreignField': '_id',
                     'as': 'request'
                 }
-            }, { '$unwind': '$request' }
+            }, { '$unwind': '$request' },
+            {
+                '$lookup': {
+                    'from': 'publications',
+                    'localField': 'request.id_publication',
+                    'foreignField': '_id',
+                    'as': 'publication'
+                }
+            }, { '$unwind': '$publication' },
+            {
+                '$lookup': {
+                    'from': 'products',
+                    'localField': 'publication.id_product',
+                    'foreignField': '_id',
+                    'as': 'product'
+                }
+            }, { '$unwind': '$product' }
         ], function (err, rents) {
             if (err) {
                 res.status(401).res.send(err);
@@ -33,8 +49,7 @@ async function showRents(req, res) {
                 });
                 res.status(200).send(result);
             }
-        }
-        )
+        })
     } else if (req.query.id_lessor) {
         await Rent.aggregate([
             {
@@ -44,7 +59,23 @@ async function showRents(req, res) {
                     'foreignField': '_id',
                     'as': 'request'
                 }
-            }, { '$unwind': '$request' }
+            }, { '$unwind': '$request' },
+            {
+                '$lookup': {
+                    'from': 'publications',
+                    'localField': 'request.id_publication',
+                    'foreignField': '_id',
+                    'as': 'publication'
+                }
+            }, { '$unwind': '$publication' },
+            {
+                '$lookup': {
+                    'from': 'products',
+                    'localField': 'publication.id_product',
+                    'foreignField': '_id',
+                    'as': 'product'
+                }
+            }, { '$unwind': '$product' }
         ], function (err, rents) {
             if (err) {
                 res.status(401).res.send(err);
@@ -60,8 +91,7 @@ async function showRents(req, res) {
                 });
                 res.status(200).send(result);
             }
-        }
-        )
+        })
     } else {
         await Rent.aggregate([
             {
@@ -71,16 +101,33 @@ async function showRents(req, res) {
                     'foreignField': '_id',
                     'as': 'request'
                 }
-            }, { '$unwind': '$request' }], function (err, rents) {
-                if (err) {
-                    res.status(401).res.send(err);
+            }, { '$unwind': '$request' },
+            {
+                '$lookup': {
+                    'from': 'publications',
+                    'localField': 'request.id_publication',
+                    'foreignField': '_id',
+                    'as': 'publication'
                 }
-                else if (rents.length === 0) {
-                    res.send("No se han encontrado registros");
-                } else {
-                    res.status(200).send(rents);
+            }, { '$unwind': '$publication' },
+            {
+                '$lookup': {
+                    'from': 'products',
+                    'localField': 'publication.id_product',
+                    'foreignField': '_id',
+                    'as': 'product'
                 }
+            }, { '$unwind': '$product' }
+        ], function (err, rents) {
+            if (err) {
+                res.status(401).res.send(err);
             }
+            else if (rents.length === 0) {
+                res.send("No se han encontrado registros");
+            } else {
+                res.status(200).send(rents);
+            }
+        }
         )
     }
 }

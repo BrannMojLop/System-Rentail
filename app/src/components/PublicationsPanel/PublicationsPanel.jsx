@@ -6,25 +6,25 @@ import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import SimpleBackdrop from '../utils/SimpleBackdrop/SimpleBackdrop'
 import ModalCreate from "./utils/ModalCreate/ModalCreate"
-import "./products-panel.sass"
+import "./publications-panel.sass"
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function ProductsPanel(){
+export default function PublicationsPanel(){
 
-    const [ productsData, setProductsData ] = React.useState(null)
+    const [ publicationsData, setpublicationsData ] = React.useState(null)
     const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
     
 
     React.useEffect(() => {
 
         setLoading(true);
 
-        const getProducts = async (url) => {
+        const getpublications = async (url) => {
           try {
             const config = {
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
@@ -34,7 +34,7 @@ export default function ProductsPanel(){
               headers: config
             }) 
               const jsonRequest = await request.json() 
-              setProductsData(jsonRequest)
+              setpublicationsData(jsonRequest)
               setHeaderData(Object.keys(jsonRequest[0]))
               setLoading(false)
 
@@ -42,9 +42,12 @@ export default function ProductsPanel(){
               console.log(e); 
             } } 
     
-            getProducts('https://system-rentail-api.herokuapp.com/products?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
+            getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
     
         },[]) 
+
+        console.log(publicationsData);
+        console.log(headerData);
 
         const [openModal, setOpenModal] = React.useState(false);
 
@@ -66,16 +69,16 @@ export default function ProductsPanel(){
     return (
         <>
             {loading ? <SimpleBackdrop loading={true} />: null} 
-            <div className="header-products">
-                <h3>Mis Productos</h3>
-                <div className="actions-products">
-                    <Button onClick={handleClickOpen} className="btn-add"variant="outlined"> <strong>+</strong> Agregar </Button>
+            <div className="header-publications-panel">
+                <h3>Mis Publicaciones</h3>
+                <div className="actions-publications-panel">
+                    <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicacion </Button>
                 </div>
             </div>
-            <div className="table-products">
-              {productsData !== null && headerData !== null ? <BasicTable productsData={productsData} headerData={headerData} /> : null}
+            <div className="table-publications-panel">
+              {publicationsData !== null && headerData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} headerData={headerData} /> : null}
             </div> 
-            {openModal ? <ModalCreate setMsg={setMsg} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
+            {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
               <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
