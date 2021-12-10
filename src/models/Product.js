@@ -9,7 +9,8 @@ const productSchema = new mongoose.Schema({
         type: String
     },
     image: {
-        type: String
+        type: String,
+        required: [true, 'El producto debe tener una imagen']
     },
     id_category: {
         type: mongoose.Types.ObjectId,

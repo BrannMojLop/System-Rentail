@@ -135,7 +135,7 @@ export default function FullScreenDialog(props) {
           </div>
           <div className="actions-publication-panel">
             <Button onClick={handleClickOpen} id="edit" className="btn-publication-panel"variant="outlined"> Editar Publicacion </Button>
-            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Publicacion</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Producto</Button> }
+            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Publicacion</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Publicacion</Button> }
           </div>
         </div>
         <div className="details-publication-panel">

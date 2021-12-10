@@ -182,6 +182,7 @@ export default function MyAccount(props) {
                       setOpenAlert(true); 
                       setDataEdit(null);
                       setPasswordEdit({password_current:"", password_new:""})
+                      setLoading(false)
                   } 
                 }
               } 
