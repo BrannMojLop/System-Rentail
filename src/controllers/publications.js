@@ -160,7 +160,7 @@ async function showPublications(req, res) {
         if (!req.query.min_price) {
             req.query.min_price = 0
         }
-        if (!req.query.max_price) {
+        if (!req.query.max_price || req.query.max_price == 0) {
             req.query.max_price = Infinity
         }
         await Publication.aggregate([
@@ -322,6 +322,12 @@ async function updatePublication(req, res) {
             await Publication.findByIdAndUpdate(req.params.id, {
                 $set: req.body
             });
+            if (req.body.status === false) {
+                await Product.updateOne({ _id: publication.id_product }, { $set: { published: false } })
+            } else if (req.body.status === true) {
+                await Product.updateOne({ _id: publication.id_product }, { $set: { published: true } })
+            }
+
             res.status(200).send({
                 message: 'Publicacion Actualizada con Exito'
             });

@@ -12,8 +12,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 
 export default function RangePriceM(props) {
   const [open, setOpen] = React.useState(false);
-  const [min_price, setMin_price] = React.useState(null);
-  const [max_price, setMax_price] = React.useState(null);
+  const [min_price, setMin_price] = React.useState(0);
+  const [max_price, setMax_price] = React.useState(0);
 
   const handleChangeMin = (event) => {
     setMin_price(event.target.value);
@@ -28,14 +28,20 @@ export default function RangePriceM(props) {
   };
 
   const handleClose = (event) => {
-    if (event.target.textContent === 'Cancel') {
-      setOpen(false);
-    } else if (event.target.textContent === 'Ok') {
-        props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
+      if (event.target.textContent === 'Cancel') {
         setOpen(false);
-    } else {
-      setOpen(false);
-    }
+        setMax_price(0)
+        setMin_price(0)
+      } else if (event.target.textContent === 'Ok') {
+          if (min_price > 0 || max_price > 0) {
+            props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
+            setMax_price(0)
+            setMin_price(0)
+            setOpen(false);
+           }
+      } else {
+        setOpen(false);
+      }
   };
 
   return (

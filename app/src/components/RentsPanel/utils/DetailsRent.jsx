@@ -119,7 +119,7 @@ export default function FullScreenDialog(props) {
             <p>{props.rentInfo[0].product.name}</p>
           </div>
           <div className="actions-product">
-            {props.rentInfo[0].payment || props.rentInfo[0].status.status === "Cancelada" ? null : <Button className="btn-product"variant="outlined" id="payment" onClick={handleClickAction}>Marcar como Pagada</Button> }
+            {props.rentInfo[0].payment || props.rentInfo[0].status.status === "Cancelada" ? null : <Button className="btn-product"variant="outlined" id="payment" onClick={handleClickAction}>Pagar Renta</Button> }
             {(props.rentInfo[0].payment && props.rentInfo[0].status.status === "Activa") || props.rentInfo[0].status.status === "Cancelada" ? null : <Button className="btn-product"variant="outlined" id="cancel" onClick={handleClickAction}>Cancelar Renta</Button> }
           </div>
         </div>

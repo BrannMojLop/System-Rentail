@@ -15,7 +15,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function ProductsPanel(){
 
     const [ productsData, setProductsData ] = React.useState(null)
-    const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
     
@@ -35,7 +34,6 @@ export default function ProductsPanel(){
             }) 
               const jsonRequest = await request.json() 
               setProductsData(jsonRequest)
-              setHeaderData(Object.keys(jsonRequest[0]))
               setLoading(false)
 
             } catch (e){ 
@@ -73,7 +71,7 @@ export default function ProductsPanel(){
                 </div>
             </div>
             <div className="table-products">
-              {productsData !== null && headerData !== null ? <BasicTable productsData={productsData} headerData={headerData} /> : null}
+              {productsData !== null ? <BasicTable productsData={productsData} /> : null}
             </div> 
             {openModal ? <ModalCreate setMsg={setMsg} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>

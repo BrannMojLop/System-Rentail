@@ -125,6 +125,35 @@ export default function Login() {
     const [ password, setPassword ] = React.useState(null);
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "", message: ""})
+    const [ nextPage, setNextPage ] = React.useState("/catalog");
+
+    React.useEffect(() => {
+      if (window.location.href.includes("redirect")) {
+        let params = new URLSearchParams(document.location.search);
+        switch (params.get('next')) {
+          case "account":
+            setNextPage("/user/account")
+            break;
+          case "products":
+            setNextPage("/user/panel-products")
+            break;
+          case "requests":
+            setNextPage("/user/panel-requests")
+            break;
+          case "publications":
+            setNextPage("/user/panel-publications")
+            break;
+          case "rents":
+            setNextPage("/user/panel-rents")
+            break;
+          case "catalog":
+            setNextPage("/catalog/detailsPublication/" + params.get("publication"))
+            break;
+        }
+        setMsg({status: "warning", message: `Inicia sesión para continuar!`})
+        setOpenAlert(true)
+      }
+    },[])
 
     async function sendLogin(event) {
         event.preventDefault()
@@ -166,7 +195,7 @@ export default function Login() {
               setOpenAlert(true)
               setTimeout(() => {
                 setLoading(false)
-                window.location.href = "/catalog"
+                window.location.href = nextPage
               }, 2000)
             }
           } catch (e){

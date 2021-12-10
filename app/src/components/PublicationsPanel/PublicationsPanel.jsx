@@ -15,7 +15,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function PublicationsPanel(){
 
     const [ publicationsData, setpublicationsData ] = React.useState(null)
-    const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
     
@@ -33,17 +32,16 @@ export default function PublicationsPanel(){
             const request = await fetch(url, {
               headers: config
             }) 
-              const jsonRequest = await request.json() 
-              setpublicationsData(jsonRequest)
-              setHeaderData(Object.keys(jsonRequest[0]))
-              setLoading(false)
+            const jsonRequest = await request.json() 
+            setpublicationsData(jsonRequest)
+            setLoading(false)
 
             } catch (e){ 
-              console.log(e); 
-            } } 
-    
-            getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
-    
+              setpublicationsData([])
+              setLoading(false) 
+            } 
+          } 
+          getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
         },[]) 
 
         const [openModal, setOpenModal] = React.useState(false);
@@ -73,7 +71,7 @@ export default function PublicationsPanel(){
                 </div>
             </div>
             <div className="table-publications-panel">
-              {publicationsData !== null && headerData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} headerData={headerData} /> : null}
+              {publicationsData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} /> : null}
             </div> 
             {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>
