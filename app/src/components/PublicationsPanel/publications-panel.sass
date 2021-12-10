@@ -9,7 +9,7 @@
     padding-bottom: 0%
 
     h3
-        font-size: 2em
+        font-size: 1.5em
         color: black
 
     .actions-publications-panel
@@ -141,13 +141,13 @@
         .description
             width: 40%
             h3
-                font-size: 1em
-
-            p
                 font-size: 0.8em
 
+            p
+                font-size: 0.6em
+
         .actions-publication-panel
-            width: 40%
+            width: 50%
             flex-direction: column
             .btn-publication-panel
                 font-size: 0.6em
@@ -157,26 +157,7 @@
 @media (max-width: $medium) and (min-width: $small + 1px)
     .header-publications
         h3
-            font-size: 1.3em
-
-    .header-publication-panel
-        h3
-            font-size: 0.8em
-        .description
-            width: 40%
-            h3
-                font-size: 1em
-
-            p
-                font-size: 0.8em
-
-        .actions-publication-panel
-            width: 40%
-            flex-direction: column
-            .btn-publication-panel
-                font-size: 0.6em
-                width: 70%
-                margin: 1%
+            font-size: 1.1em
 
     .table-desktop
         display: none
@@ -205,10 +186,25 @@
                     width: 80%
                     margin-right: 5%
 
+    .header-publication-panel
+        .description
+            width: 40%
+            h3
+                font-size: 1em
+            p
+                font-size: 0.8em
+        .actions-publication-panel
+            width: 40%
+            flex-direction: column
+            .btn-publication-panel
+                font-size: 0.7em
+                width: 70%
+                margin: 1%
+
 @media (max-width: $medium-large) and (min-width: $medium + 1px)
-    .header-publications-panel
+    .header-publications
         h3
-            font-size: 1.5em
+            font-size: 1.2em
 
     .table-mobile
         display: block
@@ -217,6 +213,9 @@
 
     .table-desktop
         display: none
+
+    .table-publications-panel
+        padding-top: 1%
 
     .details-publication-panel
         .box-image-publication
@@ -240,15 +239,17 @@
                     width: 80%
                     margin-right: 5%
 
-    .header-publication
+    .header-publication-panel
         .description
             width: 40%
             h3
-                font-size: 1.2em
-
-    .actions-publication-panel
-        width: 40%
-        .btn-publication-panel
-            font-size: 0.7em
-            width: 50%
-            margin: 1%
+                font-size: 1em
+            p
+                font-size: 0.8em
+        .actions-publication-panel
+            width: 40%
+            flex-direction: column
+            .btn-publication-panel
+                font-size: 0.8em
+                width: 70%
+                margin: 1%

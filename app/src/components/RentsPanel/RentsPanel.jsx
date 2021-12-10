@@ -58,7 +58,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function RentsPanel(){
 
     const [ rentsData, setRentsData] = React.useState(null)
-    const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
     const [ optionSwitch, setOptionSwitch ] = React.useState(0)
     const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
@@ -80,7 +79,6 @@ export default function RentsPanel(){
             }) 
               const jsonRequest = await request.json() 
               setRentsData(jsonRequest)
-              setHeaderData(Object.keys(jsonRequest[0]))
               setLoading(false)
 
             } catch (e){ 
@@ -124,7 +122,7 @@ export default function RentsPanel(){
                 </div>
             </div>
             <div className="table-products">
-              {rentsData !== null && headerData !== null ? <BasicTable setLoading={setLoading} rentsData={rentsData} headerData={headerData} /> : null}
+              {rentsData !== null ? <BasicTable setLoading={setLoading} rentsData={rentsData} /> : null}
             </div> 
             <Stack spacing={2}>
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>

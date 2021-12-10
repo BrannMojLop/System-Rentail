@@ -79,7 +79,7 @@ export default function CardDetails(props) {
             setMsg({status: "warning", message: "Es necesario tener una cuenta para rentar"})
             setTimeout(() => {
                 setLoading(false)
-                window.location.href = "/user/login"
+                window.location.href = "/user/login/redirect?next=catalog&publication=" + props.publication[0]._id
             }, 1500);
         }
     }

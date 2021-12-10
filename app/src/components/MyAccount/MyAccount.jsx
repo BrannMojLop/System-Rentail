@@ -47,7 +47,7 @@ export default function MyAccount(props) {
         const getUser = async (url) => {
           try {
             const config = {
-                "Authorization": "Bearer " + props.user.token
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
             }
     
             const request = await fetch(url, {
@@ -65,9 +65,7 @@ export default function MyAccount(props) {
             } catch (e){ 
               console.log(e); 
             } } 
-    
-            getUser('https://system-rentail-api.herokuapp.com/users/' + props.user.id)
-    
+            getUser('https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id)
         }, [])
     
       React.useEffect(() => {
@@ -76,7 +74,7 @@ export default function MyAccount(props) {
         const getUser = async (url) => {
           try {
             const config = {
-                "Authorization": "Bearer " + props.user.token
+                "Authorization": "Bearer " + window.localStorage.getItem('user').token
             }
     
             const request = await fetch(url, {
@@ -94,7 +92,7 @@ export default function MyAccount(props) {
               console.log(e); 
             } } 
     
-            getUser('https://system-rentail-api.herokuapp.com/users/' + props.user.id)
+            getUser('https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id)
     
         }, [userData]);
     
@@ -143,43 +141,50 @@ export default function MyAccount(props) {
             if (reason === 'backdropClick') {
               setOpen(false);
               setDataEdit(null);
+              setPasswordEdit({password_current:"", password_new:""})
             }
             else if (event.target.textContent === "Cancel") {
               setOpen(false);
               setDataEdit(null);
+              setPasswordEdit({password_current:"", password_new:""})
     
             } else {
               if (!dataEdit) {
-                setMsg({status: "error", message: "Complete los datos requeridos (*)"})
-                setOpenAlert(true)
-              } else {
-                setOpen(false);
-                setLoading(true);
-      
-                try {
-                  const url = 'https://system-rentail-api.herokuapp.com/users/' + props.user.id
-                  const config = {
-                      method: "PUT",
-                      headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + props.user.token
-                      },
-                      body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
-                  }
-                  await fetch(url, config)
-                  
-                  setUserData({})
-                  setDataEdit(null);
-                  setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+                if(passwordEdit.password_current == "" || passwordEdit.password_new == "") {
+                  console.log(event);
+                  setMsg({status: "error", message: "Complete los datos requeridos (*)"})
                   setOpenAlert(true)
-                  setLoading(false)
-      
-                } catch (e){ 
-                    setMsg({status: "error", message: "No se pudo Actualizar!"})
-                    setOpenAlert(true); 
+                } else {
+                  setOpen(false);
+                  setLoading(true);
+        
+                  try {
+                    const url = 'https://system-rentail-api.herokuapp.com/users/' + window.localStorage.getItem('user').id
+                    const config = {
+                        method: "PUT",
+                        headers: {
+                          "Content-Type": "application/json",
+                          "Authorization": "Bearer " + window.localStorage.getItem('user').token
+                        },
+                        body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
+                    }
+                    const request = await fetch(url, config)
+                    const jsonRequest = await request.json()
+                    setUserData({})
                     setDataEdit(null);
-                } 
-              }
+                    setPasswordEdit({password_current:"", password_new:""})
+                    setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+                    setOpenAlert(true)
+                    setLoading(false)
+        
+                  } catch (e){ 
+                      setMsg({status: "error", message: "No se pudo Actualizar, valide sus credenciales!"})
+                      setOpenAlert(true); 
+                      setDataEdit(null);
+                      setPasswordEdit({password_current:"", password_new:""})
+                  } 
+                }
+              } 
             }
           };
     
@@ -323,7 +328,7 @@ export default function MyAccount(props) {
                             <TextField id="textEdit" label={dialogText == "Contraseña" ? dialogText + ' Actual' : dialogText} variant="outlined" onChange={handleChange} required="true" />
                           </FormControl>
                           {dialogText == "Contraseña" ? <FormControl sx={{ m: 1, minWidth: 120 }}>
-                            <TextField id="textEditNew" label={'Nueva ' + dialogText} variant="outlined" onChange={handleChange} />
+                            <TextField id="textEditNew" label={'Nueva ' + dialogText} variant="outlined" onChange={handleChange} required="true" />
                           </FormControl>: null}
                         </Box>
                     </DialogContent>

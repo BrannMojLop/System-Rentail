@@ -45,16 +45,23 @@ export default function FullScreenDialog(props) {
           body: JSON.stringify({ status: action })
           
       } 
-      await fetch(url, config)
-      if (action){
-        setMsg({status: "success", message: "Producto Activado con Exito!"})
+
+      if (props.productData[0].published) {
+        setMsg({status: "warning", message: "El producto esta publicado no puede ser Deshabilitado!"})
+        setOpenAlert(true)
+        setLoading(false)
       } else {
-        setMsg({status: "success", message: "Producto Deshabilitado con Exito!"})
+        await fetch(url, config)
+        if (action){
+          setMsg({status: "success", message: "Producto Activado con Exito!"})
+        } else {
+          setMsg({status: "success", message: "Producto Deshabilitado con Exito!"})
+        }
+        setOpenAlert(true)
+        setTimeout(() => {
+          window.location.href = "/user/panel-products"
+        }, 1500)
       }
-      setOpenAlert(true)
-      setTimeout(() => {
-        window.location.href = "/user/panel-products"
-      }, 1500)
 
     } catch (e){
       setMsg({status: "error", message: "No se pudo Deshabilitar!"})

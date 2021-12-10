@@ -102,7 +102,6 @@ export default function PrimarySearchAppBar(props) {
       window.location.href = "/user/account";
     } else if (event.target.textContent === "Cerrar Sesión") {
       window.localStorage.removeItem('user')
-      props.setUser(null)
       setMsg({status: "success", message: "La sesion ha finalizado"})
       setOpenAlert(true)
       setTimeout(() => {
@@ -153,8 +152,8 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      { props.user ?  <Link style={{textDecoration: 'none', color: 'black'}} to="/user/account"><MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem></Link> : <Link style={{textDecoration: 'none', color: 'black'}} to="/user/login"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></Link>}
-      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
+      { window.localStorage.getItem('user') ?  <Link style={{textDecoration: 'none', color: 'black'}} to="/user/account"><MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem></Link> : <Link style={{textDecoration: 'none', color: 'black'}} to="/user/login"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></Link>}
+      { window.localStorage.getItem('user') ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
     </Menu>
   );
 
@@ -175,8 +174,8 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      { props.user ?  <Link style={{textDecoration: 'none', color: 'black'}} to="/user/account"><MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem></Link> : <Link style={{textDecoration: 'none', color: 'black'}} to="/user/login"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></Link>}
-      { props.user ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
+      { window.localStorage.getItem('user') ?  <Link style={{textDecoration: 'none', color: 'black'}} to="/user/account"><MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem></Link> : <Link style={{textDecoration: 'none', color: 'black'}} to="/user/login"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></Link>}
+      { window.localStorage.getItem('user') ?  <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem> : null}
       {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">

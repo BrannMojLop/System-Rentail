@@ -21,30 +21,33 @@ import {
 
 export default function App() {
 
-  const [ user, setUser] = useState(null)
-
-  useEffect(() => {
-    if (window.localStorage.getItem('user')) {
-      setUser(JSON.parse(localStorage.getItem('user')));
-    }
-  }, [])
-
   return (
     <div className="App">
-      <PrimarySearchAppBar user={user} setUser={setUser} />
+      <PrimarySearchAppBar />
       <Router>
         <Switch>
+        <Route exact path="/user/login/redirect">
+            <Login />
+          </Route>
           <Route exact path="/user/login">
-            <Login setUser={setUser} />
+            <Login />
           </Route>
           <Route exact path="/user/account">
-            {user ? <MyAccount user={user}/> : null }
+            {window.localStorage.getItem('user') ? <MyAccount /> : <Redirect to="/user/login/redirect?next=account"/> }
           </Route>
           <Route exact path="/user/register" component={Register}/>
-          <Route exact path="/user/panel-requests" component={RequestPanel}/>
-          <Route exact path="/user/panel-products" component={ProductsPanel}/>
-          <Route exact path="/user/panel-publications" component={PublicationsPanel}/>
-          <Route exact path="/user/panel-rents" component={RentsPanel}/>
+          <Route exact path="/user/panel-requests">
+            {window.localStorage.getItem('user') ? <RequestPanel /> : <RequestPanel to="/user/login/redirect?next=requests"/> }
+          </Route>
+          <Route exact path="/user/panel-products">
+            {window.localStorage.getItem('user') ? <ProductsPanel /> : <Redirect to="/user/login/redirect?next=products"/> }
+          </Route>
+          <Route exact path="/user/panel-publications">
+            {window.localStorage.getItem('user') ? <PublicationsPanel /> : <Redirect to="/user/login/redirect?next=publications"/> }
+          </Route>
+          <Route exact path="/user/panel-rents">
+            {window.localStorage.getItem('user') ? <RentsPanel /> : <Redirect to="/user/login/redirect?next=rents"/> }
+          </Route>
           <Route exact path="/catalog" component={Catalog}/>
           <Route exact path="/catalog/search/:search" component={Catalog}/>
           <Route exact path="/catalog/detailsPublication/:id" component={DetailsPublication}/>
