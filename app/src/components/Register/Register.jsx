@@ -134,7 +134,9 @@ export default function Register() {
     async function sendRegister(event) {
         event.preventDefault()
         setLoading(true)
-        try {
+
+        if (formData.email && formData.username && formData.password) {
+          try {
             const url = 'https://system-rentail-api.herokuapp.com/users'
             const config = {
                 method: "POST",
@@ -165,6 +167,11 @@ export default function Register() {
               setOpenAlert(true); 
               setLoading(false)
           } 
+        } else {
+          setMsg({status: "error", message: `Completa los datos requeridos (*)`})
+          setOpenAlert(true)
+          setLoading(false)
+        }
     }
 
     function handleChange(event) {
@@ -198,16 +205,17 @@ export default function Register() {
             <div className="actions-register">
             <h2>Nueva Cuenta</h2>
             <h4>Ingresa los siguientes datos y activa tu cuenta</h4>
-                <TextField onChange={handleChange} className="input-text" id="firstname" label="Nombre"  placeholder="Ingresa tu Nombre" variant="outlined" />
-                <TextField onChange={handleChange} className="input-text" id="lastname" label="Apellidos"  placeholder="Ingresa tus Apellidos" variant="outlined" />
-                <TextField onChange={handleChange} className="input-text" id="email" label="Email"  placeholder="Ingresa tu Email" variant="outlined" />
-                <TextField onChange={handleChange} className="input-text" id="username" label="Username"  placeholder="Ingresa un Alias" variant="outlined" />
-                <TextField onChange={handleChange} type="password" className="input-text" id="password" label="Contraseña"  placeholder="Ingresa tu Contraseña" variant="outlined" />
-                <SvgButton onClick={sendRegister}  id="submit-login">Registrarme</SvgButton>
-                <a onClick={(event) => {
-                  event.preventDefault();
-                  window.location.href = "/user/login"
-                }} >Ya tengo una Cuenta</a>
+            <p>Recuerda los campor con (*) son obligatorios</p>
+            <TextField onChange={handleChange} className="input-text" id="firstname" label="Nombre"  placeholder="Ingresa tu Nombre" variant="outlined" />
+            <TextField onChange={handleChange} className="input-text" id="lastname" label="Apellidos"  placeholder="Ingresa tus Apellidos" variant="outlined" />
+            <TextField onChange={handleChange} className="input-text" type="email" id="email" label="Email"  placeholder="Ingresa tu Email" variant="outlined" required="true" />
+            <TextField onChange={handleChange} className="input-text" id="username" label="Username"  placeholder="Ingresa un Alias" variant="outlined" required="true" />
+            <TextField onChange={handleChange} type="password" className="input-text" id="password" label="Contraseña"  placeholder="Ingresa tu Contraseña" variant="outlined" required="true" />
+            <SvgButton onClick={sendRegister}  id="submit-login">Registrarme</SvgButton>
+            <a onClick={(event) => {
+              event.preventDefault();
+              window.location.href = "/user/login"
+            }} >Ya tengo una Cuenta</a>
             </div>
         </div>
         <Stack spacing={2}>

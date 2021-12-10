@@ -39,7 +39,7 @@ export default function BasicSelectM(props) {
   const handleClose = (event) => {
     if (event.target.textContent === 'Cancel') {
       setOpen(false);
-    } else {
+    } else if (event.target.textContent === 'Ok'){
         if (selectOption === 'Mostrar Todos'){
             props.searchPublications('https://system-rentail-api.herokuapp.com/publications')
             setOpen(false);
@@ -47,6 +47,8 @@ export default function BasicSelectM(props) {
             props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search + '=' + selectOption, selectSearch)
             setOpen(false);
           }
+    } else {
+      setOpen(false);
     }
   };
 

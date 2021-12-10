@@ -24,7 +24,7 @@ export default function DetailsPublication(props) {
               setPublication([])
           }
         }
-
+    
         let { id } = props.match.params    
         getPublication('https://system-rentail-api.herokuapp.com/publications/' + id)
     

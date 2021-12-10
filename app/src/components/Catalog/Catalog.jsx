@@ -11,8 +11,7 @@ export default function Catalog(props) {
     const [ publications, setPublications ] = useState([]);
     const [ loading, setLoading ] = useState(null);
     const [ notResult, setNotResult ] = useState(null);
-    const [ search, setSearch ] = useState(null)
-    console.log(props);
+    const [ search, setSearch ] = useState(null);
 
     useEffect(() => {
         const getPublications = async (url) => {

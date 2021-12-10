@@ -4,17 +4,19 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import TextField from '@mui/material/TextField';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 export default function RangePriceM(props) {
   const [open, setOpen] = React.useState(false);
-  const [min_price, setMin_price] = React.useState(0);
-  const [max_price, setMax_price] = React.useState(0);
+  const [min_price, setMin_price] = React.useState(null);
+  const [max_price, setMax_price] = React.useState(null);
 
   const handleChangeMin = (event) => {
-      setMin_price(event.target.value);
+    setMin_price(event.target.value);
   };
   
   const handleChangeMax = (event) => {
@@ -28,9 +30,11 @@ export default function RangePriceM(props) {
   const handleClose = (event) => {
     if (event.target.textContent === 'Cancel') {
       setOpen(false);
-    } else {
+    } else if (event.target.textContent === 'Ok') {
         props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)
         setOpen(false);
+    } else {
+      setOpen(false);
     }
   };
 
@@ -42,8 +46,30 @@ export default function RangePriceM(props) {
         <DialogContent>
           <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <TextField onChange={(e) => {handleChangeMin(e)}} type='number' id="min_price" label="Min Precio" variant="outlined" min={0} max={5000}/>
-              <TextField onChange={(e) => {handleChangeMax(e)}} type='number' id="max_price" label="Max Precio" variant="outlined" min={0} max={5000}/>
+              {/* <TextField onChange={(e) => {handleChangeMin(e)}} type='number' id="min_price" label="Min Precio" variant="outlined" value={min_price} min={0} max={5000}/> */}
+              {/* <TextField onChange={(e) => {handleChangeMax(e)}} type='number' id="max_price" label="Max Precio" variant="outlined" value={max_price} min={0} max={5000}/> */}
+              <FormControl style={{ margin: '5% 0%' }}>
+              <InputLabel htmlFor="min_price">Min Precio</InputLabel>
+              <OutlinedInput
+                id="min_price"
+                type='number'
+                min={0} 
+                max={5000}
+                onChange={(e) => {handleChangeMin(e)}}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                label="min_price"
+               />
+              </FormControl>
+              <FormControl>
+              <InputLabel htmlFor="max_price">Max Precio</InputLabel>
+              <OutlinedInput
+                id="max_price"
+                type='number'
+                onChange={(e) => {handleChangeMax(e)}}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                label="max_price"
+               />
+               </FormControl>
             </FormControl>
           </Box>
         </DialogContent>

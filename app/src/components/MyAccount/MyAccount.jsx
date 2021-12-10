@@ -103,16 +103,19 @@ export default function MyAccount(props) {
           const handleChange = (event) => {
             switch (dialogText) {
               case 'Username':
-                setDataEdit({username: event.target.value})
+                if(event.target.value !== ""){
+                  setDataEdit({username: event.target.value})
+                } 
                 break;
               case 'Nombre': 
+              if(event.target.value !== ""){
                 setDataEdit({firstname: event.target.value})
+              } 
                 break;
               case 'Apellidos': 
+              if(event.target.value !== ""){
                 setDataEdit({lastname: event.target.value})
-                break;
-              case 'Email': 
-                setDataEdit({email: event.target.value})
+              } 
                 break;
               case 'Contraseña':
                 if (event.target.id === "textEditNew"){
@@ -124,46 +127,59 @@ export default function MyAccount(props) {
           };
         
           const handleClickOpen = (event) => {
-                if(event.target.id === ""){
+                if (event.target.id == "Correo") {
+                    setMsg({status: "warning", message: "Esta opción pronto estara disponible"})
+                    setOpenAlert(true)
+                } else if(event.target.id === ""){
                     setDialogText(event.target.parentElement.id);
+                    setOpen(true);
                 } else {
                     setDialogText(event.target.id);
+                    setOpen(true);
                 }
-                setOpen(true);
           };
         
           const handleClose = async (event, reason) => {
             if (reason === 'backdropClick') {
               setOpen(false);
+              setDataEdit(null);
             }
             else if (event.target.textContent === "Cancel") {
               setOpen(false);
+              setDataEdit(null);
     
             } else {
-              setOpen(false);
-              setLoading(true);
-    
-              try {
-                const url = 'https://system-rentail-api.herokuapp.com/users/' + props.user.id
-                const config = {
-                    method: "PUT",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Authorization": "Bearer " + props.user.token
-                    },
-                    body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
-                }
-    
-                await fetch(url, config)
-                setUserData({})
-                setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+              if (!dataEdit) {
+                setMsg({status: "error", message: "Complete los datos requeridos (*)"})
                 setOpenAlert(true)
-                setLoading(false)
-    
-              } catch (e){ 
-                  setMsg({status: "error", message: "No se pudo Actualizar!"})
-                  setOpenAlert(true); 
-              } 
+              } else {
+                setOpen(false);
+                setLoading(true);
+      
+                try {
+                  const url = 'https://system-rentail-api.herokuapp.com/users/' + props.user.id
+                  const config = {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + props.user.token
+                      },
+                      body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
+                  }
+                  await fetch(url, config)
+                  
+                  setUserData({})
+                  setDataEdit(null);
+                  setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+                  setOpenAlert(true)
+                  setLoading(false)
+      
+                } catch (e){ 
+                    setMsg({status: "error", message: "No se pudo Actualizar!"})
+                    setOpenAlert(true); 
+                    setDataEdit(null);
+                } 
+              }
             }
           };
     
@@ -304,7 +320,7 @@ export default function MyAccount(props) {
                     <DialogContent>
                         <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                           <FormControl sx={{ m: 1, minWidth: 120 }}>
-                            <TextField id="textEdit" label={dialogText == "Contraseña" ? dialogText + ' Actual' : dialogText} variant="outlined" onChange={handleChange} />
+                            <TextField id="textEdit" label={dialogText == "Contraseña" ? dialogText + ' Actual' : dialogText} variant="outlined" onChange={handleChange} required="true" />
                           </FormControl>
                           {dialogText == "Contraseña" ? <FormControl sx={{ m: 1, minWidth: 120 }}>
                             <TextField id="textEditNew" label={'Nueva ' + dialogText} variant="outlined" onChange={handleChange} />

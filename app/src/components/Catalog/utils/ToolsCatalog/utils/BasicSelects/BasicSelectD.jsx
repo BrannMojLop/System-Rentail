@@ -45,6 +45,7 @@ export default function BasicSelectD(props) {
           {options.map((o) => <MenuItem value={o._id}>{o.name}</MenuItem> )}
         </Select>
         <Button className="btn-select"onClick={(e) => {
+          console.log(e);
           if (selectOption === 'Mostrar Todos'){
             props.searchPublications('https://system-rentail-api.herokuapp.com/publications')
           } else{
