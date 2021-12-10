@@ -55,7 +55,8 @@ export default function ModalCreate(props) {
   const [ createData, setCreateData ] = React.useState({
     id_lessor: JSON.parse(localStorage.getItem('user')).id,
     id_category: "",
-    name: ""
+    name: "",
+    image: ""
   })
   const [selectCategories, setSelectCategories] = React.useState([]);
 
@@ -72,7 +73,7 @@ export default function ModalCreate(props) {
 
   const handleClose = async (event) => {
       if (event.target.id === 'create-product'){
-        if (createData.id_category === ""  || createData.name === "") {
+        if (createData.id_category === ""  || createData.name === "" || createData.image === "") {
           props.setMsg({status: "error", message: "Completa los datos requeridos (*)"})
           props.setOpenAlert(true)
         } else {
@@ -140,7 +141,7 @@ export default function ModalCreate(props) {
             >
               {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>
-            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={createData.image || ""}/>
+            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={createData.image || ""} required="true"/>
             <TextField
             onChange={handleChange}
             className="input-product-multiline"
