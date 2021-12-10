@@ -127,12 +127,16 @@ export default function MyAccount(props) {
           };
         
           const handleClickOpen = (event) => {
-                if(event.target.id === ""){
+                if (event.target.id == "Correo") {
+                    setMsg({status: "warning", message: "Esta opción pronto estara disponible"})
+                    setOpenAlert(true)
+                } else if(event.target.id === ""){
                     setDialogText(event.target.parentElement.id);
+                    setOpen(true);
                 } else {
                     setDialogText(event.target.id);
+                    setOpen(true);
                 }
-                setOpen(true);
           };
         
           const handleClose = async (event, reason) => {
@@ -145,10 +149,7 @@ export default function MyAccount(props) {
               setDataEdit(null);
     
             } else {
-              if (dialogText == "Correo") {
-                setMsg({status: "warning", message: "Esta opción pronto estara disponible"})
-                setOpenAlert(true)
-              } else if (!dataEdit) {
+              if (!dataEdit) {
                 setMsg({status: "error", message: "Complete los datos requeridos (*)"})
                 setOpenAlert(true)
               } else {
