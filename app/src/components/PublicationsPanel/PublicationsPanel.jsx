@@ -46,9 +46,6 @@ export default function PublicationsPanel(){
     
         },[]) 
 
-        console.log(publicationsData);
-        console.log(headerData);
-
         const [openModal, setOpenModal] = React.useState(false);
 
         const handleClickOpen = () => {
@@ -69,7 +66,7 @@ export default function PublicationsPanel(){
     return (
         <>
             {loading ? <SimpleBackdrop loading={true} />: null} 
-            <div className="header-publications-panel">
+            <div className="header-publications">
                 <h3>Mis Publicaciones</h3>
                 <div className="actions-publications-panel">
                     <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicacion </Button>
