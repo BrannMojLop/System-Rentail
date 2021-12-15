@@ -190,10 +190,19 @@ export  function CollapsibleTable(props) {
           
           try{
               const response = await fetch(url)
-              const data = await response.json()
-              //console.log(data)
-              setRequests(data)
-              setLoading(false)
+             
+            
+              if (response.status != 404){
+                const data = await response.json()
+                setRequests(data)
+                setLoading(false)
+
+              }
+              else {
+                setLoading(false)
+            
+              }
+              
           } catch(err){
               console.log(err)
           }
@@ -260,10 +269,19 @@ export  function CollapsibleTableMobile(props) {
           
           try{
               const response = await fetch(url)
-              const data = await response.json()
-              //console.log(data)
-              setRequests(data)
-              setLoading(false)
+            
+             
+              if (response.status != 404){
+                const data = await response.json()
+                setRequests(data)
+                setLoading(false)
+
+              }
+              else {
+                setLoading(false)
+              }
+              
+              
           } catch(err){
               console.log(err)
           }
