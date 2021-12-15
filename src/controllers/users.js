@@ -211,36 +211,29 @@ async function updateUser(req, res) {
   await connect();
 
   const user = await User.findById(req.usuario.id);
-  const type = await user.typeUser(user.id_type);
   const userSearch = await User.findById(req.params.id);
   if (!user) {
     res.status(204).send("No se han encontrado registros");
   } else {
-    if (type === 2) {
-      await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      res.status(200).send({
-        message: "Usuario Actualizado con Exito",
-      });
-    } else if (user.id == userSearch._id) {
+    if (user.id == userSearch._id) {
       if (req.body.password_new) {
         if (userSearch.validationPassword(req.body.password_current)) {
           const passwordNew = userSearch.updatePassword(req.body.password_new);
           delete req.body.password;
           req.body.salt = passwordNew[0];
           req.body.hash = passwordNew[1];
+          return res.status(200).send("Contraseña actualizada con exito")
         } else {
           return res.status(400).send("La contraseña actual es incorrecta");
         }
+      } else {
+        await User.findByIdAndUpdate(req.params.id, {
+          $set: req.body,
+        });
+        res.status(200).send({
+          message: "Usuario Actualizado con Exito",
+        });
       }
-
-      await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      res.status(200).send({
-        message: "Usuario Actualizado con Exito",
-      });
     } else {
       res.status(401).send("Permisos insuficientes");
     }
