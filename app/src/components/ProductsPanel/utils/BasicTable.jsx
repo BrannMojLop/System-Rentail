@@ -79,8 +79,8 @@ export default function CustomizedTables(props) {
 
             let dateCreated = new Date(product.createdAt);
             let dateUpdated = new Date(product.updatedAt);
-            dateCreated = dateCreated.getDate() + "-"+ dateCreated.getMonth()+ "-" +dateCreated.getFullYear()
-            dateUpdated = dateUpdated.getDate() + "-"+ dateUpdated.getMonth() + "-" + dateUpdated.getFullYear()
+            dateCreated = dateCreated.getDate() + "-"+ (dateCreated.getMonth()+1)+ "-" +dateCreated.getFullYear()
+            dateUpdated = dateUpdated.getDate() + "-"+ (dateUpdated.getMonth()+1) + "-" + dateUpdated.getFullYear()
 
             return (
               <StyledTableRow key={product.name} className="item-table" onClick={handleClick}>
@@ -119,8 +119,8 @@ export default function CustomizedTables(props) {
 
             let dateCreated = new Date(product.createdAt);
             let dateUpdated = new Date(product.updatedAt);
-            dateCreated = dateCreated.getDate() + "-"+ dateCreated.getMonth()+ "-" +dateCreated.getFullYear()
-            dateUpdated = dateUpdated.getDate() + "-"+ dateUpdated.getMonth() + "-" + dateUpdated.getFullYear()
+            dateCreated = dateCreated.getDate() + "-"+ (dateCreated.getMonth()+1) + "-" +dateCreated.getFullYear()
+            dateUpdated = dateUpdated.getDate() + "-"+ (dateUpdated.getMonth()+1) + "-" + dateUpdated.getFullYear()
 
             return (
               <StyledTableRow key={product.name} className="item-table" onClick={handleClick}>

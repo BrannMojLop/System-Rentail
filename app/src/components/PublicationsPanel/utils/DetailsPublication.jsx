@@ -83,8 +83,8 @@ export default function FullScreenDialog(props) {
 
   let dateCreated = new Date(props.publicationData[0].createdAt);
   let dateUpdated = new Date(props.publicationData[0].updatedAt);
-  dateCreated = dateCreated.getDate() + "-"+ dateCreated.getMonth()+ "-" +dateCreated.getFullYear()
-  dateUpdated = dateUpdated.getDate() + "-"+ dateUpdated.getMonth() + "-" + dateUpdated.getFullYear()
+  dateCreated = dateCreated.getDate() + "-"+ (dateCreated.getMonth()+1)+ "-" +dateCreated.getFullYear()
+  dateUpdated = dateUpdated.getDate() + "-"+ (dateUpdated.getMonth()+1) + "-" + dateUpdated.getFullYear()
 
   const [openAlert, setOpenAlert] = React.useState(false);
   const [open, setOpen] = React.useState(true);
@@ -187,7 +187,7 @@ export default function FullScreenDialog(props) {
                 </div>
               </div>
         </div>
-        <ModalEdit openModal={openModal} setOpenModal={setOpenModal} publicationData={props.publicationData}/>
+        <ModalEdit handleClose={handleClose} refresh={props.refresh} setRefresh={props.setRefresh} setMsg={setMsg} setOpenAlert={setOpenAlert} openModal={openModal} setOpenModal={setOpenModal} publicationData={props.publicationData}/>
       </Dialog>
       <Stack spacing={2}>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>

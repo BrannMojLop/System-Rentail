@@ -20,7 +20,7 @@ export default function PublicationsPanel(){
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
     const [ selectFilter, setSelectFilter ] = React.useState(null);
-
+    const [ refresh, setRefresh ] = React.useState(false);
 
     React.useEffect(() => {
 
@@ -96,6 +96,31 @@ export default function PublicationsPanel(){
 
         },[selectFilter]) 
 
+        React.useEffect(() => {
+
+          setLoading(true);
+  
+          const getpublications = async (url) => {
+            try {
+              const config = {
+                  "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+              }
+  
+              const request = await fetch(url, {
+                headers: config
+              }) 
+              const jsonRequest = await request.json() 
+              setpublicationsData(jsonRequest)
+              setLoading(false)
+  
+              } catch (e){ 
+                setpublicationsData([])
+                setLoading(false) 
+              } 
+            } 
+            getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
+          },[refresh]) 
+
         const [openModal, setOpenModal] = React.useState(false);
 
         const handleClickOpen = () => {
@@ -125,7 +150,7 @@ export default function PublicationsPanel(){
                 </div>
             </div>
             <div className="table-publications-panel">
-              {publicationsData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} /> : null}
+              {publicationsData !== null ? <BasicTable refresh={refresh} setRefresh={setRefresh} publicationsData={publicationsData} setLoading={setLoading} /> : null}
             </div> 
             {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setMsg={setMsg} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>

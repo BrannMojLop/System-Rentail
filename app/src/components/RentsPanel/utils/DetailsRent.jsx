@@ -71,8 +71,8 @@ export default function FullScreenDialog(props) {
 
   let dateStart = new Date(props.rentInfo[0].start_date);
   let dateEnd = new Date(props.rentInfo[0].end_date);
-  dateStart = dateStart.getDate() + "-"+ dateStart.getMonth()+ "-" +dateStart.getFullYear()
-  dateEnd = dateEnd.getDate() + "-"+ dateEnd.getMonth() + "-" + dateEnd.getFullYear()
+  dateStart = dateStart.getDate() + "-"+ (dateStart.getMonth()+1)+ "-" +dateStart.getFullYear()
+  dateEnd = dateEnd.getDate() + "-"+ (dateEnd.getMonth()+1) + "-" + dateEnd.getFullYear()
 
   const [openAlert, setOpenAlert] = React.useState(false);
       
