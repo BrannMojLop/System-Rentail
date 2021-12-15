@@ -81,6 +81,8 @@ export default function RentsPanel(){
               const jsonRequest = await request.json() 
               if (jsonRequest.length > 0) {
                 setRentsData(jsonRequest)
+              } else {
+                setRentsData([])
               }
 
             } catch (e){ 
@@ -107,7 +109,9 @@ export default function RentsPanel(){
                 const jsonRequest = await request.json() 
                 if (jsonRequest.length > 0) {
                   setRentsData(jsonRequest)
-                } 
+                } else {
+                  setRentsData([])
+                }
                 setLoading(false)
   
               } catch (e){ 

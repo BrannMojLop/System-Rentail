@@ -7,7 +7,7 @@ function handleClick(event) {
   event.preventDefault();
   if (event.target.innerHTML == "Home") {
     window.location.href = "/";
-  } else if (event.target.innerHTML == "Catalogo"){
+  } else if (event.target.innerHTML == "Catálogo"){
     window.location.href = "/catalog";
   }
 }
@@ -26,7 +26,7 @@ export default function BasicBreadcrumbs(props) {
           color="inherit"
           href="/getting-started/installation/"
         >
-          Catalogo
+          Catálogo
         </Link>
         <Typography color="text.primary">{props.search}</Typography>
       </Breadcrumbs>

@@ -16,7 +16,7 @@ export default function CardDetails(props) {
     const [view, setView] = React.useState(null);
     const [loading, setLoading ] = React.useState(null);
     const [selectOption, setSelectOption] = React.useState(null)
-    const [msg, setMsg] = React.useState({status: "success", message: "Solcitud enviada con Exito!"})
+    const [msg, setMsg] = React.useState({status: "success", message: "Solcitud enviada con éxito!"})
 
     let request = {}
 
@@ -28,7 +28,7 @@ export default function CardDetails(props) {
                 body: JSON.stringify(request)
         }
             await fetch("https://system-rentail-api.herokuapp.com/rental-requests", objRequest)
-            setMsg({status: "success", message: "Solcitud enviada con Exito!"})
+            setMsg({status: "success", message: "Solcitud enviada con éxito!"})
             restForm()
             setOpen(true);
             setLoading(false)
@@ -116,14 +116,14 @@ export default function CardDetails(props) {
                     <h2>{props.publication[0].amount} Existencias - Producto Disponible</h2>
                         <h3>Datos de Arrendador</h3>
                         <p>Nombre: {props.publication[0].lessor[0].firstname} {props.publication[0].lessor[0].lastname}</p>
-                        <p>Ubicacion: {props.publication[0].location}</p>
+                        <p>Ubicación: {props.publication[0].location}</p>
                         <h3>Detalles del Producto</h3>
                         <p>Producto: {props.publication[0].product[0].name}</p>
-                        <p>Descripcion: {props.publication[0].product[0].description}</p>
-                        <p>Categoria: {props.publication[0].category[0].name}</p>
+                        <p>Descripción: {props.publication[0].product[0].description}</p>
+                        <p>Categoría: {props.publication[0].category[0].name}</p>
                     </article>
                     <section className="actions-box">
-                    <h3>Envia una solicitud de Renta</h3>
+                    <h3>Envía una solicitud de Renta</h3>
                     <form className="form-actions">
                     <p>Selecciona una opcion</p>
                     <ToggleButtonGroup

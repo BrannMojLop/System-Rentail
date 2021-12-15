@@ -34,12 +34,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function MyAccount(props) {
     
     const [ userData, setUserData ] = React.useState({})
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Perfil Actualizado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Perfil actualizado con éxito!"})
     const [ loading, setLoading ] = React.useState(null);
     const [ avatar, setAvatar ] = React.useState("")
     const [ dialogText, setDialogText ] = React.useState(null)
     const [ dataEdit, setDataEdit ] = React.useState(null)
     const [ passwordEdit, setPasswordEdit ] = React.useState({password_current:"", password_new:""})
+    const [ editAply, setEditAply ] = React.useState(false)
 
     React.useEffect(() => {
         setLoading(true)
@@ -75,7 +76,7 @@ export default function MyAccount(props) {
         const getUser = async (url) => {
           try {
             const config = {
-                "Authorization": "Bearer " + window.localStorage.getItem('user').token
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
             }
     
             const request = await fetch(url, {
@@ -96,7 +97,7 @@ export default function MyAccount(props) {
     
             getUser('https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id)
     
-        }, [userData]);
+        }, [editAply]);
     
           const [open, setOpen] = React.useState(false);
         
@@ -140,6 +141,47 @@ export default function MyAccount(props) {
           };
         
           const handleClose = async (event, reason) => {
+            const sendEdit = async () => {
+              try {
+                const url = 'https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id
+                const config = {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+                    },
+                    body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
+                }
+                const request = await fetch(url, config)
+                if (request.status === 400) {
+                  setMsg({status: "error", message: "No se pudo Actualizar, valide sus credenciales!"})
+                  setOpenAlert(true); 
+                  setDataEdit(null);
+                  setPasswordEdit({password_current:"", password_new:""})
+                  setLoading(false)
+                  setOpen(false);
+                } else {
+                  setUserData({})
+                  setDataEdit(null);
+                  setPasswordEdit({password_current:"", password_new:""})
+                  setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+                  setOpenAlert(true)
+                  setEditAply(true)
+                  setOpen(false);
+                  setLoading(false)
+                  setEditAply(false)
+                }
+    
+              } catch (e){ 
+                  setMsg({status: "error", message: "No se pudo Actualizar, valide sus credenciales!"})
+                  setOpenAlert(true); 
+                  setDataEdit(null);
+                  setPasswordEdit({password_current:"", password_new:""})
+                  setLoading(false)
+                  setOpen(false);
+              }
+            }
+
             if (reason === 'backdropClick') {
               setOpen(false);
               setDataEdit(null);
@@ -151,45 +193,21 @@ export default function MyAccount(props) {
               setPasswordEdit({password_current:"", password_new:""})
     
             } else {
-              if (!dataEdit) {
+              if (event.target.id === "Contraseña"){
                 if(passwordEdit.password_current == "" || passwordEdit.password_new == "") {
-                  console.log(event);
                   setMsg({status: "error", message: "Complete los datos requeridos (*)"})
                   setOpenAlert(true)
                 } else {
-                  setOpen(false);
-                  setLoading(true);
-        
-                  try {
-                    const url = 'https://system-rentail-api.herokuapp.com/users/' + window.localStorage.getItem('user').id
-                    const config = {
-                        method: "PUT",
-                        headers: {
-                          "Content-Type": "application/json",
-                          "Authorization": "Bearer " + window.localStorage.getItem('user').token
-                        },
-                        body: JSON.stringify(dialogText == "Contraseña" ? passwordEdit : dataEdit)
-                    }
-                    const request = await fetch(url, config)
-                    const jsonRequest = await request.json()
-                    setUserData({})
-                    setDataEdit(null);
-                    setPasswordEdit({password_current:"", password_new:""})
-                    setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
-                    setOpenAlert(true)
-                    setLoading(false)
-        
-                  } catch (e){ 
-                      setMsg({status: "error", message: "No se pudo Actualizar, valide sus credenciales!"})
-                      setOpenAlert(true); 
-                      setDataEdit(null);
-                      setPasswordEdit({password_current:"", password_new:""})
-                      setLoading(false)
-                  } 
+                  sendEdit()
                 }
-              } 
+              } else if (!dataEdit) {
+                setMsg({status: "error", message: "Complete los datos requeridos (*)"})
+                setOpenAlert(true)
+              } else if (dataEdit || passwordEdit) {
+                  sendEdit()
+                }
+              }
             }
-          };
     
           const [openAlert, setOpenAlert] = React.useState(false);
       
@@ -337,7 +355,7 @@ export default function MyAccount(props) {
                     </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleClose}>Ok</Button>
+                  <Button id={dialogText} onClick={handleClose}>Ok</Button>
                 </DialogActions>
             </Dialog>
 

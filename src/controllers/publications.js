@@ -331,6 +331,8 @@ async function updatePublication(req, res) {
                 await Product.updateOne({ _id: publication.id_product }, { $set: { published: false, status: true } })
             } else if (req.body.status === true) {
                 await Product.updateOne({ _id: publication.id_product }, { $set: { published: true } })
+            } else if (req.body.id_product !== product._id) {
+                await Product.updateOne({ _id: product._id }, { $set: { published: false } })
             }
 
             res.status(200).send({

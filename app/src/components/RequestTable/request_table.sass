@@ -1,0 +1,70 @@
+@import '../../public/styles/variables.sass'
+
+
+td, th
+    .cancelled 
+        background-color: #E34646
+    .accepted
+        background-color: #54E346
+    .pending
+        background-color: #153E90
+        color: #ffffff
+    .cancelled-mobile
+        color: #E34646
+    .accepted-mobile
+        color: #54E346
+    .pending-mobile
+        color: #153E90
+
+    
+    text-align: center
+    width: 25%
+    padding: 1%
+
+    font-family: sans-serif
+
+
+thead
+    .table-header
+        color: #153E90
+        font-size: 1em
+        font-weight: bold
+
+.item-table
+    cursor: pointer
+    &:hover
+        background-color: #cde4f0 !important
+
+/*
+
+*/
+
+
+
+
+@media (max-width: $small)
+    .web
+        display: none !important
+        background-color: #000000
+ 
+
+@media (max-width: $medium) and (min-width: $small + 1px)
+    .web
+        display: none !important
+    
+    
+
+@media (max-width: $medium-large) and (min-width: $medium + 1px)
+    .mobile
+        display: none !important
+
+
+@media (min-width: $medium-large + 1px)
+    .mobile
+        display: none !important
+
+
+
+
+
+

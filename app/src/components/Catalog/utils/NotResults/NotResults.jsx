@@ -124,7 +124,7 @@ export default function NotResults(){
         <div className="box-not-results">
             <SearchOffIcon className="search-off" />
             <h2>No se encontraron resultados</h2>
-            <Link to="/catalog"><SvgButton onClick={handleClick}>Volver al Catalago</SvgButton></Link>
+            <Link to="/catalog"><SvgButton onClick={handleClick}>Volver al Catálogo</SvgButton></Link>
         </div>
     )
 }

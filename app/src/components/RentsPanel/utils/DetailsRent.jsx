@@ -29,7 +29,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullScreenDialog(props) {
 
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Renta Actualizada con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Renta Actualizada con Éxito!"})
   const [ open, setOpen] = React.useState(true);
 
   const handleClose = () => {
@@ -139,7 +139,7 @@ export default function FullScreenDialog(props) {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                   <ListItemButton id="contract" className="contract-list" sx={{ pl: 4 }}>
-                  <ListItemText className="input-publication-panel" label="Contrato de Renta">{`${props.rentInfo[0].request.contract.period} Dias por $${props.rentInfo[0].request.contract.price} pesos`}</ListItemText>
+                  <ListItemText className="input-publication-panel" label="Contrato de Renta">{`${props.rentInfo[0].request.contract.period} Días por $${props.rentInfo[0].request.contract.price} pesos`}</ListItemText>
                   </ListItemButton>
                   </List>
                 </Collapse>
@@ -154,7 +154,7 @@ export default function FullScreenDialog(props) {
                   <TextField className="input-product" label="Inicio de renta" value={dateStart} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-product" label="Termino de renta" value={dateEnd} disabled={true} />
+                  <TextField className="input-product" label="Término de renta" value={dateEnd} disabled={true} />
                 </div>
                 <div className="option">
                   {/* <TextField className="input-product" label="Categoria" value={props.rentInfo[0].category[0].name} disabled={true} /> */}

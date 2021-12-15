@@ -120,7 +120,7 @@ export default function ProductsPanel(){
                 <SelectFilterD setSelectFilter={setSelectFilter} />
                 <SelectFilterM setSelectFilter={setSelectFilter} />
                 <div className="actions-products">
-                    <Button onClick={handleClickOpen} className="btn-add"variant="outlined"> <strong>+</strong> Agregar </Button>
+                    <Button onClick={handleClickOpen} className="btn-add" variant="outlined"> <strong>+</strong> Agregar </Button>
                 </div>
             </div>
             <div className="table-products">
