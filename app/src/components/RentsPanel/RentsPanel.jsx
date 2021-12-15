@@ -8,6 +8,8 @@ import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import SimpleBackdrop from '../utils/SimpleBackdrop/SimpleBackdrop'
 import "./rents-panel.sass"
+import SelectFilterD from './utils/SelectFilter/SelectFilterD'
+import SelectFilterM from './utils/SelectFilter/SelectFilterM'
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 45,
@@ -57,12 +59,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function RentsPanel(){
 
-    const [ rentsData, setRentsData] = React.useState(null)
+    const [ rentsData, setRentsData] = React.useState([])
     const [ loading, setLoading ] = React.useState(null);
     const [ optionSwitch, setOptionSwitch ] = React.useState(0)
     const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
-    
-    console.log(optionSwitch);
+    const [ selectFilter, setSelectFilter ] = React.useState(null);
 
     React.useEffect(() => {
 
@@ -78,16 +79,115 @@ export default function RentsPanel(){
               headers: config
             }) 
               const jsonRequest = await request.json() 
-              setRentsData(jsonRequest)
-              setLoading(false)
+              if (jsonRequest.length > 0) {
+                setRentsData(jsonRequest)
+              }
 
             } catch (e){ 
               console.log(e); 
             } } 
-    
+            
           getRents("https://system-rentail-api.herokuapp.com/rents?id_lessor=" + JSON.parse(localStorage.getItem('user')).id)
-    
+          setLoading(false)
         },[]) 
+
+        React.useEffect(() => {
+
+          setLoading(true);
+  
+          const getRents = async (url) => {
+            try {
+              const config = {
+                  "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+              }
+  
+              const request = await fetch(url, {
+                headers: config
+              }) 
+                const jsonRequest = await request.json() 
+                if (jsonRequest.length > 0) {
+                  setRentsData(jsonRequest)
+                } 
+                setLoading(false)
+  
+              } catch (e){ 
+                console.log(e); 
+              } } 
+              
+              if (optionSwitch === 0){
+                getRents("https://system-rentail-api.herokuapp.com/rents?id_lessor=" + JSON.parse(localStorage.getItem('user')).id)
+              } else if (optionSwitch === 1){
+                getRents("https://system-rentail-api.herokuapp.com/rents?id_lessee=" + JSON.parse(localStorage.getItem('user')).id)
+              }
+      
+              setLoading(false)
+
+          },[optionSwitch]) 
+
+          React.useEffect(() => {
+
+            setLoading(true);
+  
+            const getRents = async (url) => {
+              try {
+                const config = {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+                }
+    
+                const request = await fetch(url, {
+                  headers: config
+                }) 
+                  const jsonRequest = await request.json() 
+                  let filterRents = null
+                  switch (selectFilter){
+                    case "Activas":
+                      filterRents = jsonRequest.filter(rent => {
+                        if (rent.status.status === "Activa"){
+                          return rent
+                        }
+                      })
+                      setRentsData(filterRents);
+                      setLoading(false);
+                      break
+    
+                    case "Canceladas":
+                      filterRents = jsonRequest.filter(rent => {
+                        if (rent.status.status === "Cancelada"){
+                          return rent
+                        }
+                      })                  
+                      setRentsData(filterRents);
+                      setLoading(false);
+                      break
+
+                      case "Pagadas":
+                        filterRents = jsonRequest.filter(rent => {
+                          if (rent.payment){
+                            return rent
+                          }
+                        })                  
+                        setRentsData(filterRents);
+                        setLoading(false);
+                        break
+  
+                    default:
+                      setRentsData(jsonRequest);
+                      setLoading(false);
+                      break
+                  }
+                } catch (e){ 
+                  console.log(e); 
+                } } 
+        
+                if (optionSwitch === 0){
+                  getRents("https://system-rentail-api.herokuapp.com/rents?id_lessor=" + JSON.parse(localStorage.getItem('user')).id)
+                } else if (optionSwitch === 1){
+                  getRents("https://system-rentail-api.herokuapp.com/rents?id_lessee=" + JSON.parse(localStorage.getItem('user')).id)
+                }
+
+                setLoading(false)
+  
+          },[selectFilter]) 
 
         const [openAlert, setOpenAlert] = React.useState(false);
       
@@ -107,22 +207,23 @@ export default function RentsPanel(){
             option = 1
           }
           setOptionSwitch(option)
-        }
-      
+        }      
 
     return (
         <>
             {loading ? <SimpleBackdrop loading={true} />: null} 
             <div className="header-products">
                 <h3>Mis Rentas</h3>
+                <SelectFilterD setSelectFilter={setSelectFilter} />
+                <SelectFilterM setSelectFilter={setSelectFilter} />
                 <div className="switch-rents">
-                  <Typography id="lessor" className="text-switch" >Arrendatario</Typography>
+                  <Typography id="lessor" className="text-switch" >Contratadas</Typography>
                     <AntSwitch onClick={handleClickSwith} className="input-switch" defaultChecked inputProps={{ 'aria-label': 'ant design' }} />
-                  <Typography id="lessee" className="text-switch" >Arrendador</Typography>
+                  <Typography id="lessee" className="text-switch" >Otorgadas</Typography>
                 </div>
             </div>
             <div className="table-products">
-              {rentsData !== null ? <BasicTable setLoading={setLoading} rentsData={rentsData} /> : null}
+              {rentsData !== null || rentsData.length > 0? <BasicTable optionSwitch={optionSwitch} setLoading={setLoading} rentsData={rentsData} /> : null}
             </div> 
             <Stack spacing={2}>
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>

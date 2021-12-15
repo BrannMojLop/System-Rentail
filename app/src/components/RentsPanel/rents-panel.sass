@@ -2,24 +2,27 @@
 
 .header-products
     width: 96%
-    display: flex
-    justify-content: flex-start
+    display: grid !important
+    grid-template-columns: repeat(3, 1fr)
+    justify-content: center
     align-items: center
     padding: 2%
-    padding-bottom: 0%
 
     h3
         font-size: 2em
         color: black
 
-    .actions-products
-        width: 76%
-        display: flex
-        justify-content: flex-end
+    .select-filter-M
+        display: none
 
-        strong
-            margin-right: 10%
-            font-size: 1.3em
+    .switch-rents
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        .text-switch
+            font-size: 1em
+            padding: 2%
 
 .table-mobile
     display: none
@@ -106,8 +109,29 @@
 
 @media (max-width: $small)
     .header-products
+        width: 96%
+        display: flex !important
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
         h3
-            font-size: 1em
+            margin-bottom: 0
+            font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .switch-rents
+            .text-switch
+                font-size: 0.8em
+                padding: 2%
 
     .table-desktop
         display: none
@@ -158,7 +182,16 @@
 @media (max-width: $medium) and (min-width: $small + 1px)
     .header-products
         h3
-            font-size: 1em
+            font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
 
     .table-desktop
         display: none
@@ -207,6 +240,15 @@
     .header-products
         h3
             font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
 
     .table-mobile
         display: block

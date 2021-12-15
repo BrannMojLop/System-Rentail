@@ -2,20 +2,25 @@
 
 .header-publications
     width: 96%
-    display: flex
-    justify-content: flex-start
+    display: grid !important
+    grid-template-columns: repeat(3, 1fr)
+    justify-content: center
     align-items: center
     padding: 2%
-    padding-bottom: 0%
 
     h3
-        font-size: 1.5em
+        font-size: 2em
         color: black
 
+    .select-filter-M
+        display: none
+
     .actions-publications-panel
-        width: 76%
         display: flex
         justify-content: flex-end
+        align-items: center
+        .btn-publication-panel
+            width: 70%
 
         strong
             margin-right: 10%
@@ -103,12 +108,36 @@
 
 @media (max-width: $small)
     .header-publications
+        width: 96%
+        display: flex !important
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
         h3
-            font-size: 1em
+            margin-bottom: 1%
+            font-size: 1.5em
+
+        .actions-publications-panel
+            width: 100% !important
+            justify-content: center
+            .btn-publication-panel
+                font-size: 0.8em
+                width: 50%
+                margin: 1%
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
 
         .actions-publication-panel
             .btn-publication-panel
-                font-size: 0.8em
+                width: 80%
 
     .table-desktop
         display: none
@@ -157,7 +186,20 @@
 @media (max-width: $medium) and (min-width: $small + 1px)
     .header-publications
         h3
-            font-size: 1.1em
+            font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .actions-publication-panel
+            .btn-publication-panel
+                width: 80%
 
     .table-desktop
         display: none
@@ -204,7 +246,20 @@
 @media (max-width: $medium-large) and (min-width: $medium + 1px)
     .header-publications
         h3
-            font-size: 1.2em
+            font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .actions-publication-panel
+            .btn-publication-panel
+                width: 80%
 
     .table-mobile
         display: block

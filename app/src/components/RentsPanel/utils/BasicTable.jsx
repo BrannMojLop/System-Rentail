@@ -134,7 +134,7 @@ export default function CustomizedTables(props) {
       </Table>
     </TableContainer>
     </div>
-    {rentInfo ? <DetailsRent setLoading={props.setLoading} rentInfo={rentInfo} open={open} setOpen={setOpen}/> : null}
+    {rentInfo ? <DetailsRent optionSwitch={props.optionSwitch} setLoading={props.setLoading} rentInfo={rentInfo} open={open} setOpen={setOpen}/> : null}
     </>
   );
 }

@@ -89,7 +89,7 @@ export default function CustomizedTables(props) {
                 <StyledTableCell id={publication._id} align="center">{publication.amount}</StyledTableCell>
                 <StyledTableCell id={publication._id} align="center">{dateCreated}</StyledTableCell>
                 <StyledTableCell id={publication._id} align="center">{dateUpdated}</StyledTableCell>
-                <StyledTableCell id={publication._id} align="center">{publication.status ? "Activo" : "Deshabilitado" }</StyledTableCell>
+                <StyledTableCell id={publication._id} align="center">{publication.status ? "Activa" : "Deshabilitada" }</StyledTableCell>
                 <StyledTableCell id={publication._id} align="center">
                   <IconButton id={publication._id} aria-label="edit" size="small">
                         <EditIcon id={publication._id} aria-label="edit"/>
@@ -126,7 +126,7 @@ export default function CustomizedTables(props) {
                   {publication.title}
                 </StyledTableCell>
                 <StyledTableCell className="item-mobile" id={publication._id} align="center">{dateCreated}</StyledTableCell>
-                <StyledTableCell id={publication._id} align="center">{publication.status ? "Activo" : "Deshabilitado" }</StyledTableCell>
+                <StyledTableCell id={publication._id} align="center">{publication.status ? "Activa" : "Deshabilitada" }</StyledTableCell>
               </StyledTableRow>
             )
           })}

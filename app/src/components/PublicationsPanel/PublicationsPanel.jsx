@@ -7,6 +7,8 @@ import MuiAlert from '@mui/material/Alert';
 import SimpleBackdrop from '../utils/SimpleBackdrop/SimpleBackdrop'
 import ModalCreate from "./utils/ModalCreate/ModalCreate"
 import "./publications-panel.sass"
+import SelectFilterD from './utils/SelectFilter/SelectFilterD'
+import SelectFilterM from './utils/SelectFilter/SelectFilterM'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -17,7 +19,8 @@ export default function PublicationsPanel(){
     const [ publicationsData, setpublicationsData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
     const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
-    
+    const [ selectFilter, setSelectFilter ] = React.useState(null);
+
 
     React.useEffect(() => {
 
@@ -44,6 +47,55 @@ export default function PublicationsPanel(){
           getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
         },[]) 
 
+        React.useEffect(() => {
+
+          setLoading(true);
+
+          const getpublications = async (url) => {
+            try {
+              const config = {
+                  "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token
+              }
+  
+              const request = await fetch(url, {
+                headers: config
+              }) 
+                const jsonRequest = await request.json() 
+                let filterPublications = null
+                switch (selectFilter){
+                  case "Activas":
+                    filterPublications = jsonRequest.filter(publication => {
+                      if (publication.status){
+                        return publication
+                      }
+                    })
+                    setpublicationsData(filterPublications);
+                    setLoading(false);
+                    break
+  
+                  case "Deshablitadas":
+                    filterPublications = jsonRequest.filter(publication => {
+                      if (!publication.status){
+                        return publication
+                      }
+                    })                  
+                    setpublicationsData(filterPublications);
+                    setLoading(false);
+                    break
+
+                  default:
+                    setpublicationsData(jsonRequest);
+                    setLoading(false);
+                    break
+                }
+              } catch (e){ 
+                console.log(e); 
+              } } 
+      
+              getpublications('https://system-rentail-api.herokuapp.com/publications?id_lessor=' + JSON.parse(localStorage.getItem('user')).id)
+
+        },[selectFilter]) 
+
         const [openModal, setOpenModal] = React.useState(false);
 
         const handleClickOpen = () => {
@@ -66,8 +118,10 @@ export default function PublicationsPanel(){
             {loading ? <SimpleBackdrop loading={true} />: null} 
             <div className="header-publications">
                 <h3>Mis Publicaciones</h3>
+                <SelectFilterD setSelectFilter={setSelectFilter} />
+                <SelectFilterM setSelectFilter={setSelectFilter} />
                 <div className="actions-publications-panel">
-                    <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicacion </Button>
+                    <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicación</Button>
                 </div>
             </div>
             <div className="table-publications-panel">

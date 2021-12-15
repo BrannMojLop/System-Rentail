@@ -25,9 +25,11 @@ export default function Catalog(props) {
                     setNotResult(false)
                 } else {
                     setNotResult(true)
+                    setLoading(false)
                 }
             } catch (err) {
                 setNotResult(true)
+                setLoading(false)
             }
         }
 

@@ -119,7 +119,7 @@ export default function FullScreenDialog(props) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {props.productData[0].name}
+              {props.productData[0].name} - {props.productData[0].published ? "Publicado" : "No Publicado"}
             </Typography>
           </Toolbar>
         </AppBar>

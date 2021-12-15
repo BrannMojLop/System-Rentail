@@ -2,20 +2,23 @@
 
 .header-products
     width: 96%
-    display: flex
-    justify-content: flex-start
-    align-items: center
-    padding: 2%
-    padding-bottom: 0%
+    display: grid !important
+    grid-template-columns: repeat(3, 1fr)
 
     h3
         font-size: 2em
         color: black
 
+    .select-filter-M
+        display: none
+
     .actions-products
-        width: 76%
         display: flex
         justify-content: flex-end
+
+        .btn-add
+            width: 50%
+            height: 55px
 
         strong
             margin-right: 10%
@@ -104,7 +107,25 @@
 @media (max-width: $small)
     .header-products
         h3
-            font-size: 1em
+            margin-bottom: 2%
+            font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .actions-products
+            width: 100% !important
+            justify-content: center
+            .btn-add
+                font-size: 0.8em
+                width: 50%
+                margin: 1%
 
     .table-desktop
         display: none
@@ -155,6 +176,19 @@
         h3
             font-size: 1em
 
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .actions-products
+            .btn-add
+                width: 80%
+
     .table-desktop
         display: none
 
@@ -201,6 +235,19 @@
     .header-products
         h3
             font-size: 1.5em
+
+        .select-filter-D
+            display: none
+
+        .select-filter-M
+            display: flex !important
+            width: 100% !important
+            justify-content: center
+            align-items: center
+
+        .actions-products
+            .btn-add
+                width: 80%
 
     .table-mobile
         display: block

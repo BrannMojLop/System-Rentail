@@ -69,6 +69,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Categoria</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Creación</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Ultima Actualización</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Publicado</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Editar</StyledTableCell>
           </TableRow>
@@ -89,6 +90,7 @@ export default function CustomizedTables(props) {
                 <StyledTableCell id={product._id} align="center">{product.category[0].name}</StyledTableCell>
                 <StyledTableCell id={product._id} align="center">{dateCreated}</StyledTableCell>
                 <StyledTableCell id={product._id} align="center">{dateUpdated}</StyledTableCell>
+                <StyledTableCell id={product._id} align="center">{product.published ? "Si" : "No" }</StyledTableCell>
                 <StyledTableCell id={product._id} align="center">{product.status ? "Activo" : "Deshabilitado" }</StyledTableCell>
                 <StyledTableCell id={product._id} align="center">
                   <IconButton id={product._id} aria-label="edit" size="small">
@@ -125,7 +127,7 @@ export default function CustomizedTables(props) {
                 <StyledTableCell id={product._id} component="th" scope="row">
                   {product.name}
                 </StyledTableCell>
-                <StyledTableCell className="item-mobile" id={product._id} align="center">{dateCreated}</StyledTableCell>
+                <StyledTableCell className="item-mobile" id={product._id} align="center">{product.published ? "Si" : "No" }</StyledTableCell>
                 <StyledTableCell id={product._id} align="center">{product.status ? "Activo" : "Deshabilitado" }</StyledTableCell>
               </StyledTableRow>
             )

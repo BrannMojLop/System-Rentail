@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
-import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +16,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ActionsRents from './ActionsRents/ActionsRents'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -43,7 +43,7 @@ export default function FullScreenDialog(props) {
     } else if (event.target.id === "cancel") {
       option = "3"
     }
-    console.log(option);
+
     handleClose()
     props.setLoading(true);
     try {
@@ -55,7 +55,7 @@ export default function FullScreenDialog(props) {
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
           }
       } 
-      console.log(props.rentInfo[0]._id);
+
       await fetch(url, config)
       setOpenAlert(true)
       setTimeout(() => {
@@ -118,10 +118,7 @@ export default function FullScreenDialog(props) {
             <h3>Producto Rentado:</h3>
             <p>{props.rentInfo[0].product.name}</p>
           </div>
-          <div className="actions-product">
-            {props.rentInfo[0].payment || props.rentInfo[0].status.status === "Cancelada" ? null : <Button className="btn-product"variant="outlined" id="payment" onClick={handleClickAction}>Pagar Renta</Button> }
-            {(props.rentInfo[0].payment && props.rentInfo[0].status.status === "Activa") || props.rentInfo[0].status.status === "Cancelada" ? null : <Button className="btn-product"variant="outlined" id="cancel" onClick={handleClickAction}>Cancelar Renta</Button> }
-          </div>
+          {props.optionSwitch == 0 ? <ActionsRents handleClickAction={handleClickAction} rentInfo={props.rentInfo}/> : null}
         </div>
         <div className="details-product">
             <div className="box-image">

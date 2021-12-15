@@ -64,6 +64,7 @@ export default function MyAccount(props) {
               setLoading(false)
             } catch (e){ 
               console.log(e); 
+              setLoading(false)
             } } 
             getUser('https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id)
         }, [])
@@ -90,6 +91,7 @@ export default function MyAccount(props) {
               setLoading(false)
             } catch (e){ 
               console.log(e); 
+              setLoading(false)
             } } 
     
             getUser('https://system-rentail-api.herokuapp.com/users/' + JSON.parse(localStorage.getItem('user')).id)
