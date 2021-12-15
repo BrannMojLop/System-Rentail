@@ -165,34 +165,39 @@ async function showPublications(req, res) {
         }
         await Publication.aggregate([
             {
-                '$match': {
-                    'prices': {
-                        '$gte': Number(req.query.min_price),
-                        '$lte': Number(req.query.max_price),
-                    },
-                    'status': true
-                }
-            }, {
                 '$lookup': {
                     'from': 'products',
                     'localField': 'id_product',
                     'foreignField': '_id',
                     'as': 'product'
                 }
-            }
-        ], function (err, publications) {
-            if (err) {
-                res.status(401).send(err);
-            } else {
+            }, {
+                '$match': {
+                    'status': true
+                }
+            }], function (err, publications) {
                 if (err) {
                     res.status(401).send(err);
-                } else if (publications.length > 0) {
-                    res.status(200).send(publications);
                 } else {
-                    res.status(404).send("No se han encontrado registros");
+                    if (err) {
+                        res.status(401).send(err);
+                    } else if (publications.length > 0) {
+                        const search = publications.filter(publication => {
+                            let rangeCumplid = false;
+                            publication.prices.forEach(price => {
+                                if (price >= req.query.min_price && price <= req.query.max_price) {
+                                    return rangeCumplid = true;
+                                } else {
+                                }
+                            })
+                            if (rangeCumplid) return publication
+                        })
+                        res.status(200).send(search);
+                    } else {
+                        res.status(404).send("No se han encontrado registros");
+                    }
                 }
-            }
-        })
+            })
     } else {
         await Publication.aggregate([
             {
