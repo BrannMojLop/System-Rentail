@@ -49,10 +49,18 @@ export default function Catalog(props) {
         const request = await fetch(url_search)
         if (request.status === 200) {
             const jsonRequest = await request.json()
+
+            if (jsonRequest.length > 0) {
                 setLoading(false)
                 setSearch(search)
                 setPublications(jsonRequest)
                 setNotResult(false)
+                } else {
+                setSearch(null)
+                setLoading(false)
+                setPublications([])
+                setNotResult(true)
+            }
         } else {
             setSearch(null)
             setLoading(false)
