@@ -42,8 +42,8 @@ export default function RangePriceM(props) {
         <DialogContent>
           <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <TextField onChange={(e) => {handleChangeMin(e)}} type='number' id="min_price" label="Min Precio" variant="outlined" min={0} max={5000}/>
-              <TextField onChange={(e) => {handleChangeMax(e)}} type='number' id="max_price" label="Max Precio" variant="outlined" min={0} max={5000}/>
+              <TextField onChange={(e) => {handleChangeMin(e)}} type='number' id="min_price" label="Mín. Precio" variant="outlined" min={0} max={5000}/>
+              <TextField onChange={(e) => {handleChangeMax(e)}} type='number' id="max_price" label="Máx. Precio" variant="outlined" min={0} max={5000}/>
             </FormControl>
           </Box>
         </DialogContent>

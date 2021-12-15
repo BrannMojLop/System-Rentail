@@ -69,7 +69,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell style={{ backgroundColor: '#153E90'}} >Producto</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus de Pago</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Inicio</StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Termino</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Término</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Editar</StyledTableCell>
           </TableRow>

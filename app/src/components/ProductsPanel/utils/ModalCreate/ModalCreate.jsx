@@ -132,7 +132,7 @@ export default function ModalCreate(props) {
             <TextField
               id="category"
               select
-              label="Categoria"
+              label="Categoría"
               className="input-product"
               value={createData.id_category || ""}
               onChange={handleChange}
@@ -144,7 +144,7 @@ export default function ModalCreate(props) {
             <TextField
             onChange={handleChange}
             className="input-product-multiline"
-            label="Descripcion"
+            label="Descripción"
             id="description"
             multiline
             rows={4}

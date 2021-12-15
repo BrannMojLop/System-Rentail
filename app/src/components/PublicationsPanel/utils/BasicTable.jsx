@@ -65,10 +65,10 @@ export default function CustomizedTables(props) {
       <Table sx={{ minWidth: 700 }} aria-label="table">
         <TableHead>
           <TableRow>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} >Publicacion</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} >Publicación</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Existencias</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Creación</StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Ultima Actualización</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Última Actualización</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Editar</StyledTableCell>
           </TableRow>
@@ -107,7 +107,7 @@ export default function CustomizedTables(props) {
       <Table sx={{ minWidth: 200 }} aria-label="table">
         <TableHead>
           <TableRow>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} >Publicacion</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} >Publicación</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Creación</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
           </TableRow>

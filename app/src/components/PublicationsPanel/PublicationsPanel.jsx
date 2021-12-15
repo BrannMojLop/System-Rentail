@@ -17,7 +17,7 @@ export default function PublicationsPanel(){
     const [ publicationsData, setpublicationsData ] = React.useState(null)
     const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Creada con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Publicación creada con éxito!"})
     
 
     React.useEffect(() => {
@@ -72,7 +72,7 @@ export default function PublicationsPanel(){
             <div className="header-publications-panel">
                 <h3>Mis Publicaciones</h3>
                 <div className="actions-publications-panel">
-                    <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicacion </Button>
+                    <Button onClick={handleClickOpen} className="btn-publication-panel"variant="outlined"> <strong>+</strong> Nueva Publicación </Button>
                 </div>
             </div>
             <div className="table-publications-panel">

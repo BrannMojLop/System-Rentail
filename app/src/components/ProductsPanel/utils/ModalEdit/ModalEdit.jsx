@@ -62,7 +62,7 @@ export default function ModalEdit(props) {
 
   const [ editData, setEditData ] = React.useState({})
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Éxito!"})
   const [selectCategories, setSelectCategories] = React.useState([]);
 
   React.useEffect(() => {

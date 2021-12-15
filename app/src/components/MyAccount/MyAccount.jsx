@@ -34,7 +34,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function MyAccount(props) {
     
     const [ userData, setUserData ] = React.useState({})
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Perfil Actualizado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Perfil actualizado con éxito!"})
     const [ loading, setLoading ] = React.useState(null);
     const [ avatar, setAvatar ] = React.useState("")
     const [ dialogText, setDialogText ] = React.useState(null)
@@ -156,7 +156,7 @@ export default function MyAccount(props) {
     
                 await fetch(url, config)
                 setUserData({})
-                setMsg({status: "success", message: "Perfil Actualizado con Exito!"})
+                setMsg({status: "success", message: "Perfil actualizado con éxito!"})
                 setOpenAlert(true)
                 setLoading(false)
     

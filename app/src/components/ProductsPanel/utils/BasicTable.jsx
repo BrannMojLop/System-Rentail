@@ -66,9 +66,9 @@ export default function CustomizedTables(props) {
         <TableHead>
           <TableRow>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} >Producto</StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Categoria</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Categoría</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Creación</StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Ultima Actualización</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Última Actualización</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Editar</StyledTableCell>
           </TableRow>

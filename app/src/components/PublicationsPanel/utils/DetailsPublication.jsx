@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function FullScreenDialog(props) {
 
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Deshabilitado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicación deshabilitada con éxito!"})
 
   const handleClose = () => {
     props.setOpen(false);
@@ -53,9 +53,9 @@ export default function FullScreenDialog(props) {
       } 
       await fetch(url, config)
       if (action){
-        setMsg({status: "success", message: "Publicacion Activado con Exito!"})
+        setMsg({status: "success", message: "Publicación activada con éxito!"})
       } else {
-        setMsg({status: "success", message: "Publicacion Deshabilitada con Exito!"})
+        setMsg({status: "success", message: "Publicación deshabilitada con éxito!"})
       }
       setOpenAlert(true)
       setTimeout(() => {
@@ -130,12 +130,12 @@ export default function FullScreenDialog(props) {
         </AppBar>
         <div className="header-publication-panel">
           <div className="description-publication-panel">
-            <h3>Descripcion de producto:</h3>
+            <h3>Descripción de producto:</h3>
             <p>{props.publicationData[0].product[0].description}</p>
           </div>
           <div className="actions-publication-panel">
-            <Button onClick={handleClickOpen} id="edit" className="btn-publication-panel"variant="outlined"> Editar Publicacion </Button>
-            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Publicacion</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Producto</Button> }
+            <Button onClick={handleClickOpen} id="edit" className="btn-publication-panel"variant="outlined"> Editar Publicación </Button>
+            {props.publicationData[0].status ? <Button className="btn-publication-panel"variant="outlined" id="disable" onClick={handleClickOpen}>Deshabilitar Publicación</Button> : <Button className="btn-publication-panel"variant="outlined" id="enable" onClick={handleClickOpen}>Activar Producto</Button> }
           </div>
         </div>
         <div className="details-publication-panel">
@@ -143,7 +143,7 @@ export default function FullScreenDialog(props) {
                 <img src={props.publicationData[0].product[0].image} alt={props.publicationData[0].product[0].name} />
             </div>
             <div className="box-atributes">
-                <h4>Detalles de Publicacion</h4>
+                <h4>Detalles de Publicación</h4>
                 <List
                   sx={{ width: '80%', bgcolor: 'background.paper' }}
                   component="nav"
@@ -159,8 +159,8 @@ export default function FullScreenDialog(props) {
                       {props.publicationData[0].periods.map((period, index) => {
                       return <ListItemText 
                                 className="input-publication-panel" 
-                                label="Opcion de Renta" 
-                                value={index}>{`${period} Dias por $${props.publicationData[0].prices[index]} pesos`}
+                                label="Opción de Renta" 
+                                value={index}>{`${period} Días por $${props.publicationData[0].prices[index]} pesos`}
                               </ListItemText>
                       })}
                     </ListItemButton>
@@ -174,13 +174,13 @@ export default function FullScreenDialog(props) {
                   <TextField className="input-publication-panel" label="Existencias" value={props.publicationData[0].amount} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-publication-panel" label="Locacion" value={props.publicationData[0].location} disabled={true} />
+                  <TextField className="input-publication-panel" label="Locación" value={props.publicationData[0].location} disabled={true} />
                 </div>
                 <div className="option">
                   <TextField className="input-publication-panel" label="Creado el" value={dateCreated} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-publication-panel" label="Ultima actualizacion" value={dateUpdated} disabled={true} />
+                  <TextField className="input-publication-panel" label="Última actualización" value={dateUpdated} disabled={true} />
                 </div>
                 <div className="option">
                   <TextField className="input-publication-panel" label="Estatus" value={props.publicationData[0].status ? "Activo" : "Deshabilitada" } disabled={true} />

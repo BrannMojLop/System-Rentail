@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function FullScreenDialog(props) {
 
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Deshabilitado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Deshabilitado con Éxito!"})
 
   const handleClose = () => {
     props.setOpen(false);
@@ -47,9 +47,9 @@ export default function FullScreenDialog(props) {
       } 
       await fetch(url, config)
       if (action){
-        setMsg({status: "success", message: "Producto Activado con Exito!"})
+        setMsg({status: "success", message: "Producto Activado con Éxito!"})
       } else {
-        setMsg({status: "success", message: "Producto Deshabilitado con Exito!"})
+        setMsg({status: "success", message: "Producto Deshabilitado con Éxito!"})
       }
       setOpenAlert(true)
       setTimeout(() => {
@@ -118,7 +118,7 @@ export default function FullScreenDialog(props) {
         </AppBar>
         <div className="header-product">
           <div className="description">
-            <h3>Descripcion de producto:</h3>
+            <h3>Descripción de producto:</h3>
             <p>{props.productData[0].description}</p>
           </div>
           <div className="actions-product">
@@ -136,13 +136,13 @@ export default function FullScreenDialog(props) {
                   <TextField className="input-product" label="Producto" value={props.productData[0].name} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-product" label="Categoria" value={props.productData[0].category[0].name} disabled={true} />
+                  <TextField className="input-product" label="Categoría" value={props.productData[0].category[0].name} disabled={true} />
                 </div>
                 <div className="option">
                   <TextField className="input-product" label="Creado el" value={dateCreated} disabled={true} />
                 </div>
                 <div className="option">
-                  <TextField className="input-product" label="Ultima actualizacion" value={dateUpdated} disabled={true} />
+                  <TextField className="input-product" label="Última actualización" value={dateUpdated} disabled={true} />
                 </div>
                 <div className="option">
                   <TextField className="input-product" label="Estatus" value={props.productData[0].status ? "Activo" : "Deshabilitado" } disabled={true} />

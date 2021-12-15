@@ -17,7 +17,7 @@ export default function ProductsPanel(){
     const [ productsData, setProductsData ] = React.useState(null)
     const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto creado con éxito!"})
     
 
     React.useEffect(() => {

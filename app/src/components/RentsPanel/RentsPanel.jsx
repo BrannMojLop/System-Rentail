@@ -61,7 +61,7 @@ export default function RentsPanel(){
     const [ headerData, setHeaderData ] = React.useState(null)
     const [ loading, setLoading ] = React.useState(null);
     const [ optionSwitch, setOptionSwitch ] = React.useState(0)
-    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Exito!"})
+    const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Creado con Éxito!"})
     
     console.log(optionSwitch);
 

@@ -153,7 +153,7 @@ export default function Register() {
                 setLoading(false)
               }, 2000)
             } else {
-              setMsg({status: "success", message: `Registro Exitoso, ya puedes inciar sesion!`})
+              setMsg({status: "success", message: `Registro Exitoso, ya puedes inciar sesión!`})
               setOpenAlert(true)
               setTimeout(() => {
                 setLoading(false)

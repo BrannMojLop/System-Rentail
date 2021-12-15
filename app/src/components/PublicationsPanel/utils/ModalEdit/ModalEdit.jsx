@@ -68,7 +68,7 @@ export default function ModalEdit(props) {
 
   const [ editData, setEditData ] = React.useState({})
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicacion Actualizada con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicación actualizada con éxito!"})
   const [ selectProducts, setSelectProducts] = React.useState([]);
   const [ open, setOpen] = React.useState(true);
   const [ optionContract, setOptionContract] = React.useState(null);
@@ -337,7 +337,7 @@ export default function ModalEdit(props) {
                   {props.publicationData[0].periods.map((period, index) => {
                       return (
                         <ListItemButton onClick={handleClickContract} id={index} className="contract-list" sx={{ pl: 4 }} onClick={handleClickContract}>
-                          <ListItemText className="input-publication-panel" label="Opcion de Renta">{`Opcion ${index + 1} - ${period} Dias por $${props.publicationData[0].prices[index]} pesos`}</ListItemText>
+                          <ListItemText className="input-publication-panel" label="Opción de Renta">{`Opción ${index + 1} - ${period} Días por $${props.publicationData[0].prices[index]} pesos`}</ListItemText>
                         </ListItemButton>
                       ) 
                   })}
@@ -360,10 +360,10 @@ export default function ModalEdit(props) {
         open={openModalContract}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseContract}>
-           Editar Opcion - {parseInt(optionContract) + 1}
+           Editar Opción - {parseInt(optionContract) + 1}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Dias del Periodo" value={ null }/>
+        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Días del Periodo" value={ null }/>
         <TextField type="number" onChange={handleChange} className="input-publication" id="price" label="Precio" value={ null }/>
         </DialogContent>
         <DialogActions>

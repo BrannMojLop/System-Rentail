@@ -21,8 +21,8 @@ export default function BasicSelect(props) {
     <Box className="box-price-D" sx={{ minWidth: 120, padding: 2 }}>
       <FormControl fullWidth sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         <Box sx={{width:'70%', display: 'flex', flexDirection: 'row'}}>
-          <TextField onChange={(e) => {handleChange(e)}} type='number' id="min_price" label="Min Precio" variant="outlined" min={0} max={5000}/>
-          <TextField onChange={(e) => {handleChange(e)}} type='number' id="max_price" label="Max Precio" variant="outlined" min={0} max={5000}/>
+          <TextField onChange={(e) => {handleChange(e)}} type='number' id="min_price" label="Mín. Precio" variant="outlined" min={0} max={5000}/>
+          <TextField onChange={(e) => {handleChange(e)}} type='number' id="max_price" label="Máx. Precio" variant="outlined" min={0} max={5000}/>
         </Box>
         <Button onClick={(e) => {
             props.searchPublications('https://system-rentail-api.herokuapp.com/publications?'+ props.search[0] + '=' + min_price + '&' + props.search[1] + '=' + max_price)

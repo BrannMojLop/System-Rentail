@@ -337,7 +337,7 @@ export default function ModalCreate(props) {
                   {createData.periods.map((period, index) => {
                       return (
                         <ListItemButton onClick={handleClickContract} id={index} className="contract-list" sx={{ pl: 4 }} onClick={handleClickContract}>
-                          <ListItemText className="input-publication-panel" label="Opcion de Renta">{`Opcion ${index + 1} - ${period} Dias por $${createData.prices[index]} pesos`}</ListItemText>
+                          <ListItemText className="input-publication-panel" label="Opción de Renta">{`Opción ${index + 1} - ${period} Días por $${createData.prices[index]} pesos`}</ListItemText>
                         </ListItemButton>
                       ) 
                   })}
@@ -350,7 +350,7 @@ export default function ModalCreate(props) {
         </DialogContent>
         <DialogActions>
           <Button id="create-publish" autoFocus onClick={handleClose}>
-            Crear Publicacion
+            Crear Publicación
           </Button>
         </DialogActions>
       </BootstrapDialog>
@@ -360,10 +360,10 @@ export default function ModalCreate(props) {
         open={openModalContract}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseContract}>
-           Editar Opcion - {optionContract == 0 ? "1" : parseInt(optionContract) + 1}
+           Editar Opción - {optionContract == 0 ? "1" : parseInt(optionContract) + 1}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Dias del Periodo" value={ null } />
+        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Días del Periodo" value={ null } />
         <TextField type="number" onChange={handleChange} className="input-publication" id="price" label="Precio" value={ null } />
         </DialogContent>
         <DialogActions>
