@@ -9,9 +9,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Stack from '@mui/material/Stack';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import List from '@mui/material/List';
@@ -21,10 +18,6 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import "./modal-edit.sass"
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -66,16 +59,15 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ModalEdit(props) {
 
-  const [ editData, setEditData ] = React.useState({})
+  const [ editData, setEditData ] = React.useState(props.publicationData[0])
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Publicación actualizada con éxito!"})
   const [ selectProducts, setSelectProducts] = React.useState([]);
   const [ open, setOpen] = React.useState(true);
   const [ optionContract, setOptionContract] = React.useState(null);
 
   const contracts = {
-    prices: props.publicationData[0].prices,
-    periods: props.publicationData[0].periods
+    prices: editData.prices,
+    periods: editData.periods
   }
 
   React.useEffect(() => {
@@ -101,153 +93,74 @@ export default function ModalEdit(props) {
 
 },[])
 
-  const validateNumbers = ()=>{
-    console.log(editData)
-    if (editData.prices && editData.periods){
-      if(editData.prices.length !== editData.periods.length){
-
-        // console.log('volvere', editData.prices.length, editData.periods.length)
-        return
-      }
-
-      for (let i=0; i<editData.periods.length; i++){
-        if(isNaN(editData.prices[i]) || isNaN(editData.periods[i]) || editData.periods[i] < 0 || editData.prices[i]< 0){
-          //console.log(editData.prices[i], editData.periods[i])
-          return
-        }
-        else{
-          if(editData.periods[i]<1){
-            return
-          }
-        }
-
-      }
-    }
-    else {
-      if (editData.prices){
-        for (const price of editData.prices){
-          if(isNaN(price) || price < 0){
-            return
-          }
-        }
-      }
-      else{
-        for (const period of editData.periods){
-          if(isNaN(period) || period < 0){
-            return
-          }
-        }
-      }
-
-    }
-    return 'ok'
-  }
-
-
-  const validateData = () => {
-   
-    if(editData.title){
-      setEditData({...editData, title:editData.title.trim().replace(/\s+/g, ' ')})
-      if (editData.title==" " || editData.title==""){
-        const newData = {...editData, title:props.publicationData[0].title}
-        setEditData(newData)
-        //console.log('EditData: ', editData)
-        //console.log('newData: ', newData)
-        //console.log('EditDataD: ', editData)
-
-      }      
-    }
-    if(editData.amount ){
-      if(editData.amount < 1){
-        setMsg({status: "error", message: "La cantidad mínima es 1"})
-        setOpenAlert(true)
-        return
-      } 
-    }
-    
-
-    if( editData.periods){
-      console.log('check period')
-      if (validateNumbers()!=='ok'){
-        setMsg({status: "error", message: "Utiliza cantidades válidas para periodos y precios"})
-        setOpenAlert(true)
-        return
-      }
-
-    }
-    return 'ok'
-  }
-    
-
-  const editPub= async ()=>{
-    
-    props.setOpenModal(false);
-    setLoading(true)
-    try {
-      const url = 'https://system-rentail-api.herokuapp.com/publications/' + props.publicationData[0]._id
-      const config = {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
-          },
-          body: JSON.stringify(editData)
-          
-      }
-      const response = await fetch(url, config)
-      if (response.status === 400 || response.status === 401 ){
-        setMsg({status: "error", message: "Algo salió mal, intenta nuevamente"})
-      }
-      else {
-        
-        setMsg({status: "success", message: "Publicación actualizada correctamente"})
-      }
-  
-      setOpenAlert(true)
-      setTimeout(() => {
-        window.location.href = "/user/panel-publications"
-      }, 1000)
-
-    } catch (e){
-      console.log(e);
-    } 
-  }
-
   const handleClose = async (event) => {
     setOpenModalContract(false);
     if (event.target.id === 'edit-publication'){
-      console.log('Editar', editData)
-     
-      if(Object.keys(editData).length !== 0 ){
-        if(validateData() == 'ok'){
-          editPub()
-        }
+      if (editData.title === '' || editData.id_product === '' || editData.amount === '' || editData.prices.length === 0 || editData.periods.length === 0){
+        props.setMsg({status: "error", message: "Completa los datos requeridos (*)"})
+        props.setOpenAlert(true)
+      } else {
+        props.setOpenModal(false);
+        setLoading(true)
+        try {
+          const url = 'https://system-rentail-api.herokuapp.com/publications/' + props.publicationData[0]._id
+          const config = {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
+              },
+              body: JSON.stringify(editData)
+              
+          }
+          const response = await fetch(url, config)
+          if (response.status === 400 || response.status === 401 ){
+            props.setMsg({status: "error", message: "Algo salió mal, intenta nuevamente"})
+          }
+          else {
+            
+            props.setMsg({status: "success", message: "Publicación actualizada correctamente"})
+          }
+      
+          props.setOpenAlert(true)
+          setTimeout(() => {
+            window.location.href = "/user/panel-publications"
+          }, 1000)
+    
+        } catch (e){
+          console.log(e);
+        } 
       }
-    }
-    else {
+    } else {
       props.setOpenModal(false);
+      props.setRefresh(!props.refresh)
+      props.handleClose()
     }
   };
 
   const handleChange = (event) => {
     if (event.target.id === "title"){
-      if (event.target.value !== "") {
         setEditData({...editData, title:event.target.value});
-      }
     } else if (event.target.id === "amount"){
-      if (event.target.value !== "") {
         setEditData({...editData, amount:event.target.value})
-      }
     } else if (event.target.id === "location") {
-      if (event.target.value !== "") {
         setEditData({...editData, location:event.target.value})
-      }
     } else if (event.target.id === "price"){
-      contracts.prices[optionContract] = event.target.value
-      setEditData({...editData, prices: contracts.prices})
+      if (event.target.value === "0"){
+        props.setMsg({status: "error", message: "No es posible indicar 0 pesos para el precio"})
+        props.setOpenAlert(true)
+      } else {
+        contracts.prices[optionContract] = event.target.value
+        setEditData({...editData, prices: contracts.prices})
+      }
     } else if (event.target.id === "period"){
-      contracts.periods[optionContract] = event.target.value
-      setEditData({...editData, periods: contracts.periods}) 
+      if (event.target.value === "0"){
+        props.setMsg({status: "error", message: "No es posible indicar 0 dias para el periodo"})
+        props.setOpenAlert(true)
+      } else {
+        contracts.periods[optionContract] = event.target.value
+        setEditData({...editData, periods: contracts.periods})
+      } 
     } else {
       setEditData({...editData, id_product:event.target.value})
     }
@@ -259,16 +172,6 @@ export default function ModalEdit(props) {
     setOpenModalContract(false);
   };
 
-  const [openAlert, setOpenAlert] = React.useState(false);
-      
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  }
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -277,7 +180,6 @@ export default function ModalEdit(props) {
     if (event.target.id == "add-contract") {
       setOpenModalContract(true)
       setOptionContract(String(props.publicationData[0].periods.length));
-      console.log(optionContract);
     } else if (event.target.id == "") {
       if (event.target.parentElement.id == "add-contract") {
         setOpenModalContract(true)
@@ -309,17 +211,19 @@ export default function ModalEdit(props) {
            Editar: {props.publicationData[0].title}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-          <TextField onChange={handleChange} className="input-publication" id="title" label="Título"  defaultValue={props.publicationData[0].title} required="true"/>
-          <TextField onChange={handleChange} type="number" className="input-publication" id="amount" label="Existencias" value={editData.amount || null }/>
-          <TextField onChange={handleChange} className="input-publication" id="location" label="Locación" value={editData.location || null }/>
+          <TextField onChange={handleChange} className="input-publication" id="title" label="Título"  defaultValue={editData.title} required="true"/>
+          <TextField onChange={handleChange} type="number" className="input-publication" id="amount" label="Existencias" value={editData.amount} required="true"/>
+          <TextField onChange={handleChange} className="input-publication" id="location" label="Locación" value={editData.location}/>
           <TextField
               id="product"
               select
               label="Producto"
               className="input-publication"
-              value={editData.id_product || props.publicationData[0].product[0].name}
+              value={editData.id_product}
               onChange={handleChange}
+              required="true"
             >
+              <MenuItem key={editData.id_product} value={editData.id_product}>{editData.product[0].name}</MenuItem>
               {selectProducts.map((p) => <MenuItem key={p._id} value={p._id}>{p.name}</MenuItem> )}
             </TextField>
             <List
@@ -329,15 +233,15 @@ export default function ModalEdit(props) {
                 className="contracts"
                 >
                 <ListItemButton onClick={handleClick}>
-                <ListItemText primary="Opciones de Renta" />
+                <ListItemText primary="Opciones de Renta *" />
                 {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                  {props.publicationData[0].periods.map((period, index) => {
+                  {editData.periods.map((period, index) => {
                       return (
                         <ListItemButton onClick={handleClickContract} id={index} className="contract-list" sx={{ pl: 4 }} onClick={handleClickContract}>
-                          <ListItemText className="input-publication-panel" label="Opción de Renta">{`Opción ${index + 1} - ${period} Días por $${props.publicationData[0].prices[index]} pesos`}</ListItemText>
+                          <ListItemText className="input-publication-panel" label="Opción de Renta">{`Opción ${index + 1} - ${period} Días por $${editData.prices[index]} pesos`}</ListItemText>
                         </ListItemButton>
                       ) 
                   })}
@@ -372,13 +276,6 @@ export default function ModalEdit(props) {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-      <Stack spacing={2}>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
-        <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
-          {msg.message}
-        </Alert>
-      </Snackbar>
-      </Stack>
     </div>
     </>
   );

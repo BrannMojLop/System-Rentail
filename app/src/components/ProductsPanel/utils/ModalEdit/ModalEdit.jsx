@@ -9,16 +9,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Stack from '@mui/material/Stack';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import "./modal-edit.sass"
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -60,9 +53,8 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ModalEdit(props) {
 
-  const [ editData, setEditData ] = React.useState({})
+  const [ editData, setEditData ] = React.useState(props.productData[0])
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Éxito!"})
   const [selectCategories, setSelectCategories] = React.useState([]);
 
   React.useEffect(() => {
@@ -80,19 +72,10 @@ export default function ModalEdit(props) {
   const handleClose = async (event) => {
    
     if (event.target.id === 'edit-product'){
-
-      if(Object.keys(editData).length !== 0){
-        
-        if(editData.name === ""){
-          console.log('Nombre vacío')
-          const newData = {...editData, name:props.productData[0].name}
-          setEditData(newData)
-          console.log('EditData: ', editData)
-          console.log('newData: ', newData)
-    
-          
-        }
-
+      if (editData.name === '' || editData.image === '' || editData.id_category === ''){
+        props.setMsg({status: "error", message: "Completa los datos requeridos (*)"})
+        props.setOpenAlert(true)
+      } else {
         setLoading(true)
         try {
           const url = 'https://system-rentail-api.herokuapp.com/products/' + props.productData[0]._id
@@ -106,7 +89,8 @@ export default function ModalEdit(props) {
               
           } 
           await fetch(url, config)
-          setOpenAlert(true)
+          props.setMsg({status: "success", message: "Producto Actualizado con Exito!"})
+          props.setOpenAlert(true)
           setTimeout(() => {
             window.location.href = "/user/panel-products"
           }, 1000)
@@ -114,13 +98,10 @@ export default function ModalEdit(props) {
         } catch (e){
           console.log(e);
         } 
-       
-      }
-
-   
-    }
-    else {
+      } 
+    } else {
       props.setOpenModal(false);
+      setEditData(props.productData[0])
     }
   };
 
@@ -163,7 +144,7 @@ export default function ModalEdit(props) {
               onChange={handleChange} 
               className="input-product" 
               id="name" label="Nombre" 
-              defaultValue= {props.productData[0].name}
+              defaultValue= {editData.name}
               required="true"
             />
             <TextField
@@ -171,7 +152,7 @@ export default function ModalEdit(props) {
               select
               label="Categoría"
               className="input-product"
-              value={editData.id_category || null}
+              value={editData.id_category}
               onChange={handleChange}
               required="true"
             >
@@ -181,7 +162,7 @@ export default function ModalEdit(props) {
               className="input-product url-img" 
               id="image" 
               label="Imagen (URL)" 
-              value={editData.image || props.productData[0].image}
+              value={editData.image}
               required="true"
             />
             <TextField
@@ -193,7 +174,7 @@ export default function ModalEdit(props) {
             rows={4}
             defaultValue="Default Value"
             variant="standard"
-            value={editData.description || props.productData[0].description}
+            value={editData.description}
           />
         </DialogContent>
         <DialogActions>
@@ -202,13 +183,6 @@ export default function ModalEdit(props) {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-      <Stack spacing={2}>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
-        <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>
-          {msg.message}
-        </Alert>
-      </Snackbar>
-      </Stack>
     </div>
     </>
   );

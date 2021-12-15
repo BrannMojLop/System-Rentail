@@ -78,8 +78,8 @@ export default function CustomizedTables(props) {
 
             let dateCreated = new Date(publication.createdAt);
             let dateUpdated = new Date(publication.updatedAt);
-            dateCreated = dateCreated.getDate() + "-"+ dateCreated.getMonth()+ "-" +dateCreated.getFullYear()
-            dateUpdated = dateUpdated.getDate() + "-"+ dateUpdated.getMonth() + "-" + dateUpdated.getFullYear()
+            dateCreated = dateCreated.getDate() + "-"+ (dateCreated.getMonth()+1) + "-" +dateCreated.getFullYear()
+            dateUpdated = dateUpdated.getDate() + "-"+ (dateUpdated.getMonth()+1) + "-" + dateUpdated.getFullYear()
 
             return (
               <StyledTableRow key={publication.title} className="item-table" onClick={handleClick}>
@@ -117,8 +117,8 @@ export default function CustomizedTables(props) {
 
             let dateCreated = new Date(publication.createdAt);
             let dateUpdated = new Date(publication.updatedAt);
-            dateCreated = dateCreated.getDate() + "-"+ dateCreated.getMonth()+ "-" +dateCreated.getFullYear()
-            dateUpdated = dateUpdated.getDate() + "-"+ dateUpdated.getMonth() + "-" + dateUpdated.getFullYear()
+            dateCreated = dateCreated.getDate() + "-"+ (dateCreated.getMonth()+1) + "-" +dateCreated.getFullYear()
+            dateUpdated = dateUpdated.getDate() + "-"+ (dateUpdated.getMonth()+1) + "-" + dateUpdated.getFullYear()
 
             return (
               <StyledTableRow key={publication.title} className="item-table" onClick={handleClick}>
@@ -134,7 +134,7 @@ export default function CustomizedTables(props) {
       </Table>
     </TableContainer>
     </div>
-    {publicationData ? <Detailspublication publicationData={publicationData} setLoading={props.setLoading} open={open} setOpen={setOpen}/> : null}
+    {publicationData ? <Detailspublication refresh={props.refresh} setRefresh={props.setRefresh} publicationData={publicationData} setLoading={props.setLoading} open={open} setOpen={setOpen}/> : null}
     </>
   );
 }
