@@ -16,7 +16,7 @@ export function MaterialUIPickers(props) {
           onChange={props.handleChange}
           minDate= {new Date()}
           inputProps={{ readOnly: true }}
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params) => <TextField className="calendar-textfield" {...params} />}
         />
       </Stack>
     </LocalizationProvider>

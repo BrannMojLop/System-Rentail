@@ -127,7 +127,7 @@ export default function PublicationsPanel(){
             <div className="table-publications-panel">
               {publicationsData !== null ? <BasicTable publicationsData={publicationsData} setLoading={setLoading} /> : null}
             </div> 
-            {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
+            {openModal ? <ModalCreate publicationsData={publicationsData} setOpenAlert={setOpenAlert} setMsg={setMsg} setLoading={setLoading} openModal={openModal} setOpenModal={setOpenModal} /> : null}
             <Stack spacing={2}>
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
               <Alert onClose={handleCloseAlert} severity={msg.status} sx={{ width: '100%' }}>

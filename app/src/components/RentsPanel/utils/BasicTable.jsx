@@ -69,7 +69,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell style={{ backgroundColor: '#153E90'}} >Producto</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus de Pago</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Inicio</StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Termino</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Fecha de Término</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Estatus</StyledTableCell>
             <StyledTableCell style={{ backgroundColor: '#153E90'}} align="center">Editar</StyledTableCell>
           </TableRow>
@@ -79,8 +79,8 @@ export default function CustomizedTables(props) {
 
             let dateStart = new Date(rent.start_date);
             let dateEnd = new Date(rent.end_date);
-            dateStart = dateStart.getDate() + "-"+ dateStart.getMonth()+ "-" +dateStart.getFullYear()
-            dateEnd = dateEnd.getDate() + "-"+ dateEnd.getMonth() + "-" + dateEnd.getFullYear()
+            dateStart = dateStart.getDate() + "-"+ (dateStart.getMonth() + 1) + "-" +dateStart.getFullYear()
+            dateEnd = dateEnd.getDate() + "-"+ (dateEnd.getMonth() + 1) + "-" + dateEnd.getFullYear()
 
             let statusPayment = rent.payment ? "Pagada" : "Pendiente"
 

@@ -62,7 +62,7 @@ export default function ModalEdit(props) {
 
   const [ editData, setEditData ] = React.useState({})
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Éxito!"})
   const [selectCategories, setSelectCategories] = React.useState([]);
 
   React.useEffect(() => {
@@ -142,7 +142,7 @@ export default function ModalEdit(props) {
             <TextField
               id="category"
               select
-              label="Categoria"
+              label="Categoría"
               className="input-product"
               value={editData.id_category || null}
               onChange={handleChange}
@@ -153,7 +153,7 @@ export default function ModalEdit(props) {
             <TextField
             onChange={handleChange}
             className="input-product-multiline"
-            label="Descripcion"
+            label="Descripción"
             id="description"
             multiline
             rows={4}

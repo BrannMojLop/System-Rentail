@@ -62,7 +62,7 @@ export default function ModalEdit(props) {
 
   const [ editData, setEditData ] = React.useState({})
   const [ loading, setLoading ] = React.useState(null);
-  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Exito!"})
+  const [ msg, setMsg ] = React.useState({status: "success", message: "Producto Actualizado con Éxito!"})
   const [selectCategories, setSelectCategories] = React.useState([]);
 
   React.useEffect(() => {
@@ -76,30 +76,51 @@ export default function ModalEdit(props) {
 
 },[])
 
-  const handleClose = async (event) => {
-    props.setOpenModal(false);
-    if (event.target.id === 'edit-product'){
-      setLoading(true)
-      try {
-        const url = 'https://system-rentail-api.herokuapp.com/products/' + props.productData[0]._id
-        const config = {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
-            },
-            body: JSON.stringify(editData)
-            
-        } 
-        await fetch(url, config)
-        setOpenAlert(true)
-        setTimeout(() => {
-          window.location.href = "/user/panel-products"
-        }, 1000)
 
-      } catch (e){
-        console.log(e);
-      } 
+  const handleClose = async (event) => {
+   
+    if (event.target.id === 'edit-product'){
+
+      if(Object.keys(editData).length !== 0){
+        
+        if(editData.name === ""){
+          console.log('Nombre vacío')
+          const newData = {...editData, name:props.productData[0].name}
+          setEditData(newData)
+          console.log('EditData: ', editData)
+          console.log('newData: ', newData)
+    
+          
+        }
+
+        setLoading(true)
+        try {
+          const url = 'https://system-rentail-api.herokuapp.com/products/' + props.productData[0]._id
+          const config = {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
+              },
+              body: JSON.stringify(editData)
+              
+          } 
+          await fetch(url, config)
+          setOpenAlert(true)
+          setTimeout(() => {
+            window.location.href = "/user/panel-products"
+          }, 1000)
+  
+        } catch (e){
+          console.log(e);
+        } 
+       
+      }
+
+   
+    }
+    else {
+      props.setOpenModal(false);
     }
   };
 
@@ -138,22 +159,35 @@ export default function ModalEdit(props) {
           Editar: {props.productData[0].name}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-            <TextField onChange={handleChange} className="input-product" id="name" label="Nombre" value={editData.name || props.productData[0].name }/>
+            <TextField 
+              onChange={handleChange} 
+              className="input-product" 
+              id="name" label="Nombre" 
+              defaultValue= {props.productData[0].name}
+              required="true"
+            />
             <TextField
               id="category"
               select
-              label="Categoria"
+              label="Categoría"
               className="input-product"
               value={editData.id_category || null}
               onChange={handleChange}
+              required="true"
             >
               {selectCategories.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>
-            <TextField onChange={handleChange} className="input-product url-img" id="image" label="Imagen (URL)" value={editData.image || props.productData[0].image}/>
+            <TextField onChange={handleChange} 
+              className="input-product url-img" 
+              id="image" 
+              label="Imagen (URL)" 
+              value={editData.image || props.productData[0].image}
+              required="true"
+            />
             <TextField
             onChange={handleChange}
             className="input-product-multiline"
-            label="Descripcion"
+            label="Descripción"
             id="description"
             multiline
             rows={4}
