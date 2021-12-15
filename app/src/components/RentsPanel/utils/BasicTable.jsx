@@ -79,8 +79,8 @@ export default function CustomizedTables(props) {
 
             let dateStart = new Date(rent.start_date);
             let dateEnd = new Date(rent.end_date);
-            dateStart = dateStart.getDate() + "-"+ dateStart.getMonth()+ "-" +dateStart.getFullYear()
-            dateEnd = dateEnd.getDate() + "-"+ dateEnd.getMonth() + "-" + dateEnd.getFullYear()
+            dateStart = dateStart.getDate() + "-"+ (dateStart.getMonth() + 1) + "-" +dateStart.getFullYear()
+            dateEnd = dateEnd.getDate() + "-"+ (dateEnd.getMonth() + 1) + "-" + dateEnd.getFullYear()
 
             let statusPayment = rent.payment ? "Pagada" : "Pendiente"
 
