@@ -66,8 +66,8 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
  
   useEffect( () => {
-    //console.log(`Var que recibo ${props.update}`)
-}, [props.update])
+  
+}, [])
 
   return (
     <React.Fragment>
@@ -84,7 +84,6 @@ function Row(props) {
         </StyledTableCell>
  
       </StyledTableRow>
-
 
       <TableRow>
         <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -117,8 +116,8 @@ const MobileRow = (props) => {
   const [open, setOpen] = React.useState(false);
  
   useEffect( () => {
-    //console.log(`Var que recibo ${props.update}`)
-}, [props.update])
+   
+}, [])
 
   return (
     <React.Fragment>
@@ -179,10 +178,6 @@ export  function CollapsibleTable(props) {
   const [ loading, setLoading ] = useState(null);
 
 
-  const increment = () => {
-      setUpdate(update + 1)
-    }
-
   useEffect( () => {
     
       const getRequestsList = async (url) =>{
@@ -232,7 +227,7 @@ return (
       <TableBody>
         {requestsList.map((request) => (         
           <Row key={request._id} request={request} type={typeQuery} idRR ={request._id}
-          setUpdate= {increment} update={update}
+          setUpdate= {setUpdate} update={update}
           />
         ))}
 
@@ -258,9 +253,7 @@ export  function CollapsibleTableMobile(props) {
   const [ loading, setLoading ] = useState(null);
 
 
-  const increment = () => {
-      setUpdate(update + 1)
-    }
+
 
   useEffect( () => {
     
@@ -308,7 +301,7 @@ return (
       <TableBody>
         {requestsList.map((request) => (         
           <MobileRow key={request._id} request={request} type={typeQuery} idRR ={request._id}
-          setUpdate= {increment} update={update}
+          setUpdate= {setUpdate} update={update}
           />
         ))}
 

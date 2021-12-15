@@ -124,6 +124,7 @@ const handleCloseAlert = (event, reason) => {
 
 // Queda pendiente lo del target
 const handleClick = ()=>{
+    console.log(`update vale ${props.update}`)  
 
     const ref = activeRRI//e.target.id;
     console.log(ref);
@@ -215,8 +216,9 @@ const handleClick = ()=>{
     else{
         updateStatus(urlUpdateRequest)
     }
-    props.setUpdate(props.update)
-    //console.log(`update vale ${props.update}`)  
+
+    props.setUpdate(props.update + 1)
+    console.log(`update vale ${props.update}`)  
 
 }
 
@@ -527,7 +529,7 @@ const handleClick = ()=>{
     else{
         updateStatus(urlUpdateRequest)
     }
-    props.setUpdate(props.update)
+    props.setUpdate(props.update + 1)
     //console.log(`update vale ${props.update}`)  
 
 }
