@@ -9,37 +9,40 @@ import { DialogActions, List, DialogContent } from '@mui/material';
 import { AlertDialog } from '../../../utils/Confirm/Confirm';
 import { MaterialUIPickers } from '../../utils/DatePicker/DatePicker';
 
+
 import './edit_dialog.sass';
 
 export function EditDialog (props) {
     
 return (   
     <Dialog disableEscapeKeyDown open={props.open} onClose={props.handleClose}>
-        <DialogTitle className="textInfo">Editar solicitud recibida</DialogTitle>
             <DialogContent>
                 {
                     <List>
                         <ListItem>
                             <div id = "editPanel">
+                                <h1>Editar solicitud recibida</h1>
                                 <h6>Antes de aceptar una solicitud seleccione la fecha correcta</h6> 
                                 
                                 <MaterialUIPickers
                                     value = {props.value}
                                     handleChange = {props.handleDPChange}
                                 ></MaterialUIPickers>
-                                <div>
-                                    <button 
+                                <div className='buttons-section'>
+                                    <Button 
                                         id='2' 
-                                        className = "green-button" 
+                                        variant="outlined"
+                                        className="btn"
                                         name={props.idRR} 
                                         onClick={props.confirm}
-                                    >Aceptar</button>
-                                    <button 
+                                    >Aceptar</Button>
+                                    <Button 
                                         id='3' 
-                                        className = "red-button" 
+                                        variant="outlined"
+                                        className="btn"
                                         name={props.idRR} 
                                         onClick={props.confirm}
-                                    >Rechazar</button>
+                                    >Rechazar</Button>
                                 </div>
 
                                 <AlertDialog
@@ -54,7 +57,7 @@ return (
                 }
             </DialogContent>
         <DialogActions>
-            <Button onClick={props.handleClose}>Cancel</Button>
+            <Button onClick={props.handleClose}>Cancelar</Button>
         </DialogActions>
     </Dialog>
     );

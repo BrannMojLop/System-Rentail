@@ -1,4 +1,8 @@
 @import '../../public/styles/variables.sass'
+
+
+
+    
 .blue-white-button
 
     height: 30px
@@ -59,32 +63,65 @@
         margin-top: 5%
         margin-bottom: 5%
 
-#details-complete
 
+
+
+
+.details-complete-web
     display: flex
+    flex-direction: row
+    justify-content: space-between
     align-items: center
-    justify-content: left
-    flex-direction: row
-    padding: 2%
 
-    button
-        margin-left: 10px
 
-#group-details
-    align-self: center
-    .linkT
-        font-size: 0.9em
-        margin-left: 10px
-        margin-top: 15px
-
-#image-div
-    background-color: #000000
-    width: 30%
-
-#general
-    margin-right: 30%
+.details-complete-mobile
     display: flex
     flex-direction: row
+    justify-content: space-between
+    align-items: center
+
+  
+.group-details
+    display: flex
+    flex-direction: column
+    align-content: center
+
+    .linkT
+        font-size: 0.8em
+        margin-top: 2%
+    
+
+.group-details-mobile
+    display: flex
+    flex-direction: column
+
+
+    .linkT
+        font-size: 0.8em
+        margin-top: 2%
+    
+
+
+
+.general
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    align-items: center
+
+   
+
+
+.general-web
+    display: flex
+    flex-direction: row
+    padding:0
+
+
+h6
+    font-size: 14px
+
+
  
 .buttonsEdit
     display: flex
@@ -94,13 +131,37 @@
     padding: 10%
     margin: 10%
 
-@media (max-width: $small)
+
+.btn 
+    margin-top: 5%
+
+
+.buttons-section
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+
+
+.calendar-section
+    display: flex
+    flex-direction: column
+    align-items: center
+    
+
+@media (max-width: $medium-large) and (min-width: $small + 1px)
     .details
         .group-details
-            font-size: 0.9em
+            font-size: 0.8em
+            flex-direction: row
+            justify-content: center
+            align-items: center
+  
     .linkT
-        font-size: 0.8em
+        font-size: 0.7em
         text-align: center
 
+
+
+    
 
     

@@ -21,6 +21,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import "./modal-create.sass"
+import { createDecipheriv } from 'crypto';
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -81,6 +83,43 @@ export default function ModalCreate(props) {
     periods: createData.periods,
   }
 
+  const validateNumbers = ()=>{
+    console.log('holi')
+
+    if(createData.prices.length !== createData.periods.length){
+
+      console.log('volvere', createData.prices.length, createData.periods.length)
+      return
+    }
+
+    for (let i=0; i<createData.periods.length; i++){
+      if(isNaN(createData.prices[i]) || isNaN(createData.periods[i])){
+        console.log('holi',createData.prices[i], createData.periods[i])
+        return
+      }
+      else{
+        if(createData.periods[i]<1){
+          return
+        }
+      }
+
+    }
+/*
+    for (const price of createData.prices){
+      if(isNaN(price)){
+        return
+      }
+    }
+
+    for (const period of createData.periods){
+      if(isNaN(period)){
+        return
+      }
+    }*/
+    //console.log('todo ok')
+    return 'ok'
+  }
+
   React.useEffect(() => {
     setLoading(true);
     const getProducts = async (url) => {
@@ -104,30 +143,80 @@ export default function ModalCreate(props) {
 
 },[])
 
-  const handleClose = async (event) => {
-    props.setOpenModal(false);
-    if (event.target.id === 'create-publish'){
-      props.setLoading(true)
-      try {
-        const url = 'https://system-rentail-api.herokuapp.com/publications'
-        const config = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
-            },
-            body: JSON.stringify(createData)
-            
-        }
-        await fetch(url, config)
-        props.setOpenAlert(true)
-        setTimeout(() => {
-          window.location.href = "/user/panel-publications"
-        }, 1000)
 
-      } catch (e){
-        console.log(e);
-      } 
+  const createPub = async () =>{
+    props.setOpenModal(false);
+    props.setLoading(true)
+    try {
+      const url = 'https://system-rentail-api.herokuapp.com/publications'
+      const config = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
+          },
+          body: JSON.stringify(createData)
+          
+      }
+      const response = await fetch(url, config)
+      if(response.status !==201){
+        props.setMsg({status: "error", message: "Algo salió mal"})
+      }
+      props.setOpenAlert(true)
+      setTimeout(() => {
+        window.location.href = "/user/panel-publications"
+      }, 1000)
+
+    } catch (e){
+      console.log(e);
+    } 
+
+  }
+
+  const handleClose = async (event) => {    
+    if (event.target.id === 'create-publish'){
+      console.log(createData.prices.length)
+      // Primero valida que están los campos requeridos
+      if (Object.keys(createData).length === 0 ||
+          createData.title === ""  || 
+          createData.id_product === "" ||
+          createData.amount < 1 ||
+          createData.prices.length === 0 ||
+          createData.periods.length === 0 ) 
+        {
+          props.setMsg({status: "error", message: "Completa los campos requeridos (*)"})
+          props.setOpenAlert(true)
+        } 
+      
+      else{
+
+        //Luego se valida que el formato de los datos sea el adecuado, incluyendo los opcionales
+        if(validateNumbers() != 'ok'){
+          props.setMsg({status: "error", message: "Selecciona un valor válido para periodos y precios"})
+          props.setOpenAlert(true)
+        }
+        else {
+          if(createData.max_distance){
+            if (createData.max_distance < 1){
+              props.setMsg({status: "error", message: "La distancia mínima es 1"})
+              props.setOpenAlert(true)
+            }
+            else{
+              console.log('Cantidad Válida')
+              createPub()
+            }
+          }
+          else {
+            createPub()
+          }
+
+        }
+
+      }
+    
+    }
+    else {
+      props.setOpenModal(false);
     }
   };
 
@@ -197,10 +286,17 @@ export default function ModalCreate(props) {
         open={props.openModal}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Crear Nueva Publicacion
+          Crear Nueva Publicación
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-            <TextField onChange={handleChange} className="input-product" id="title" label="Titulo" value={createData.title || "" }/>
+            <TextField 
+              onChange={handleChange} 
+              className="input-product" 
+              id="title" label="Título" 
+              value={createData.title || "" }
+              required="true"
+              
+            />
             <TextField
               id="product"
               select
@@ -208,20 +304,22 @@ export default function ModalCreate(props) {
               className="input-product"
               value={createData.id_product || ""}
               onChange={handleChange}
+              required="true"
             >
               {selectProducts.map((o) => <MenuItem key={o._id} value={o._id}>{o.name}</MenuItem> )}
             </TextField>
-            <TextField onChange={handleChange} className="input-product" id="location" label="Locacion" value={createData.location || "" }/>
-            <TextField type="number" onChange={handleChange} className="input-product" id="amount" label="Existencias" value={createData.amount || "" }/>
-            <TextField type="number" onChange={handleChange} className="input-product" id="max_distance" label="Distancia Maxima (KM)" value={createData.max_distance || "" }/>
+            <TextField onChange={handleChange} className="input-product" id="location" label="Locación" value={createData.location || "" }/>
+            <TextField type="number" onChange={handleChange} className="input-product" id="amount" label="Existencias (mín. 1)" value={createData.amount || "" } required="true"/>
+            <TextField type="number" onChange={handleChange} className="input-product" id="max_distance" label="Distancia Máxima (KM)" value={createData.max_distance || "" }/>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MobileDatePicker
-            id="finished_at"
-            label="Finalizar Publicacion el:"
-            inputFormat="MM/dd/yyyy"
-            value={createData.finished_at}
-            onChange={handleChangeDate}
-            renderInput={(params) => <TextField style={{marginTop: "3%"}} {...params} />}
+              id="finished_at"
+              label="Finalizar Publicación el:"
+              inputFormat="dd/MM/yyyy"
+              value={createData.finished_at}
+              onChange={handleChangeDate}
+              inputProps={{ readOnly: true }}
+              renderInput={(params) => <TextField style={{marginTop: "3%"}} {...params} />}
             />
             </LocalizationProvider>
             <List
@@ -265,8 +363,8 @@ export default function ModalCreate(props) {
            Editar Opcion - {optionContract == 0 ? "1" : parseInt(optionContract) + 1}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Dias del Periodo" value={ null }/>
-        <TextField type="number" onChange={handleChange} className="input-publication" id="price" label="Precio" value={ null }/>
+        <TextField type="number" onChange={handleChange} className="input-publication" id="period" label="Dias del Periodo" value={ null } />
+        <TextField type="number" onChange={handleChange} className="input-publication" id="price" label="Precio" value={ null } />
         </DialogContent>
         <DialogActions>
           <Button id="edit-publication-contract" autoFocus onClick={handleCloseContract}>

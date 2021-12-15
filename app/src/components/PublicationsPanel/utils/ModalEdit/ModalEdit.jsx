@@ -101,31 +101,131 @@ export default function ModalEdit(props) {
 
 },[])
 
-  const handleClose = async (event) => {
+  const validateNumbers = ()=>{
+    console.log(editData)
+    if (editData.prices && editData.periods){
+      if(editData.prices.length !== editData.periods.length){
+
+        // console.log('volvere', editData.prices.length, editData.periods.length)
+        return
+      }
+
+      for (let i=0; i<editData.periods.length; i++){
+        if(isNaN(editData.prices[i]) || isNaN(editData.periods[i]) || editData.periods[i] < 0 || editData.prices[i]< 0){
+          //console.log(editData.prices[i], editData.periods[i])
+          return
+        }
+        else{
+          if(editData.periods[i]<1){
+            return
+          }
+        }
+
+      }
+    }
+    else {
+      if (editData.prices){
+        for (const price of editData.prices){
+          if(isNaN(price) || price < 0){
+            return
+          }
+        }
+      }
+      else{
+        for (const period of editData.periods){
+          if(isNaN(period) || period < 0){
+            return
+          }
+        }
+      }
+
+    }
+    return 'ok'
+  }
+
+
+  const validateData = () => {
+   
+    if(editData.title){
+      setEditData({...editData, title:editData.title.trim().replace(/\s+/g, ' ')})
+      if (editData.title==" " || editData.title==""){
+        const newData = {...editData, title:props.publicationData[0].title}
+        setEditData(newData)
+        //console.log('EditData: ', editData)
+        //console.log('newData: ', newData)
+        //console.log('EditDataD: ', editData)
+
+      }      
+    }
+    if(editData.amount ){
+      if(editData.amount < 1){
+        setMsg({status: "error", message: "La cantidad mínima es 1"})
+        setOpenAlert(true)
+        return
+      } 
+    }
+    
+
+    if( editData.periods){
+      console.log('check period')
+      if (validateNumbers()!=='ok'){
+        setMsg({status: "error", message: "Utiliza cantidades válidas para periodos y precios"})
+        setOpenAlert(true)
+        return
+      }
+
+    }
+    return 'ok'
+  }
+    
+
+  const editPub= async ()=>{
+    
     props.setOpenModal(false);
+    setLoading(true)
+    try {
+      const url = 'https://system-rentail-api.herokuapp.com/publications/' + props.publicationData[0]._id
+      const config = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
+          },
+          body: JSON.stringify(editData)
+          
+      }
+      const response = await fetch(url, config)
+      if (response.status === 400 || response.status === 401 ){
+        setMsg({status: "error", message: "Algo salió mal, intenta nuevamente"})
+      }
+      else {
+        
+        setMsg({status: "success", message: "Publicación actualizada correctamente"})
+      }
+  
+      setOpenAlert(true)
+      setTimeout(() => {
+        window.location.href = "/user/panel-publications"
+      }, 1000)
+
+    } catch (e){
+      console.log(e);
+    } 
+  }
+
+  const handleClose = async (event) => {
     setOpenModalContract(false);
     if (event.target.id === 'edit-publication'){
-      setLoading(true)
-      try {
-        const url = 'https://system-rentail-api.herokuapp.com/publications/' + props.publicationData[0]._id
-        const config = {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + JSON.parse(localStorage.getItem('user')).token 
-            },
-            body: JSON.stringify(editData)
-            
+      console.log('Editar', editData)
+     
+      if(Object.keys(editData).length !== 0 ){
+        if(validateData() == 'ok'){
+          editPub()
         }
-        await fetch(url, config)
-        setOpenAlert(true)
-        setTimeout(() => {
-          window.location.href = "/user/panel-publications"
-        }, 1000)
-
-      } catch (e){
-        console.log(e);
-      } 
+      }
+    }
+    else {
+      props.setOpenModal(false);
     }
   };
 
@@ -209,8 +309,8 @@ export default function ModalEdit(props) {
            Editar: {props.publicationData[0].title}
         </BootstrapDialogTitle>
         <DialogContent dividers className="dialog-content">
-          <TextField onChange={handleChange} className="input-publication" id="title" label="Titulo" value={editData.title || null}/>
-          <TextField onChange={handleChange} type="number" className="input-publication" id="amount" label="Exitencias" value={editData.amount || null }/>
+          <TextField onChange={handleChange} className="input-publication" id="title" label="Título"  defaultValue={props.publicationData[0].title} required="true"/>
+          <TextField onChange={handleChange} type="number" className="input-publication" id="amount" label="Existencias" value={editData.amount || null }/>
           <TextField onChange={handleChange} className="input-publication" id="location" label="Locación" value={editData.location || null }/>
           <TextField
               id="product"

@@ -5,12 +5,12 @@ import './request_panel.sass';
 export default function RequestPanel(props) {
 
     return (
-        <main className="body-panel">
+        <div className="body-panel">
             <div className="requests-panel">
                 <h1>Solicitudes</h1>
                 <BasicTabs></BasicTabs>
             </div>
-        </main>
+        </div>
     )
 
 }

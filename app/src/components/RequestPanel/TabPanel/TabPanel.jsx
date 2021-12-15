@@ -9,9 +9,6 @@ import { CollapsibleTable, CollapsibleTableMobile } from '../../RequestTable/Req
 
 import './tab_panel.sass';
 
-
-
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -66,8 +63,6 @@ export default function BasicTabs() {
         <CollapsibleTable className= "web" type = "lessee"></CollapsibleTable>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div><p className="mobile">HOLA</p></div>
-        <div><p className="web">ADIOS</p></div>
         <CollapsibleTable className= "web"  type = "lessor"></CollapsibleTable>
         <CollapsibleTableMobile className= "mobile" type = "lessor"></CollapsibleTableMobile> 
       </TabPanel>

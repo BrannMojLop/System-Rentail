@@ -69,7 +69,7 @@ export default function ProductsPanel(){
             <div className="header-products">
                 <h3>Mis Productos</h3>
                 <div className="actions-products">
-                    <Button onClick={handleClickOpen} className="btn-add"variant="outlined"> <strong>+</strong> Agregar </Button>
+                    <Button onClick={handleClickOpen} className="btn-add" variant="outlined"> <strong>+</strong> Agregar </Button>
                 </div>
             </div>
             <div className="table-products">

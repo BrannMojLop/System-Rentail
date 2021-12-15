@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Button from '@mui/material/Button';
 
 import { AlertDialog } from '../utils/Confirm/Confirm';
 import { BasicAlerts } from '../utils/Alert/Alert';
@@ -223,9 +224,10 @@ const handleClick = ()=>{
   return (
     <>
     
-    <div id ="details-complete">    
-        <div id ="general">
-            <List
+    <div className ="details-complete-web">    
+        
+        <div >
+            <List className="general-web"
                 sx={{
                     width: '100%',
                     maxWidth: 360,
@@ -255,13 +257,14 @@ const handleClick = ()=>{
             </List>
         </div>
 
-        <div id="group-details">
+        <div className="group-details">
         {loading ? <CircularProgress/> : null}
+
             {
                 // Vista de Lessee
                 (lessee && evalStatus(props.req.answer.status) && 
                 <div>
-                    <button id='4' className = "red-button" name={props.idRR} onClick={confirm}>Cancelar</button>
+                    <Button id='4' variant="outlined" className="btn"  name={props.idRR} onClick={confirm}>Cancelar</Button>
                     <AlertDialog
                         open={open}
                         cancel={cancel}
@@ -272,16 +275,19 @@ const handleClick = ()=>{
                 ||
                 // Vista de Lessor
                 (lessor && evalStatus(props.req.answer.status) &&
-                <div>
+                <div className='calendar-section'>
                     <h6>Antes de aceptar una solicitud seleccione la fecha correcta</h6> 
                     <MaterialUIPickers
                         value = {value}
                         handleChange = {handleDPChange}
                     ></MaterialUIPickers>
+                    <div className="buttons-section">
+                    <Button id='2' name={props.idRR} className="btn" variant="outlined" onClick={confirm}>Aceptar</Button>
+                    <Button id='3' name={props.idRR} className="btn" variant="outlined" onClick={confirm}>Rechazar</Button>
+                    </div>
                          
-                                   
-                    <button id='2' className = "green-button" name={props.idRR} onClick={confirm}>Aceptar</button>
-                    <button id='3' className = "red-button" name={props.idRR} onClick={confirm}>Rechazar</button>
+                       
+                    
                     <AlertDialog
                         open={open}
                         cancel={cancel}
@@ -294,10 +300,10 @@ const handleClick = ()=>{
             }
 
             {
-                (props.req.answer.status == 'Confirmada' || props.req.answer.status == 'En Espera')
+                (props.req.answer.status == 'Confirmada')
                 &&
-                <Link href="#" className="linkT" underline="hover">
-                {'Ver Renta'} 
+                <Link href="/user/panel-rents/" className="linkT" underline="hover">
+                    {'Panel de Rentas →'} 
                 </Link>
             }
         
@@ -530,9 +536,9 @@ const handleClick = ()=>{
     return (
     <>
     
-    <div id ="details-complete">    
-        {loading ? <CircularProgress/> : null}
-        <div id ="general">
+    <div className ="details-complete-mobile">    
+        
+        <div className="general details-complete-mobile">
             <List
                 sx={{
                     width: '100%',
@@ -540,59 +546,27 @@ const handleClick = ()=>{
                     bgcolor: 'background.paper',
                 }}
             >
-            <ListItem>
-                <ListItemText primary={type} secondary={data.username} />
-            </ListItem>
+                <ListItem>
+                    <ListItemText primary={type} secondary={data.username} />
+                </ListItem>
 
-            <ListItem>
-                <ListItemText primary="Periodo" secondary={(props.req.contract.days || props.req.contract.period ) + " days"} />
-            </ListItem>
+                <ListItem>
+                    <ListItemText primary="Periodo" secondary={(props.req.contract.days || props.req.contract.period ) + " days"} />
+                </ListItem>
 
-            <ListItem>
-                <ListItemText primary="Precio" secondary={'$ '+ props.req.contract.price} />
-            </ListItem>
+                <ListItem>
+                    <ListItemText primary="Precio" secondary={'$ '+ props.req.contract.price} />
+                </ListItem>
             </List>
-            <div className="buttonsEdit">
-            {
-                // Vista de Lessee
-                (lessee && evalStatus(props.req.answer.status) && 
-                <div >
-                    <button id='4' className = "red-button" name={props.idRR} onClick={confirm}>Cancelar</button>
-                    <AlertDialog
-                        open={open}
-                        cancel={cancel}
-                        accept ={accept}
-                        action = {'cancelar'}
-                    ></AlertDialog>    
-                </div>)
-                ||
-                // Vista de Lessor
-                (lessor && evalStatus(props.req.answer.status) &&
 
-                <div className="iconEdit">
-                    <IconButton  size="small" onClick={handleClickOpen}>
-                        <EditIcon  aria-label="edit"/>
-                    </IconButton>
-                    {
-                    (props.req.answer.status == 'Confirmada' || props.req.answer.status == 'En Espera')
-                    &&
-                    <Link href="#" className="linkT" underline="hover">
-                        {'Ver Renta'} 
-                    </Link>
-                    }
-                </div>
-                )   
-            }
-            </div>
-           
+
             <BasicAlerts 
                 open={openAlert}
                 resSeverity={responseSeverity} 
                 responseMessage={responseMessage}
                 handleClose={handleCloseAlert}
             >
-            </BasicAlerts>
-        </div>
+        </BasicAlerts>
 
         <EditDialog
             value = {value}
@@ -605,7 +579,51 @@ const handleClick = ()=>{
             accept = {accept}
             handleClose = {handleCloseEdit}
         ></EditDialog> 
+    
+
+    
+
+            <div className="group-details-mobile">
+                {loading ? <CircularProgress/> : null}
+                {
+                    // Vista de Lessee
+                    (lessee && evalStatus(props.req.answer.status) && 
+                    <div>
+                        <Button id='4'  variant="outlined" name={props.idRR} className="btn" onClick={confirm}>Cancelar</Button>
+                        <AlertDialog
+                            open={open}
+                            cancel={cancel}
+                            accept ={accept}
+                            action = {'cancelar'}
+                        ></AlertDialog>    
+                    </div>)
+                    ||
+                    // Vista de Lessor
+                    (lessor && evalStatus(props.req.answer.status) &&
+
+                    <div className="iconEdit">
+                        <IconButton  size="small" onClick={handleClickOpen}>
+                            <EditIcon  aria-label="edit"/>
+                        </IconButton>
+    
+                    </div>
+                    )   
+                }
+
+
+                {
+                    (props.req.answer.status == 'Confirmada')
+                    &&
+                    <Link href="/user/panel-rents/" className="linkT" underline="hover">
+                        {'Panel de Rentas →'} 
+                    </Link>
+                }
+            </div>
+        </div>
     </div>
+
+    
+    
   
     </>
     

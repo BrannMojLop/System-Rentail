@@ -145,9 +145,9 @@ export default function FullScreenDialog(props) {
             <div className="box-atributes">
                 <h4>Detalles de Publicacion</h4>
                 <List
-                sx={{ width: '80%', bgcolor: 'background.paper' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
+                  sx={{ width: '80%', bgcolor: 'background.paper' }}
+                  component="nav"
+                  aria-labelledby="nested-list-subheader"
                 >
                 <ListItemButton onClick={handleClick}>
                 <ListItemText primary="Opciones de Renta" />
@@ -157,7 +157,11 @@ export default function FullScreenDialog(props) {
                   <List component="div" disablePadding>
                     <ListItemButton sx={{ pl: 4 }}>
                       {props.publicationData[0].periods.map((period, index) => {
-                      return <ListItemText className="input-publication-panel" label="Opcion de Renta" value={index}>{`${period} Dias por $${props.publicationData[0].prices[index]} pesos`}</ListItemText>
+                      return <ListItemText 
+                                className="input-publication-panel" 
+                                label="Opcion de Renta" 
+                                value={index}>{`${period} Dias por $${props.publicationData[0].prices[index]} pesos`}
+                              </ListItemText>
                       })}
                     </ListItemButton>
                   </List>
