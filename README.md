@@ -1,4 +1,5 @@
-# System Rentail
+# Rentadito
+¡No lo compres, réntalo!
 
 Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack con JavaScript
 
@@ -14,11 +15,11 @@ Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack con JavaScrip
 
 ### Objetivo:
 
-Ofrecer un servicio para la implementación de un sistema de rentas, la cual sea suficientemente robusta y escalable a la necesidad de las interfaces de usuario que el sistema requiera. El propósito de la API es brindar un control y una herramienta de una forma ordenada y estandarizada, para personas que requieran poner en renta sus servicios o productos y estos a su ves esten al alcance de otras personas que busquen un producto o servicio para interes personal, laboral, etc.
+Con la finalidad de minimizar los impactos ambientales del consumo excesivo y contribuir a la integridad económica de la población, se ofrece una plataforma web para la renta de productos en la que los usuarios puedan publicar sus productos, así como solicitar en renta los de otros usuarios. Esta plataforma es compatible con computadoras y dispositivos móviles.
 
 ### Alcance:
 
-En primer instancia, el proyecto está enfocado a un servicio básico que dé la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendatarios de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo, la forma en que se esta modularizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
+En primer instancia, el proyecto está enfocado a un servicio básico que dé la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendatarios de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo, la forma en que se esta modularizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran, por ejemplo:
 
 - Control de Pagos
 - Control de Envíos
