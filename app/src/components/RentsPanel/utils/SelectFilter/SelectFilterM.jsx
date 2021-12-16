@@ -12,7 +12,7 @@ import Select from '@mui/material/Select';
 
 export default function BasicSelectM(props) {
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState(["Activas", "Deshablitadas", "Mostrar Todas"]);
+  const [options, setOptions] = React.useState(["Activas", "Canceladas", "Pagadas", "Mostrar Todas"]);
   const [selectOption, setSelectOption] = React.useState(null);
 
   const handleChange = (event) => {

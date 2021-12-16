@@ -100,7 +100,6 @@ export default function FullScreenDialog(props) {
   return (
     <>
     <div>
-      {loading ? <SimpleBackdrop loading={true} />: null} 
       <Dialog
         fullScreen
         open={props.open}
@@ -108,6 +107,7 @@ export default function FullScreenDialog(props) {
         TransitionComponent={Transition}
         style={{ background: "#eef4f7 !important" }}
       >
+        {loading ? <SimpleBackdrop loading={true} />: null} 
         <AppBar sx={{ position: 'relative', backgroundColor: '#153E90'}}>
           <Toolbar>
             <IconButton

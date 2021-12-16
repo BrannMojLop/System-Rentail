@@ -327,14 +327,19 @@ async function updatePublication(req, res) {
             await Publication.findByIdAndUpdate(req.params.id, {
                 $set: req.body
             });
-            if (req.body.status === false) {
+            if (req.body.status === true || publication.status === true) {
+                if (req.body.id_product) {
+                    if (req.body.id_product !== product._id) {
+                        await Product.updateOne({ _id: product._id }, { $set: { published: false } })
+                        await Product.updateOne({ _id: req.body.id_product }, { $set: { published: true } })
+                    } else {
+                        await Product.updateOne({ _id: publication.id_product }, { $set: { published: true } })
+                    }
+                } else {
+                    await Product.updateOne({ _id: publication.id_product }, { $set: { published: true } })
+                }
+            } else if (req.body.status === false) {
                 await Product.updateOne({ _id: publication.id_product }, { $set: { published: false, status: true } })
-            } else if (req.body.status === true) {
-                await Product.updateOne({ _id: publication.id_product }, { $set: { published: true } })
-            }
-            if (req.body.id_product !== product._id) {
-                await Product.updateOne({ _id: product._id }, { $set: { published: false } })
-                await Product.updateOne({ _id: req.body.id_product }, { $set: { published: true } })
             }
 
             res.status(200).send({
