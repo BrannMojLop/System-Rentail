@@ -81,16 +81,18 @@ export default function RentsPanel(){
               const jsonRequest = await request.json() 
               if (jsonRequest.length > 0) {
                 setRentsData(jsonRequest)
+                setLoading(false)
               } else {
                 setRentsData([])
+                setLoading(false)
               }
 
             } catch (e){ 
-              console.log(e); 
+              console.log(e);
+              setLoading(false) 
             } } 
             
           getRents("https://system-rentail-api.herokuapp.com/rents?id_lessor=" + JSON.parse(localStorage.getItem('user')).id)
-          setLoading(false)
         },[]) 
 
         React.useEffect(() => {
@@ -109,13 +111,15 @@ export default function RentsPanel(){
                 const jsonRequest = await request.json() 
                 if (jsonRequest.length > 0) {
                   setRentsData(jsonRequest)
+                  setLoading(false)
                 } else {
                   setRentsData([])
+                  setLoading(false)
                 }
-                setLoading(false)
   
               } catch (e){ 
                 console.log(e); 
+                setLoading(false)
               } } 
               
               if (optionSwitch === 0){
@@ -123,8 +127,6 @@ export default function RentsPanel(){
               } else if (optionSwitch === 1){
                 getRents("https://system-rentail-api.herokuapp.com/rents?id_lessee=" + JSON.parse(localStorage.getItem('user')).id)
               }
-      
-              setLoading(false)
 
           },[optionSwitch]) 
 
@@ -188,8 +190,6 @@ export default function RentsPanel(){
                 } else if (optionSwitch === 1){
                   getRents("https://system-rentail-api.herokuapp.com/rents?id_lessee=" + JSON.parse(localStorage.getItem('user')).id)
                 }
-
-                setLoading(false)
   
           },[selectFilter]) 
 
