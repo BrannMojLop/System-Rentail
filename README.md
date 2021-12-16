@@ -2,21 +2,23 @@
 
 Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack con JavaScript
 
-# Integrantes del Equipo #5:
+# Integrantes del Equipo #1:
 
 - Brandon Mojica Lopez
 - Rogelio Yael Vega Hernández
-- Christian Eduardo Suárez Ontiveros
+- Karina Lizeth Ortiz Muñoz
+- Lourdes Araceli García Eulogio
+- Juliet Guadalupe Quintero Rocha
 
-# Proyecto: API con Express y Cliente utilizando React para Aplicación de Rentas
+# Proyecto: Rentadito
 
-### Objetivo de la API:
+### Objetivo:
 
 Ofrecer un servicio para la implementación de un sistema de rentas, la cual sea suficientemente robusta y escalable a la necesidad de las interfaces de usuario que el sistema requiera. El propósito de la API es brindar un control y una herramienta de una forma ordenada y estandarizada, para personas que requieran poner en renta sus servicios o productos y estos a su ves esten al alcance de otras personas que busquen un producto o servicio para interes personal, laboral, etc.
 
-### Alcance de la API:
+### Alcance:
 
-En primer instancia la API esta enfocada a un servicio básico que de la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendatarios de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo la forma en que sé esta modula rizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
+En primer instancia, el proyecto está enfocado a un servicio básico que dé la oportunidad a los arrendadores de mostrar y publicar sus servicios o productos en renta mediante la Web, de la misma forma dar la oportunidad a los arrendatarios de llegar a estas publicaciones y solicitar informes para posteriormente concretar la renta del servicio y/o producto mediante un acuerdo estandarizado en tiempos y costos. Sin embargo, la forma en que se esta modularizando la API permite que el proyecto siga creciendo agregando más funcionalidades y controles según se requieran por ejemplo:
 
 - Control de Pagos
 - Control de Envíos
@@ -56,6 +58,8 @@ Para un mejor entendimiento de las entidades, usuarios y casos de uso pueden con
 - Babel: Transcopilador para el uso adecuado del código en cualquier navegador, incluyendo nuevas sintaxis del lenguaje.
 - Express: Marco de trabajo base de la aplicación, adicionalmente se integran algunas librarías de express.
 - MongoDB: Base de datos (NoSQL) base de la aplicación.
+- React: Librería para la creación de la interfaz gráfica.
+- MUI: Para el uso de componentes bien estructurados y personalizables.
 
 # Tutorial para inciar el servidor de la API
 
