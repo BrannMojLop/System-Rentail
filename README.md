@@ -13,6 +13,9 @@ Proyecto final para curso Bedu Santander Desarrollo Web Full-Stack con JavaScrip
 
 # Proyecto: Rentadito
 
+- [App del proyecto](https://system-rentail-app.herokuapp.com/)
+- [API del proyecto](https://system-rentail-api.herokuapp.com/)
+
 ### Objetivo:
 
 Con la finalidad de minimizar los impactos ambientales del consumo excesivo y contribuir a la integridad económica de la población, se ofrece una plataforma web para la renta de productos en la que los usuarios puedan publicar sus productos, así como solicitar en renta los de otros usuarios. Esta plataforma es compatible con computadoras y dispositivos móviles.
