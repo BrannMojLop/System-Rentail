@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,3 +18,7 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
+
+serviceWorkerRegistration.register();
+
+reportWebVitals();
