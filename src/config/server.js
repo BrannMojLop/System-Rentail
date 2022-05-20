@@ -22,6 +22,7 @@ server.set("port", process.env.PORT || 4001);
 
 // Middleware
 server.use(express.json());
+
 // Configurar cabeceras y cors
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

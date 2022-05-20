@@ -56,14 +56,7 @@ async function showCategories(req, res) {
             }
         })
     } else {
-        await Category.aggregate([
-            {
-                '$project': req.body.require
-            },
-            {
-                '$limit': req.body.limit
-            }
-        ], function (err, categories) {
+        await Category.find(function (err, categories) {
             if (err) {
                 res.status(401).send(err);
             } else if (categories.length > 0) {

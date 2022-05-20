@@ -12,7 +12,7 @@ export async function connect(res) {
     );
     return db;
   } catch (e) {
-    return res.status(422).send(err);
+    return res.status(422).send(e);
   }
 }
 

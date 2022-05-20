@@ -5,7 +5,7 @@ const User = require('../models/User');
 
 async function showSectors(req, res) {
     try {
-        await connect(res);
+        await connect();
 
         if (req.body.require || req.body.limit) {
             if (!req.body.limit) {
@@ -52,14 +52,8 @@ async function showSectors(req, res) {
                 }
             })
         } else {
-            await Sector.aggregate([
-                {
-                    '$project': req.body.require
-                },
-                {
-                    '$limit': req.body.limit
-                }
-            ], function (err, sectors) {
+            await Sector.find(function (err, sectors) {
+                console.log(err);
                 if (err) {
                     res.status(401).send(err);
                 } else if (sectors.length > 0) {
@@ -70,7 +64,7 @@ async function showSectors(req, res) {
             })
         }
     } catch (err) {
-        res.send(err)
+        res.send('err')
     }
 }
 

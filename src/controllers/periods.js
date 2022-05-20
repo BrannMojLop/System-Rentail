@@ -50,14 +50,7 @@ async function showPeriods(req, res) {
             }
         })
     } else {
-        await Period.aggregate([
-            {
-                '$project': req.body.require
-            },
-            {
-                '$limit': req.body.limit
-            }
-        ], function (err, periods) {
+        await Period.find(function (err, periods) {
             if (err) {
                 res.status(401).send(err);
             } else if (periods.length > 0) {

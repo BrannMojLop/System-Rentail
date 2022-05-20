@@ -112,24 +112,15 @@ async function showUsers(req, res) {
         }
       );
     } else {
-      await User.aggregate(
-        [
-          {
-            $project: req.body.require,
-          },
-          {
-            $limit: req.body.limit,
-          },
-        ],
-        function (err, users) {
-          if (err) {
-            res.status(401).send(err);
-          } else if (users.length > 0) {
-            res.status(200).send(users);
-          } else {
-            res.status(204).send("No se han encontrado registros");
-          }
+      await User.find(function (err, users) {
+        if (err) {
+          res.status(401).send(err);
+        } else if (users.length > 0) {
+          res.status(200).send(users);
+        } else {
+          res.status(204).send("No se han encontrado registros");
         }
+      }
       );
     }
   } else {

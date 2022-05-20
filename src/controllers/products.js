@@ -115,14 +115,7 @@ async function showProducts(req, res) {
             }
         })
     } else {
-        await Product.aggregate([
-            {
-                '$project': req.body.require
-            },
-            {
-                '$limit': req.body.limit
-            }
-        ], function (err, products) {
+        await Product.find(function (err, products) {
             console.log(req.body.require);
             if (err) {
                 res.status(401).send(err);

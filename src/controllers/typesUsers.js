@@ -45,14 +45,7 @@ async function showTypesUsers(req, res) {
                 }
             })
         } else {
-            await TypeUser.aggregate([
-                {
-                    '$project': req.body.require
-                },
-                {
-                    '$limit': req.body.limit
-                }
-            ], function (err, typesUsers) {
+            await TypeUser.find(function (err, typesUsers) {
                 if (err) {
                     res.status(401).send(err);
                 } else if (typesUsers.length > 0) {
